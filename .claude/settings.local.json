@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ct-devmcp__do_dis",
+      "mcp__ct-devmcp__do_ide"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
