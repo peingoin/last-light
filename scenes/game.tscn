@@ -1,9 +1,70 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=10 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://b407ipalvrf6u" path="res://assets/Characters(100x100)/Orc/Orc/Orc-Idle.png" id="2_yqjtg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnu2h"]
+atlas = ExtResource("2_yqjtg")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbhrr"]
+atlas = ExtResource("2_yqjtg")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iywne"]
+atlas = ExtResource("2_yqjtg")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p57ef"]
+atlas = ExtResource("2_yqjtg")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
+atlas = ExtResource("2_yqjtg")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gee14"]
+atlas = ExtResource("2_yqjtg")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0tnpc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnu2h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lbhrr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iywne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p57ef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5sy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gee14")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="Game" type="Node2D"]
 position = Vector2(0, -7)
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(1, 8)
+
+[node name="Orc" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Orc"]
+position = Vector2(-52, 0)
+sprite_frames = SubResource("SpriteFrames_0tnpc")
+autoplay = "default"
+frame_progress = 0.20674679
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Orc"]
