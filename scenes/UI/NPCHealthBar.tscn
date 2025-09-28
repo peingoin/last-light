@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqm3vvwnpcbar"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.2, 0.2, 0.2, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="NPCHealthBar" type="ProgressBar"]
+offset_left = -25.0
+offset_top = -40.0
+offset_right = 25.0
+offset_bottom = -35.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_1")
