@@ -1,0 +1,60 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T17:00:00Z"
+originalIntent: "Fix exclusion zone coordinate system mismatch where buildings claim 66,339 positions from only 2,048 sample positions, preventing other object spawning"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+  forbiddenPaths:
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/object_factory.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scenes/"
+    - "assets/"
+  newFiles: []
+apiContracts:
+  - name: "mark_exclusion_zone"
+    type: "function"
+    params:
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+      - name: "radius"
+        type: "int"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Building exclusions scaled to sample grid"
+    given: "Building spawns at sample position (4,4) with 64px radius"
+    when: "mark_exclusion_zone called"
+    then: "Only marks positions within 4-tile sampling grid, not world coordinates"
+  - id: "AC-002"
+    description: "Reasonable exclusion zone sizes"
+    given: "2,048 total sample positions available"
+    when: "Buildings spawn at 40% rate (~819 buildings)"
+    then: "Total exclusions <50% of sample positions (~1,000 positions)"
+  - id: "AC-003"
+    description: "All object types spawn together"
+    given: "Fixed coordinate system"
+    when: "Multi-pass system runs"
+    then: "Buildings, trees, garbage, props all visible in same world"
+  - id: "AC-004"
+    description: "Proper exclusion zone behavior"
+    given: "Building spawns first"
+    when: "Tree/prop passes run"
+    then: "Objects respect exclusion zones without over-excluding"
+nonGoals:
+  - "Spawn frequency changes"
+  - "Threshold adjustments"
+  - "Sampling grid modifications"
+  - "Object type additions"
+  - "Performance optimizations"
+  - "Multi-pass architecture changes"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 15
+  maxDependencies: 0

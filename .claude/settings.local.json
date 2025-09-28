@@ -1,8 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "mcp__ct-devmcp__do_dis",
-      "mcp__ct-devmcp__do_ide"
+      "Bash(find:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

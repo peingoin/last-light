@@ -1,23 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=3 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_game_script"]
-[ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="2_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="3_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="1_yqjtg"]
 
 [node name="Game" type="Node2D"]
-position = Vector2(0, -7)
 script = ExtResource("1_game_script")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-
-[node name="ObjectLayer" type="YSort" parent="."]
-
-[node name="Player" parent="ObjectLayer" instance=ExtResource("2_uwrxv")]
-position = Vector2(1, 8)
-
-[node name="Perlin" parent="." instance=ExtResource("3_yqjtg")]
-z_index = -1
-position = Vector2(-25, 2)
+[node name="Perlin" parent="." instance=ExtResource("1_yqjtg")]
+position = Vector2(-65, -22)

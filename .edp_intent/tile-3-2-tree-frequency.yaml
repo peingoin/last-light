@@ -1,0 +1,52 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T13:00:00Z"
+originalIntent: "make the tile 3, 2 spawn on the map with the same frequency and perlin noise procedural generation as trees"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+  forbiddenPaths:
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/object_factory.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scenes/"
+  newFiles: []
+apiContracts:
+  - name: "classify_terrain"
+    type: "function"
+    params:
+      - name: "noise_value"
+        type: "float"
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+    returns: "int"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Tile 3,2 spawns with same frequency as trees"
+    given: "Terrain generation is performed"
+    when: "Noise values match tree spawning thresholds"
+    then: "Tile 3,2 appears with probability (0.65 / 1.75)"
+  - id: "AC-002"
+    description: "Tile 3,2 uses object noise like trees"
+    given: "A position on the terrain"
+    when: "Tile classification is performed"
+    then: "Object noise is used for tile 3,2 probability calculation"
+  - id: "AC-003"
+    description: "Existing terrain types unchanged"
+    given: "Areas where tile 3,2 doesn't spawn"
+    when: "Terrain generation occurs"
+    then: "Original tile types 1 and 2 continue to spawn normally"
+nonGoals:
+  - "Modifying tree spawning frequency or logic"
+  - "Changing object generation systems"
+  - "Adding new tileset sources or atlas coordinates"
+  - "Performance optimization or refactoring"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 15
+  maxDependencies: 0
