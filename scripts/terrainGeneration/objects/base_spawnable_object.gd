@@ -8,6 +8,10 @@ class_name BaseSpawnableObject
 var spawn_position: Vector2
 var terrain_context: TerrainContext
 
+# Interaction system
+signal resources_collected(resources: Dictionary)
+var has_been_looted: bool = false
+
 func initialize(pos: Vector2, context: TerrainContext, variant: String = ""):
 	spawn_position = pos
 	terrain_context = context
@@ -20,3 +24,11 @@ func setup_visual():
 
 func get_object_type() -> String:
 	return object_type
+
+# Interaction interface implementation
+func can_interact() -> bool:
+	return not has_been_looted
+
+func interact_with(player: Node) -> void:
+	# Override in subclasses for specific interaction behavior
+	pass

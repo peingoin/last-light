@@ -1,0 +1,67 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T15:30:00Z"
+originalIntent: "I want to surround the current map with a border, look at dark green background using tiles (11, 0) to (13, 2) imagine its a square 3 by 3 square and use that for the border. this square has the edge in the middle and the outer area is the grass"
+scope:
+  allowedPaths:
+    - "scripts/terrainGeneration/perlin.gd"
+  forbiddenPaths:
+    - "scenes/game.tscn"
+    - "scenes/perlin.tscn"
+    - "scripts/game.gd"
+    - "scripts/player.gd"
+  newFiles: []
+apiContracts:
+  - name: "get_border_tile_coords"
+    type: "function"
+    params:
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+    returns: "Vector2i"
+    required: true
+  - name: "is_border_position"
+    type: "function"
+    params:
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+    returns: "bool"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Map displays border tiles at all edge positions"
+    given: "500x500 map is generated"
+    when: "viewing map edges"
+    then: "All edge positions show appropriate border tiles from (11,0)-(13,2) pattern"
+  - id: "AC-002"
+    description: "Corner tiles display correctly"
+    given: "Map corners are rendered"
+    when: "checking corners at (0,0), (499,0), (0,499), (499,499)"
+    then: "Corners show tiles (11,0), (13,0), (11,2), (13,2) respectively"
+  - id: "AC-003"
+    description: "Edge tiles display correctly"
+    given: "Map edges are rendered"
+    when: "checking top, bottom, left, right edges"
+    then: "Edges show tiles (12,0), (12,2), (11,1), (13,1) respectively"
+nonGoals:
+  - "Modifying existing terrain generation algorithm"
+  - "Adding new tileset files or resources"
+  - "Performance optimization beyond simple implementation"
+  - "Multi-layer border implementation"
+  - "Dynamic or animated borders"
+complexityBudget:
+  maxNewFunctions: 3
+  maxNewFiles: 0
+  maxLinesOfCode: 50
+  maxDependencies: 0

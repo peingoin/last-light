@@ -37,7 +37,14 @@ func _ready() -> void:
 	print("ObjectLayer node type: ", object_layer.get_class() if object_layer else "null")
 	print("FIXED: Player is now INSIDE ObjectLayer YSort container")
 	print("YSort should now work for player and objects together!")
+
+func start_map_generation() -> void:
 	generate_map(map_width, map_height, randi())
+
+	# Notify game that map generation is complete
+	var game_node = get_parent()
+	if game_node and game_node.has_method("hide_loading_screen"):
+		game_node.hide_loading_screen()
 
 func setup_enhanced_spawning_system():
 	spawn_bias_config = SpawnBiasConfig.new()

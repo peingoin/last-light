@@ -1,7 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "mcp__ct-devmcp__do_dis",
+      "mcp__ct-devmcp__do_ide",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "WebSearch",
+      "mcp__ct-devmcp__do_pla",
+      "Bash(mkdir:*)",
+      "mcp__ct-devmcp__do_bld",
+      "mcp__ct-devmcp__do_trace",
+      "mcp__ct-devmcp__do_fix"
     ],
     "deny": [],
     "ask": []

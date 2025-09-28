@@ -8,10 +8,20 @@ extends Node2D
 @onready var health_bar = $"CanvasLayer/UI Control/HealthBar"
 @onready var wood_label = $"CanvasLayer/UI Control/HealthBar/Wood Indicator Control/Wood Label"
 @onready var metal_label = $"CanvasLayer/UI Control/HealthBar/Metal Indicator Control/Metal Label"
+@onready var loading_screen = $"CanvasLayer/LoadingScreen"
 
 func _ready() -> void:
+	# Show loading screen immediately when game scene loads
+	show_loading_screen()
+
 	# Wait a frame to ensure all nodes are ready
 	await get_tree().process_frame
+
+	# Start map generation now that loading screen is visible
+	if has_node("Perlin"):
+		var perlin = $Perlin
+		if perlin.has_method("start_map_generation"):
+			perlin.start_map_generation()
 
 	# Initialize health bar with player's max health
 	if health_bar and player:
@@ -68,3 +78,11 @@ func add_metal(amount: int):
 	if metal_label:
 		var current_metal = int(metal_label.text)
 		set_metal_count(current_metal + amount)
+
+func show_loading_screen():
+	if loading_screen:
+		loading_screen.visible = true
+
+func hide_loading_screen():
+	if loading_screen:
+		loading_screen.visible = false

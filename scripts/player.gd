@@ -16,9 +16,17 @@ var is_invulnerable: bool = false
 # Weapon system variables
 var current_weapon: Node2D = null
 
+# Interaction system variables
+var current_interactable: Node = null
+var inventory: Dictionary = {"wood": 0, "steel": 0}
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var weapon_slot: Node2D = $WeaponSlot
+@onready var interaction_area: Area2D = $InteractionArea
 
+func _ready():
+	interaction_area.body_entered.connect(_on_interaction_area_body_entered)
+	interaction_area.body_exited.connect(_on_interaction_area_body_exited)
 
 func get_input() -> Vector2:
 
@@ -51,6 +59,9 @@ func _process(delta):
 
 	# Handle weapon attack input
 	handle_weapon_attack()
+
+	# Handle interaction input
+	handle_interaction()
 
 func can_take_damage() -> bool:
 	# Return TRUE only when the player is NOT invulnerable
@@ -182,3 +193,23 @@ func show_death_message() -> void:
 	death_label.add_theme_constant_override("shadow_offset_y", 4)
 
 	death_overlay.add_child(death_label)
+
+func handle_interaction() -> void:
+	if Input.is_action_just_pressed("interact") and current_interactable:
+		if current_interactable.has_method("can_interact") and current_interactable.can_interact():
+			current_interactable.interact_with(self)
+
+func _on_resources_collected(resources: Dictionary) -> void:
+	for resource_type in resources:
+		inventory[resource_type] += resources[resource_type]
+	print("Collected: ", resources, " | Total inventory: ", inventory)
+
+func _on_interaction_area_body_entered(body: Node2D) -> void:
+	if body.has_method("can_interact"):
+		current_interactable = body
+		print("Near interactable: Press E to interact")
+
+func _on_interaction_area_body_exited(body: Node2D) -> void:
+	if body == current_interactable:
+		current_interactable = null
+		print("Left interactable area")

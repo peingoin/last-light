@@ -1,0 +1,52 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "add a loading screen for when its loading the mapp. Have it just say loading..."
+scope:
+  allowedPaths:
+    - "scenes/game.tscn"
+    - "scripts/game.gd"
+    - "scripts/terrainGeneration/perlin.gd"
+  forbiddenPaths:
+    - "scenes/menu.tscn"
+    - "scripts/menu.gd"
+    - "project.godot"
+  newFiles: []
+apiContracts:
+  - name: "show_loading_screen"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+  - name: "hide_loading_screen"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Loading screen displays during map generation"
+    given: "User clicks PLAY button from menu"
+    when: "Map generation process starts"
+    then: "Loading screen with 'Loading...' text is visible"
+  - id: "AC-002"
+    description: "Loading screen disappears after map generation"
+    given: "Map generation is complete"
+    when: "Game becomes playable"
+    then: "Loading screen is hidden and game is visible"
+  - id: "AC-003"
+    description: "Loading screen uses existing UI patterns"
+    given: "Loading screen is implemented"
+    when: "Screen is displayed"
+    then: "Uses CanvasLayer, VT323 font, and Control/Label hierarchy like existing UI"
+nonGoals:
+  - "Progress bars or percentage indicators"
+  - "Loading animations or spinners"
+  - "Map generation optimization"
+  - "Custom graphics or complex styling"
+  - "Multiple loading messages or tips"
+complexityBudget:
+  maxNewFunctions: 3
+  maxNewFiles: 0
+  maxLinesOfCode: 50
+  maxDependencies: 0
