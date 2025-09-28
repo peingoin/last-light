@@ -1,7 +1,7 @@
 extends Node2D
 class_name BaseWeapon
 
-signal weapon_hit(target, damage)
+signal weapon_hit(target, damage, knockback_force, knockback_direction)
 signal attack_started
 signal attack_finished
 
@@ -9,6 +9,7 @@ signal attack_finished
 @export var damage: int = 10
 @export var attack_range: float = 50.0
 @export var attack_cooldown: float = 1.0
+@export var knockback_force: float = 200.0
 
 var cooldown_timer: float = 0.0
 var is_attacking: bool = false
@@ -123,7 +124,11 @@ func unequip() -> void:
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.name == "Hurtbox":
 		var enemy = area.get_parent()
-		weapon_hit.emit(enemy, damage)
+		var player = get_parent().get_parent()
+		if player and enemy:
+			# Calculate knockback direction from player to enemy
+			var knockback_direction = (enemy.global_position - player.global_position).normalized()
+			weapon_hit.emit(enemy, damage, knockback_force, knockback_direction)
 
 func _on_attack_animation_finished() -> void:
 	is_attacking = false

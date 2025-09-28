@@ -123,7 +123,9 @@ func get_mouse_attack_direction() -> Vector2:
 	var player_pos = global_position
 	return (mouse_pos - player_pos).normalized()
 
-func _on_weapon_hit(enemy, damage: int) -> void:
+func _on_weapon_hit(enemy, damage: int, knockback_force: float, knockback_direction: Vector2) -> void:
 	# Handle weapon hit events
 	if enemy.has_method("take_damage"):
 		enemy.call("take_damage", damage)
+	if enemy.has_method("apply_knockback"):
+		enemy.call("apply_knockback", knockback_force, knockback_direction)

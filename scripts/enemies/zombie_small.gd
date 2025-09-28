@@ -10,12 +10,15 @@ extends CharacterBody2D
 @export var swing_max_distance: float = 15.0
 @export var attack_interrupt_factor: float = 1.25 # leave swing if target gets this far
 @export var enemy_health: float = 10.0
+@export var knockback_resistance: float = 0.8
 
 var player: Node2D
 var cooldown_timer := 0.0
 var is_attacking := false
 var swing_already_hit := false
 var recovering := false   # <-- new: short pause after a landed hit
+var knockback_velocity := Vector2.ZERO
+var is_dying := false
 
 func _ready() -> void:
 	if get_parent().has_node("Player"):
@@ -31,7 +34,14 @@ func _ready() -> void:
 	# Make sure "swing" does NOT loop in the SpriteFrames resource (editor).
 
 func _physics_process(delta: float) -> void:
-	if player == null:
+	if player == null or is_dying:
+		return
+
+	# Apply knockback velocity and reduce it over time
+	if knockback_velocity != Vector2.ZERO:
+		velocity = knockback_velocity
+		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, 500.0 * delta)
+		move_and_slide()
 		return
 
 	# cooldown tick
@@ -117,6 +127,11 @@ func _on_frame_changed() -> void:
 		await pause_for(pause_time)
 
 func _on_anim_finished(anim_name: String) -> void:
+	# Handle death animation completion
+	if anim_name == "death":
+		queue_free()
+		return
+
 	# Keep this for the case when a swing completes naturally
 	if anim_name == "swing":
 		is_attacking = false
@@ -147,11 +162,26 @@ func _on_hurtbox_hit(hitbox: Area2D) -> void:
 	pass
 
 func take_damage(damage: int) -> void:
+	if is_dying:
+		return
 	enemy_health = enemy_health - damage
 	print("Zombie Small health: ", enemy_health)
 	if enemy_health <= 0:
 		die()
 
 func die() -> void:
+	if is_dying:
+		return
 	print("Zombie Small died!")
-	queue_free()
+	is_dying = true
+	# Play death animation
+	$AnimatedSprite2D.play("death")
+	# Disable movement and attacking
+	is_attacking = false
+	recovering = true
+	velocity = Vector2.ZERO
+
+func apply_knockback(force: float, direction: Vector2) -> void:
+	# Apply knockback based on resistance
+	var actual_force = force / knockback_resistance
+	knockback_velocity = direction * actual_force
