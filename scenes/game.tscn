@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=14 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cp3nsyopw8s8s" path="res://scenes/enemies/zombie_axe.tscn" id="6_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dobyt11lpisfo" path="res://assets/Item_Icons/Tiny Wonder RPG Icons Pack FREE/free preview.png" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
+[ext_resource type="PackedScene" uid="uid://bvsm4c0i2xo8t" path="res://scenes/storm.tscn" id="8_storm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
@@ -23,6 +24,8 @@ region = Rect2(-0.2072525, 16.752626, 16.751667, 15.37929)
 script = ExtResource("1_game")
 player_scene = ExtResource("1_uwrxv")
 spawner_scene = ExtResource("2_spawner")
+
+[node name="Storm" parent="." instance=ExtResource("8_storm")]
 
 [node name="Spawner" parent="." instance=ExtResource("2_spawner")]
 player_path = NodePath("../Player")
