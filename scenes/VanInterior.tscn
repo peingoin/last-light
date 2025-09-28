@@ -177,6 +177,7 @@ animations = [{
 size = Vector2(20, 18.489998)
 
 [node name="VanInterior" type="Node2D"]
+position = Vector2(25, 0)
 
 [node name="MedicNPC" type="Area2D" parent="."]
 position = Vector2(-90, 227)
@@ -331,12 +332,11 @@ position = Vector2(-58, 173)
 texture = ExtResource("18_1rbwi")
 
 [node name="Player" parent="." instance=ExtResource("19_player")]
-position = Vector2(0, 250)
+position = Vector2(-53, 248)
 
 [node name="ExitDoor" type="Area2D" parent="."]
 position = Vector2(-61, 306)
 script = ExtResource("1_1rbwi")
-target_scene = "res://scenes/game.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor"]
 shape = SubResource("RectangleShape2D_84ysd")

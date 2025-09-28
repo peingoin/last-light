@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://je3eq2q7k6nx"]
+
+[ext_resource type="PackedScene" path="res://scenes/BaseNPC.tscn" id="1_test"]
+[ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="2_frames"]
+[ext_resource type="Script" uid="uid://c7as2wmn2y1qq" path="res://scripts/TestNPC.gd" id="3_script"]
+
+[node name="TestNPC" instance=ExtResource("1_test")]
+script = ExtResource("3_script")
+frames = ExtResource("2_frames")

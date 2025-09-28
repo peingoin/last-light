@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="1_yqjtg"]
+[ext_resource type="PackedScene" path="res://scenes/perlin.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c7g47ul4jt3ti" path="res://scenes/enemies/orc.tscn" id="2_orc"]
 [ext_resource type="PackedScene" uid="uid://b8r2hsxdk7k0l" path="res://scenes/spawner.tscn" id="2_spawner"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="3_lnu2h"]
@@ -11,11 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://cp3nsyopw8s8s" path="res://scenes/enemies/zombie_axe.tscn" id="6_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dobyt11lpisfo" path="res://assets/Item_Icons/Tiny Wonder RPG Icons Pack FREE/free preview.png" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
+[ext_resource type="PackedScene" uid="uid://ci4kx1msqqo0q" path="res://scenes/storm.tscn" id="8_storm"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="8_textbox"]
-[ext_resource type="PackedScene" path="res://scenes/storm.tscn" id="8_storm"]
-[ext_resource type="PackedScene" uid="uid://gyhj0rm05pfq" path="res://scenes/TestNPC.tscn" id="9_testnpc"]
-[ext_resource type="PackedScene" uid="uid://dqtv01a3a5fqo" path="res://scenes/Machine.tscn" id="10_machine"]
-[ext_resource type="PackedScene" uid="uid://dqtv01ata6ri3" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
+[ext_resource type="PackedScene" path="res://scenes/Machine.tscn" id="10_machine"]
+[ext_resource type="PackedScene" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
 [ext_resource type="TileSet" uid="uid://cthy5whhkciiq" path="res://van_tile_set.tres" id="13_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
@@ -34,19 +33,16 @@ spawner_scene = ExtResource("2_spawner")
 [node name="Storm" parent="." instance=ExtResource("8_storm")]
 
 [node name="Perlin" parent="." instance=ExtResource("1_yqjtg")]
-position = Vector2(0, 0)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("13_tileset")
+format = 2
 
 [node name="Spawner" parent="." instance=ExtResource("2_spawner")]
 player_path = NodePath("../Player")
 monster_scenes = Array[PackedScene]([ExtResource("2_orc"), ExtResource("5_gee14"), ExtResource("6_0tnpc"), ExtResource("7_vtaks")])
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
-
-[node name="TestNPC" parent="." instance=ExtResource("9_testnpc")]
-position = Vector2(100, 50)
 
 [node name="Machine" parent="." instance=ExtResource("10_machine")]
 position = Vector2(200, 100)
@@ -133,5 +129,8 @@ stretch_mode = 4
 
 [node name="TextBox" parent="CanvasLayer/UI Control" instance=ExtResource("8_textbox")]
 visible = false
+layout_mode = 1
 
 [node name="MachineLifeForceUI" parent="CanvasLayer/UI Control" instance=ExtResource("11_machineui")]
+layout_mode = 0
+anchors_preset = 0
