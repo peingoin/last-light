@@ -11,7 +11,9 @@ var is_invulnerable: bool = false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+
 func get_input() -> Vector2:
+
 	input.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	# face direction
@@ -30,6 +32,8 @@ func get_input() -> Vector2:
 				animated_sprite.play("run")
 
 	return input.normalized()
+	
+	
 
 func _process(delta: float) -> void:
 	var player_input := get_input()
