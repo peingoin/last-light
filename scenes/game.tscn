@@ -1,10 +1,69 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=6 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_game_script"]
 [ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="3_healthbar"]
+[ext_resource type="PackedScene" path="res://scenes/spawner.tscn" id="4_spawner"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game_script")
 
 [node name="Perlin" parent="." instance=ExtResource("1_yqjtg")]
 position = Vector2(-65, -22)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(0, 0)
+
+[node name="Spawner" parent="." instance=ExtResource("4_spawner")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HealthBar" parent="CanvasLayer/UI Control" instance=ExtResource("3_healthbar")]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 149.0
+offset_bottom = 34.0
+
+[node name="Wood Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 40.0
+offset_right = 120.0
+offset_bottom = 30.0
+
+[node name="Wood Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Wood Indicator Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Metal Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 130.0
+offset_right = 210.0
+offset_bottom = 30.0
+
+[node name="Metal Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Metal Indicator Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
