@@ -96,7 +96,7 @@ func _on_frame_changed() -> void:
 
 	# Only hit if player still close
 	var dist := global_position.distance_to(player.global_position)
-	if dist <= swing_max_distance + 2:
+	if dist <= swing_max_distance + 7:
 		# Respect player i-frames: only hit if they CAN take damage
 		if not player.call("can_take_damage"):
 			print("target is invulnerable (i-frames)")
