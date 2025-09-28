@@ -2,6 +2,8 @@ extends BaseNPC
 
 var has_introduced: bool = false
 var player_name: String = ""
+var player_interests: Array[String] = []
+var conversation_history: Dictionary = {}
 
 func _ready() -> void:
 	super._ready()
@@ -66,8 +68,8 @@ What brings you to our little village today?
 [[OPTIONS]]
 [h:hello:_on_hello_callback] Hello! I'm just passing through.
 [e:explore:_on_explore_callback] I'm here to explore and learn about the area.
-[t:trade] I'm looking for trade opportunities.
-[q:quiet] I prefer to keep to myself.
+[t:trade:_on_trade_callback] I'm looking for trade opportunities.
+[q:quiet:_on_quiet_callback] I prefer to keep to myself.
 [[/OPTIONS]]"""
 	
 	var dialogue_system = _get_dialogue_system()
@@ -79,6 +81,16 @@ func _show_regular_dialogue() -> void:
 	if player_name != "":
 		greeting += ", " + player_name
 	greeting += "! "
+	
+	# Add personalized comments based on previous choices
+	if "routes" in player_interests:
+		greeting += "Still planning those travels? "
+	elif "ruins" in player_interests:
+		greeting += "Found any interesting artifacts lately? "
+	elif "history" in player_interests:
+		greeting += "I've been thinking more about our village's past since we last talked. "
+	elif "festivals" in player_interests:
+		greeting += "The next festival is coming up soon! "
 	
 	var remaining = get_remaining_interactions()
 	if remaining == 1:
@@ -92,10 +104,10 @@ func _show_regular_dialogue() -> void:
 
 What would you like to talk about?
 [[OPTIONS]]
-[w:weather] How's the weather been lately?
-[v:village] Tell me more about this village.
-[p:people] Who are the important people around here?
-[g:goodbye] I should be going now.
+[w:weather:_on_weather_callback] How's the weather been lately?
+[v:village:_on_village_callback] Tell me more about this village.
+[p:people:_on_people_callback] Who are the important people around here?
+[g:goodbye:_on_goodbye_callback] I should be going now.
 [[/OPTIONS]]"""
 	
 	var dialogue_system = _get_dialogue_system()
@@ -103,81 +115,20 @@ What would you like to talk about?
 		dialogue_system.show_dialogue_with_options(display_name, dialogue_content, self)
 
 func _on_choice_picked(choice_id: String) -> void:
+	# This function now only handles fallback cases since we use specific callbacks
+	print("Warning: Fallback choice handler called for: ", choice_id)
 	var dialogue_system = _get_dialogue_system()
-	if not dialogue_system:
-		return
-	
-	match choice_id:
-		"hello":
-			player_name = "friend"
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: Wonderful to meet you, friend! I hope you enjoy your time here.")
-		
-		"explore":
-			player_name = "explorer"
-			_show_exploration_dialogue()
-		
-		"trade":
-			player_name = "trader"
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: A trader! How exciting! You should definitely visit our shopkeeper and the market square.")
-		
-		"quiet":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: I understand completely. Sometimes it's nice to just enjoy the peace and quiet of our village.")
-		
-		"weather":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: The weather's been quite pleasant lately! Perfect for working in the fields and enjoying the outdoors.")
-		
-		"village":
-			_show_village_info_dialogue()
-		
-		"people":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: Well, there's our village guard who keeps us safe, the shopkeeper with the finest goods, and our wise elder who gives great advice.")
-		
-		"goodbye":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: Safe travels! Come back and visit us again soon.")
-		
-		"history":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: Our village was built near this crossroads because it's perfect for travelers and trade. We've been here for generations!")
-		
-		"festivals":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: We have a harvest festival every autumn! There's music, dancing, and the best food you've ever tasted.")
-		
-		"problems":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: Mostly just the occasional wild animal or bandit on the roads. Nothing our guard can't handle!")
-		
-		"routes":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: The main road leads to the capital, the forest path goes to the ancient ruins, and the mountain trail leads to the mining town.")
-		
-		"ruins":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: The old ruins in the forest are mysterious. Some say they're magical, but I think they're just really, really old!")
-		
-		"dangers":
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: Watch out for wolves in the forest and bandits on the mountain roads. Stick to the main paths during daylight.")
-		
-		_:
-			print("Warning: Unexpected choice ID received: ", choice_id)
-			if dialogue_system.has_method("open_single"):
-				dialogue_system.open_single(display_name, "Villager: I'm sorry, I didn't quite catch that.")
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		dialogue_system.open_single(display_name, "Villager: I'm sorry, I didn't quite catch that.")
 
 func _show_exploration_dialogue() -> void:
 	var dialogue_content = """Villager: An explorer! How adventurous! There are many interesting places around here for someone with a curious spirit.
 
 What kind of exploration interests you most?
 [[OPTIONS]]
-[routes:routes:_on_routes_callback] What are the main travel routes?
-[ruins:ruins:_on_ruins_callback] Are there any ancient ruins nearby?
-[dangers:dangers] What dangers should I watch out for?
+[r:routes:_on_routes_callback] What are the main travel routes?
+[u:ruins:_on_ruins_callback] Are there any ancient ruins nearby?
+[d:dangers:_on_dangers_callback] What dangers should I watch out for?
 [[/OPTIONS]]"""
 	
 	var dialogue_system = _get_dialogue_system()
@@ -189,9 +140,9 @@ func _show_village_info_dialogue() -> void:
 
 What aspect of our village would you like to know about?
 [[OPTIONS]]
-[history:history:_on_history_callback] Tell me about the village's history.
-[festivals:festivals:_on_festivals_callback] Do you have any festivals or celebrations?
-[problems:problems] Are there any problems in the village?
+[h:history:_on_history_callback] Tell me about the village's history.
+[f:festivals:_on_festivals_callback] Do you have any festivals or celebrations?
+[p:problems:_on_problems_callback] Are there any problems in the village?
 [[/OPTIONS]]"""
 	
 	var dialogue_system = _get_dialogue_system()
@@ -204,27 +155,124 @@ func _on_dialogue_finished() -> void:
 # Callback functions for dialogue options
 func _on_hello_callback() -> void:
 	print("TestNPC: Hello callback triggered!")
-	# Add some special behavior when hello is chosen
 	player_name = "friendly traveler"
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		dialogue_system.open_single(display_name, "Villager: Wonderful to meet you, friendly traveler! May the roads be kind to you on your journey.")
 
 func _on_explore_callback() -> void:
 	print("TestNPC: Explore callback triggered!")
-	# Add some special behavior when explore is chosen
 	player_name = "curious explorer"
-	# Could add items, unlock new dialogue options, etc.
+	player_interests.append("exploration")
+	_show_exploration_dialogue()
+
+func _on_trade_callback() -> void:
+	print("TestNPC: Trade callback triggered! Player is interested in commerce.")
+	player_name = "shrewd trader"
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		dialogue_system.open_single(display_name, "Villager: A trader! How exciting! You should definitely visit our shopkeeper - she has the finest goods in the region. The market square is bustling this time of day!")
+
+func _on_quiet_callback() -> void:
+	print("TestNPC: Quiet callback triggered! Player prefers solitude.")
+	player_name = "mysterious stranger"
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		dialogue_system.open_single(display_name, "Villager: I understand completely, mysterious stranger. Sometimes the soul needs silence. Our village is peaceful - perfect for quiet contemplation.")
+
+func _on_village_callback() -> void:
+	print("TestNPC: Village callback triggered! Player wants to learn about the village.")
+	conversation_history["asked_about_village"] = true
+	_show_village_info_dialogue()
+
+func _on_people_callback() -> void:
+	print("TestNPC: People callback triggered! Player is interested in villagers.")
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		dialogue_system.open_single(display_name, "Villager: Well, there's our brave village guard who keeps us safe from bandits, the shopkeeper with her amazing wares, and our wise elder who gives the best advice. Each person here has a story worth hearing!")
+
+func _on_goodbye_callback() -> void:
+	print("TestNPC: Goodbye callback triggered! Player is leaving.")
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		var farewell_message = "Villager: Safe travels"
+		if player_name != "":
+			farewell_message += ", " + player_name
+		farewell_message += "! May fortune smile upon your adventures, and don't forget to visit us again!"
+		dialogue_system.open_single(display_name, farewell_message)
 
 func _on_routes_callback() -> void:
 	print("TestNPC: Routes callback triggered! Player is interested in travel routes.")
-	# Could unlock a map item, mark routes on player's map, etc.
+	player_interests.append("routes")
+	conversation_history["asked_about_routes"] = true
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		var routes_response: String
+		if conversation_history.get("asked_about_routes", false):
+			routes_response = "Villager: Since you're so interested in travel, I should mention that the merchant caravan comes through every month. You could probably join them for safer passage to distant lands!"
+		else:
+			routes_response = "Villager: The main road leads to the capital city, the forest path goes to the mysterious ancient ruins, and the mountain trail leads to the bustling mining town. Each route has its own adventures!"
+		dialogue_system.open_single(display_name, routes_response)
 
 func _on_ruins_callback() -> void:
 	print("TestNPC: Ruins callback triggered! Player is interested in ancient ruins.")
-	# Could give a quest, unlock ruins location, provide ancient knowledge, etc.
+	player_interests.append("ruins")
+	conversation_history["asked_about_ruins"] = true
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		var ruins_response: String
+		if conversation_history.get("asked_about_ruins", false):
+			ruins_response = "Villager: You know, after our last talk about the ruins, I remembered my grandfather used to tell stories about strange lights coming from there at night. Maybe there's more to them than I thought! Ancient magic, perhaps?"
+		else:
+			ruins_response = "Villager: The old ruins in the forest are truly mysterious! Some say they're magical, others think they're just really, really old. I've seen strange symbols carved into the stones - nobody knows what they mean!"
+		dialogue_system.open_single(display_name, ruins_response)
+
+func _on_dangers_callback() -> void:
+	print("TestNPC: Dangers callback triggered! Player wants to know about hazards.")
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		dialogue_system.open_single(display_name, "Villager: Watch out for wolves in the deep forest - they hunt in packs at night! Bandits sometimes lurk on the mountain roads, so travel in daylight and stick to well-traveled paths. The old ruins can be treacherous too - unstable floors and hidden pitfalls!")
 
 func _on_history_callback() -> void:
 	print("TestNPC: History callback triggered! Player wants to learn village history.")
-	# Could increase reputation, unlock historical quests, etc.
+	player_interests.append("history")
+	conversation_history["asked_about_history"] = true
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		var history_response: String
+		if conversation_history.get("asked_about_history", false):
+			history_response = "Villager: I've been digging through some old family records since we talked. Turns out my great-great-grandmother was one of the original founders! I had no idea our family went back that far. She was quite the adventurer herself!"
+		else:
+			history_response = "Villager: Our village was built near this crossroads because it's perfect for travelers and trade. We've been here for generations! Founded by brave settlers who saw the potential of this location."
+		dialogue_system.open_single(display_name, history_response)
 
 func _on_festivals_callback() -> void:
 	print("TestNPC: Festivals callback triggered! Player is interested in celebrations.")
-	# Could unlock seasonal events, provide festival schedule, etc.
+	player_interests.append("festivals")
+	conversation_history["asked_about_festivals"] = true
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		var festivals_response: String
+		if conversation_history.get("asked_about_festivals", false):
+			festivals_response = "Villager: Since you're interested in our festivals, I should tell you that we're planning something special this year! The elder suggested adding a storytelling competition. You should participate if you're still here - I bet you have amazing tales to tell!"
+		else:
+			festivals_response = "Villager: We have a wonderful harvest festival every autumn! There's music, dancing, and the best food you've ever tasted. The whole village comes together - it's magical!"
+		dialogue_system.open_single(display_name, festivals_response)
+
+func _on_problems_callback() -> void:
+	print("TestNPC: Problems callback triggered! Player is asking about village issues.")
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		dialogue_system.open_single(display_name, "Villager: Nothing too serious! Just the occasional wild animal near the farms and some bandits on the outer roads. Our guard handles most threats well. Sometimes merchants are late with deliveries, but that's life in a small village!")
+
+func _on_weather_callback() -> void:
+	print("TestNPC: Weather callback triggered! Player is making small talk.")
+	conversation_history["talked_about_weather"] = true
+	var dialogue_system = _get_dialogue_system()
+	if dialogue_system and dialogue_system.has_method("open_single"):
+		var weather_response: String
+		if conversation_history.get("talked_about_weather", false):
+			weather_response = "Villager: As I mentioned before, the weather's been lovely. Though I did notice some clouds gathering to the west earlier. Might get some rain tonight - good for the crops!"
+		else:
+			weather_response = "Villager: The weather's been quite pleasant lately! Perfect for working in the fields and enjoying the outdoors. The sunny days have been wonderful for everyone's spirits."
+		dialogue_system.open_single(display_name, weather_response)

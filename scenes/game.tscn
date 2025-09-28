@@ -12,8 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="8_textbox"]
 [ext_resource type="PackedScene" uid="uid://b4yj3vwmg5j2x" path="res://scenes/TestNPC.tscn" id="9_testnpc"]
-[ext_resource type="PackedScene" uid="uid://c2pwf282ejdl5" path="res://village_guard.tscn" id="10_villageguard"]
-[ext_resource type="PackedScene" uid="uid://c4pxf282ejdl6" path="res://scenes/ShopkeeperNPC.tscn" id="11_shopkeeper"]
 [ext_resource type="TileSet" uid="uid://cthy5whhkciiq" path="res://van_tile_set.tres" id="13_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
@@ -44,11 +42,6 @@ default_count = 3
 [node name="TestNPC" parent="." instance=ExtResource("9_testnpc")]
 position = Vector2(100, 50)
 
-[node name="VillageGuard" parent="." instance=ExtResource("10_villageguard")]
-position = Vector2(200, 50)
-
-[node name="ShopkeeperNPC" parent="." instance=ExtResource("11_shopkeeper")]
-position = Vector2(300, 50)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_orc")]
 position = Vector2(-99, -1)

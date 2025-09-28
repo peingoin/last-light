@@ -1,6 +1,6 @@
-[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://b2m1vgard5j2k"]
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://b2m1vgard5j2k"]
 
-[ext_resource type="Texture2D" uid="uid://cxnqg4ym3xg8l" path="res://assets/NPC/character-pack-full_version/sprite_split/character_1/character_1_frame32x32.png" id="1_guard"]
+[ext_resource type="Texture2D" uid="uid://c76hmeusmu51e" path="res://assets/NPC/character-pack-full_version/sprite_split/character_1/character_1_frame32x32.png" id="1_guard"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle1"]
 atlas = ExtResource("1_guard")
@@ -12,16 +12,15 @@ region = Rect2(32, 0, 32, 32)
 
 [resource]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle2")
-}],
+"frames": [],
 "loop": true,
 "name": &"idle",
 "speed": 2.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

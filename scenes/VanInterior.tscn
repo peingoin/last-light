@@ -1,0 +1,326 @@
+[gd_scene load_steps=35 format=3 uid="uid://ccwyhu83j70rm"]
+
+[ext_resource type="Script" uid="uid://sixh2u2ge1fx" path="res://scripts/MedicNPC.gd" id="1_medic"]
+[ext_resource type="Texture2D" uid="uid://bel0tu12ejffn" path="res://assets/NPC/character-pack-full_version/sprite_split/character_2/character_2_frame16x20.png" id="2_8lxem"]
+[ext_resource type="Script" uid="uid://byxl8m5uffgg" path="res://scripts/ForagerNPC.gd" id="2_forager"]
+[ext_resource type="Script" uid="uid://x5wkcd35ciny" path="res://scripts/EngineerNPC.gd" id="3_engineer"]
+[ext_resource type="Script" uid="uid://c0hp7l813yixg" path="res://scripts/TechnicianNPC.gd" id="4_technician"]
+[ext_resource type="Texture2D" uid="uid://xrnoclnsu16f" path="res://assets/NPC/character-pack-full_version/sprite_split/character_7/character_7_frame16x20.png" id="5_arybo"]
+[ext_resource type="Script" uid="uid://cwpp0tqvlqvcy" path="res://scripts/ScoutNPC.gd" id="5_scout"]
+[ext_resource type="Texture2D" uid="uid://kgb20o6wdn1s" path="res://assets/NPC/character-pack-full_version/sprite_split/character_2/character_2_frame32x32.png" id="6_medic"]
+[ext_resource type="Texture2D" uid="uid://cuscfks67wrpr" path="res://assets/NPC/character-pack-full_version/sprite_split/character_7/character_7_frame32x32.png" id="7_forager"]
+[ext_resource type="Texture2D" uid="uid://diyox432w1xgb" path="res://assets/NPC/character-pack-full_version/sprite_split/character_3/character_3_frame16x20.png" id="8_84ysd"]
+[ext_resource type="Texture2D" uid="uid://nkw22mp4v2eg" path="res://assets/NPC/character-pack-full_version/sprite_split/character_3/character_3_frame32x32.png" id="8_engineer"]
+[ext_resource type="Texture2D" uid="uid://c0y2wd8abbmto" path="res://assets/NPC/character-pack-full_version/sprite_split/character_4/character_4_frame32x32.png" id="9_technician"]
+[ext_resource type="Texture2D" uid="uid://do34ssos4gm7m" path="res://assets/NPC/character-pack-full_version/sprite_split/character_4/character_4_frame16x20.png" id="10_1rbwi"]
+[ext_resource type="Texture2D" uid="uid://df7uraxxkie1e" path="res://assets/NPC/character-pack-full_version/sprite_split/character_9/character_9_frame32x32.png" id="10_scout"]
+[ext_resource type="Texture2D" uid="uid://opmwkkayx41f" path="res://assets/NPC/character-pack-full_version/sprite_split/character_9/character_9_frame16x20.png" id="14_jkhij"]
+[ext_resource type="PackedScene" uid="uid://8cgn4wmmpyll" path="res://scenes/van.tscn" id="16_h5usi"]
+[ext_resource type="PackedScene" path="res://scenes/BaseNPC.tscn" id="17_84ysd"]
+[ext_resource type="Texture2D" uid="uid://c2uwolu2cwwk8" path="res://assets/Machine.png" id="18_1rbwi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_medic"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5icae"]
+atlas = ExtResource("2_8lxem")
+region = Rect2(16, 0, 16, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_medic"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5icae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_medic")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_medic")
+}],
+"loop": true,
+"name": &"talk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_forager"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvm4w"]
+atlas = ExtResource("5_arybo")
+region = Rect2(16, 0, 16, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_forager"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvm4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_forager")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_forager")
+}],
+"loop": true,
+"name": &"talk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_engineer"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq3g0"]
+atlas = ExtResource("8_84ysd")
+region = Rect2(16, 0, 16, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fgko"]
+atlas = ExtResource("10_1rbwi")
+region = Rect2(16, 0, 16, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_engineer"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq3g0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_engineer")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fgko")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_engineer")
+}],
+"loop": true,
+"name": &"talk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_technician"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rs06h"]
+atlas = ExtResource("10_1rbwi")
+region = Rect2(16, 0, 16, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_technician"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rs06h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_technician")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_technician")
+}],
+"loop": true,
+"name": &"talk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_scout"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n4ka"]
+atlas = ExtResource("14_jkhij")
+region = Rect2(16, 0, 16, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_scout"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n4ka")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_scout")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_scout")
+}],
+"loop": true,
+"name": &"talk",
+"speed": 5.0
+}]
+
+[node name="VanInterior" type="Node2D"]
+
+[node name="MedicNPC" type="Area2D" parent="."]
+position = Vector2(-90, 227)
+script = ExtResource("1_medic")
+display_name = &"Dr. Elena Brightwater"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MedicNPC"]
+shape = SubResource("RectangleShape2D_medic")
+
+[node name="Prompt" type="Label" parent="MedicNPC"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MedicNPC"]
+position = Vector2(-1, 0)
+sprite_frames = SubResource("SpriteFrames_medic")
+animation = &"idle"
+
+[node name="ForagerNPC" type="Area2D" parent="."]
+position = Vector2(-91, 275)
+script = ExtResource("2_forager")
+display_name = &"Sage Greenthumb"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ForagerNPC"]
+shape = SubResource("RectangleShape2D_forager")
+
+[node name="Prompt" type="Label" parent="ForagerNPC"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ForagerNPC"]
+sprite_frames = SubResource("SpriteFrames_forager")
+animation = &"idle"
+
+[node name="EngineerNPC" type="Area2D" parent="."]
+position = Vector2(-26, 276)
+script = ExtResource("3_engineer")
+display_name = &"Marcus Gearwright"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EngineerNPC"]
+shape = SubResource("RectangleShape2D_engineer")
+
+[node name="Prompt" type="Label" parent="EngineerNPC"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="EngineerNPC"]
+position = Vector2(-1, -1)
+sprite_frames = SubResource("SpriteFrames_engineer")
+animation = &"idle"
+
+[node name="TechnicianNPC" type="Area2D" parent="."]
+position = Vector2(-27, 227)
+script = ExtResource("4_technician")
+display_name = &"Vera Sparkwire"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TechnicianNPC"]
+shape = SubResource("RectangleShape2D_technician")
+
+[node name="Prompt" type="Label" parent="TechnicianNPC"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TechnicianNPC"]
+sprite_frames = SubResource("SpriteFrames_technician")
+animation = &"idle"
+
+[node name="ScoutNPC" type="Area2D" parent="."]
+position = Vector2(400, 300)
+script = ExtResource("5_scout")
+display_name = &"Raven Swiftfoot"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoutNPC"]
+shape = SubResource("RectangleShape2D_scout")
+
+[node name="Prompt" type="Label" parent="ScoutNPC"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ScoutNPC"]
+sprite_frames = SubResource("SpriteFrames_scout")
+animation = &"idle"
+
+[node name="Node2D" parent="." instance=ExtResource("16_h5usi")]
+z_index = -2
+position = Vector2(-99, 157)
+
+[node name="BaseNPC" parent="." instance=ExtResource("17_84ysd")]
+position = Vector2(-58, 173)
+
+[node name="Sprite2D" type="Sprite2D" parent="BaseNPC"]
+texture = ExtResource("18_1rbwi")
