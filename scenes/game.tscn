@@ -1,9 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=4 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://diqt8d50km10b" path="res://scenes/buidling_2.tscn" id="4_lbhrr"]
 
 [node name="Game" type="Node2D"]
 position = Vector2(0, -7)
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
+z_index = 1
 position = Vector2(1, 8)
+
+[node name="Perlin" parent="." instance=ExtResource("2_yqjtg")]
+z_index = -1
+position = Vector2(-25, 2)
+
+[node name="buidling2" parent="." instance=ExtResource("4_lbhrr")]
+z_index = 2
+position = Vector2(-30, 23)
