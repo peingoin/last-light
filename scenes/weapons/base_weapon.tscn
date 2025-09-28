@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bv0k6xo4yh8xj"]
+
+[ext_resource type="Script" path="res://scripts/weapons/base_weapon.gd" id="1_1qqvq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1g4n5"]
+size = Vector2(50, 20)
+
+[node name="BaseWeapon" type="Node2D"]
+z_index = 1
+script = ExtResource("1_1qqvq")
+
+[node name="WeaponSprite" type="Sprite2D" parent="."]
+
+[node name="AttackAnimation" type="AnimationPlayer" parent="."]
+
+[node name="AttackEffects" type="Node2D" parent="."]
+
+[node name="SlashEffect" type="AnimatedSprite2D" parent="AttackEffects"]
+
+[node name="HitEffect" type="AnimatedSprite2D" parent="AttackEffects"]
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_1g4n5")
+disabled = true
+
+[node name="AttackAudio" type="AudioStreamPlayer2D" parent="."]

@@ -1,0 +1,54 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "I want to change all the miscellaneous objects such that when I'm behind it, it overlaps me, but when I'm in front of it, I overlap it."
+scope:
+  allowedPaths:
+    - "scenes/game.tscn"
+    - "scripts/object_factory.gd"
+    - "scripts/objects/base_spawnable_object.gd"
+    - "scenes/objects/*.tscn"
+  forbiddenPaths:
+    - "scripts/perlin.gd"
+    - "scripts/player.gd"
+    - "scenes/player.tscn"
+  newFiles: []
+apiContracts:
+  - name: "remove_manual_z_index"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+  - name: "setup_ysort_hierarchy"
+    type: "scene_modification"
+    params:
+      - name: "parent_node"
+        type: "YSort"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Player renders behind objects when positioned above them"
+    given: "Player is positioned at Y coordinate greater than object Y coordinate"
+    when: "Player moves behind an object"
+    then: "Object renders on top of player sprite"
+  - id: "AC-002"
+    description: "Player renders in front of objects when positioned below them"
+    given: "Player is positioned at Y coordinate less than object Y coordinate"
+    when: "Player moves in front of an object"
+    then: "Player renders on top of object sprite"
+  - id: "AC-003"
+    description: "All spawnable objects participate in depth sorting"
+    given: "Objects are spawned through object factory"
+    when: "Objects are placed in scene"
+    then: "All objects automatically sort by Y position without manual z_index"
+nonGoals:
+  - "Performance optimization beyond YSort default behavior"
+  - "Object-to-object depth sorting improvements"
+  - "Player movement or collision system changes"
+  - "Terrain/background rendering modifications"
+complexityBudget:
+  maxNewFunctions: 2
+  maxNewFiles: 0
+  maxLinesOfCode: 50
+  maxDependencies: 0

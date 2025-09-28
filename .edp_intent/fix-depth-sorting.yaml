@@ -1,0 +1,48 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "when I go behind the tree, i'm above the tree. The tree is supposed to be above me"
+scope:
+  allowedPaths:
+    - "scenes/perlin.tscn"
+  forbiddenPaths:
+    - "scripts/perlin.gd"
+    - "scripts/player.gd"
+    - "scenes/player.tscn"
+    - "scenes/game.tscn"
+    - "scripts/object_factory.gd"
+  newFiles: []
+apiContracts:
+  - name: "enable_ysort_functionality"
+    type: "scene_modification"
+    params:
+      - name: "object_container"
+        type: "YSort"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Player renders behind objects when positioned behind them"
+    given: "Player Y position is greater than object Y position"
+    when: "Player moves behind an object (higher Y)"
+    then: "Object renders on top of player sprite"
+  - id: "AC-002"
+    description: "Player renders in front of objects when positioned in front of them"
+    given: "Player Y position is less than object Y position"
+    when: "Player moves in front of an object (lower Y)"
+    then: "Player renders on top of object sprite"
+  - id: "AC-003"
+    description: "YSort automatic depth sorting is functional"
+    given: "ObjectContainer is YSort type"
+    when: "Objects and player are children of YSort node"
+    then: "Automatic Y-position based sorting occurs"
+nonGoals:
+  - "Changing camera system or player movement"
+  - "Modifying object spawning mechanics"
+  - "Performance optimization of YSort"
+  - "Custom depth sorting algorithms"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 5
+  maxDependencies: 0

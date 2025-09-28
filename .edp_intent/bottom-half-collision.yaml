@@ -1,0 +1,108 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "move all the collision nodes to the bottom half of the object for all objects"
+scope:
+  allowedPaths:
+    - "scripts/object_factory.gd"
+    - "scenes/buidling_2.tscn"
+  forbiddenPaths:
+    - "scenes/game.tscn"
+    - "scenes/player.tscn"
+    - "scripts/player.gd"
+    - "scripts/perlin.gd"
+    - "scenes/objects/garbage_pile.tscn"
+    - "scenes/objects/barrel_variants.tscn"
+    - "scenes/objects/tree_variants.tscn"
+  newFiles: []
+apiContracts:
+  - name: "create_bottom_collision"
+    type: "function"
+    params:
+      - name: "size"
+        type: "Vector2"
+    returns: "CollisionShape2D"
+    required: true
+  - name: "create_tree_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+      - name: "color_variant"
+        type: "String"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_garbage_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_barrel_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_pallet_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_bin_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_bench_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_default_object"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "All misc objects have bottom-half collision positioning"
+    given: "Factory creates any misc object type"
+    when: "Object collision is inspected"
+    then: "CollisionShape2D position.y equals shape.size.y / 2"
+  - id: "AC-002"
+    description: "Building collision moved to bottom half"
+    given: "Building scene exists"
+    when: "Building collision is inspected"
+    then: "All CollisionShape2D positions adjusted for bottom-half positioning"
+  - id: "AC-003"
+    description: "Utility function handles bottom collision creation"
+    given: "create_bottom_collision function exists"
+    when: "Function called with Vector2 size"
+    then: "Returns CollisionShape2D with bottom-half positioning"
+  - id: "AC-004"
+    description: "Collision functionality remains unchanged"
+    given: "All objects exist in game"
+    when: "Player interacts with objects"
+    then: "Collision detection works exactly as before with bottom positioning"
+nonGoals:
+  - "Modifying collision shape sizes"
+  - "Changing collision detection logic"
+  - "Optimizing collision performance"
+  - "Adding new collision types"
+  - "Modifying visual appearance beyond collision"
+complexityBudget:
+  maxNewFunctions: 1
+  maxNewFiles: 0
+  maxLinesOfCode: 50
+  maxDependencies: 0

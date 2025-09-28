@@ -1,0 +1,68 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T18:30:00Z"
+originalIntent: "Make density control system actually reduce object spawning visibly when changed from 20% to 1% by fixing building spawn rates and ensuring density control affects overall visual density"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+  forbiddenPaths:
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/object_factory.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scenes/"
+    - "assets/"
+  newFiles: []
+apiContracts:
+  - name: "generate_buildings_pass"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+    returns: "Array"
+    required: true
+  - name: "generate_objects_pass"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+      - name: "building_positions"
+        type: "Array"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Building spawn rate aligns with PRD specification"
+    given: "PRD specifies buildings should be very rare (<5%)"
+    when: "Building spawning threshold is adjusted"
+    then: "Buildings spawn at <5% rate, not 25% rate"
+  - id: "AC-002"
+    description: "Density control produces visible changes"
+    given: "Density changed from 20% to 1%"
+    when: "World generation runs multiple times"
+    then: "Clear visual difference in object density between 20% and 1%"
+  - id: "AC-003"
+    description: "Building density control option implemented"
+    given: "Buildings currently ignore density control"
+    when: "Density control system is enhanced"
+    then: "Option to apply density control to buildings available"
+  - id: "AC-004"
+    description: "Overall visual balance maintained"
+    given: "Reduced building and object spawning"
+    when: "World generation completes"
+    then: "World still feels populated but not overcrowded"
+nonGoals:
+  - "New object types or visual changes"
+  - "Performance optimizations"
+  - "Multi-pass architecture changes"
+  - "Building scene modifications"
+  - "Noise layer additions beyond existing system"
+complexityBudget:
+  maxNewFunctions: 2
+  maxNewFiles: 0
+  maxLinesOfCode: 50
+  maxDependencies: 0

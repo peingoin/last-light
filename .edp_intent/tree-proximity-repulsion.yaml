@@ -1,0 +1,59 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T12:00:00Z"
+originalIntent: "there is currently some linear probability thing that makes trees more likely to spawn near buildings. I want it so that trees are less likely to spawn near buildings"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+    - "scripts/spawn_rule_engine.gd"
+  forbiddenPaths:
+    - "scripts/object_factory.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scenes/"
+  newFiles: []
+apiContracts:
+  - name: "calculate_proximity_boost"
+    type: "function"
+    params:
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+      - name: "buildings"
+        type: "Array"
+    returns: "float"
+    required: true
+  - name: "spawn_pass_trees"
+    type: "function"
+    params:
+      - name: "positions"
+        type: "Array"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Trees have reduced spawn probability near buildings"
+    given: "A location within 32 tiles of a building"
+    when: "Tree spawning calculation is performed"
+    then: "Spawn probability is reduced compared to areas far from buildings"
+  - id: "AC-002"
+    description: "Non-tree objects maintain existing proximity behavior"
+    given: "Any non-tree object spawning near buildings"
+    when: "Object spawning calculation is performed"
+    then: "Original proximity boost behavior is preserved"
+  - id: "AC-003"
+    description: "Tree spawning logic uses existing architectural patterns"
+    given: "Existing proximity detection and threshold systems"
+    when: "Tree proximity logic is modified"
+    then: "Same mathematical patterns are reused with inverted values"
+nonGoals:
+  - "Modifying building spawn probability"
+  - "Changing other object type proximities (garbage, barrels, etc.)"
+  - "Optimizing performance or refactoring code structure"
+  - "Adding new proximity detection mechanisms"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 10
+  maxDependencies: 0
