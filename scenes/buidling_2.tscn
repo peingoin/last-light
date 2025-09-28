@@ -529,6 +529,7 @@ size = Vector2(5.75, 84)
 size = Vector2(18, 38)
 
 [node name="buidling2" type="StaticBody2D"]
+z_index = 2
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(2, 1)
