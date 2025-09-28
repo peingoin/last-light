@@ -1,65 +1,22 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=9 format=3 uid="uid://dbnfe5rbtn0vc"]
 
+[ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="Texture2D" uid="uid://b407ipalvrf6u" path="res://assets/Characters(100x100)/Orc/Orc/Orc-Idle.png" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c7g47ul4jt3ti" path="res://scenes/enemies/orc.tscn" id="2_orc"]
-[ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/HealthBar/HealthBar.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="3_lnu2h"]
 [ext_resource type="FontFile" uid="uid://dwdegyba7w14f" path="res://assets/Font/VT323/VT323-Regular.ttf" id="4_lbhrr"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_lbhrr"]
-radius = 7.0
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iywne"]
-atlas = ExtResource("2_yqjtg")
-region = Rect2(0, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p57ef"]
-atlas = ExtResource("2_yqjtg")
-region = Rect2(100, 0, 100, 100)
+[ext_resource type="Texture2D" uid="uid://dobyt11lpisfo" path="res://assets/Item_Icons/Tiny Wonder RPG Icons Pack FREE/free preview.png" id="6_p57ef"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
-atlas = ExtResource("2_yqjtg")
-region = Rect2(200, 0, 100, 100)
+atlas = ExtResource("6_p57ef")
+region = Rect2(16.81281, 32.816788, 14.552509, 14.520523)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gee14"]
-atlas = ExtResource("2_yqjtg")
-region = Rect2(300, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0tnpc"]
-atlas = ExtResource("2_yqjtg")
-region = Rect2(400, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vtaks"]
-atlas = ExtResource("2_yqjtg")
-region = Rect2(500, 0, 100, 100)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kvpfn"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iywne")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p57ef")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u5sy4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gee14")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0tnpc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vtaks")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
+[sub_resource type="AtlasTexture" id="AtlasTexture_p57ef"]
+atlas = ExtResource("6_p57ef")
+region = Rect2(-0.2072525, 16.752626, 16.751667, 15.37929)
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_game")
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(20, 0)
@@ -67,20 +24,9 @@ position = Vector2(20, 0)
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_orc")]
 position = Vector2(-99, -1)
 
-[node name="Orc" type="CharacterBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Orc"]
-position = Vector2(-82, -3)
-shape = SubResource("CircleShape2D_lbhrr")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Orc"]
-position = Vector2(-81, -2)
-sprite_frames = SubResource("SpriteFrames_kvpfn")
-autoplay = "default"
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="UI Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -88,29 +34,69 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HealthBar" parent="CanvasLayer/Control" instance=ExtResource("3_lnu2h")]
+[node name="HealthBar" parent="CanvasLayer/UI Control" instance=ExtResource("3_lnu2h")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.051215276
 anchor_top = 0.9691358
-anchor_right = 0.35677084
-anchor_bottom = 1.0478395
+anchor_right = 0.3246528
+anchor_bottom = 1.0432099
 offset_left = 1.0
 offset_top = -68.0
 offset_right = 1.0
 offset_bottom = -68.0
-grow_vertical = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="CanvasLayer/Control"]
+[node name="Wood Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
+anchors_preset = 0
+offset_left = -30.0
+offset_top = -190.0
+offset_right = 206.0
+offset_bottom = -99.0
+
+[node name="Wood Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Wood Indicator Control"]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.023000002
-anchor_bottom = 0.051000003
-offset_left = 136.0
-offset_top = 466.0
-offset_right = 161.504
-offset_bottom = 497.952
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.5
+offset_right = 42.0
+offset_bottom = 73.0
+grow_horizontal = 2
 theme_override_fonts/font = ExtResource("4_lbhrr")
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 74
 text = "12"
+
+[node name="Wood Icon" type="TextureRect" parent="CanvasLayer/UI Control/HealthBar/Wood Indicator Control"]
+layout_mode = 1
+offset_right = 91.0
+offset_bottom = 71.0
+texture = SubResource("AtlasTexture_u5sy4")
+stretch_mode = 4
+
+[node name="Metal Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
+anchors_preset = 0
+offset_left = -30.0
+offset_top = -104.0
+offset_right = 206.0
+offset_bottom = -13.0
+
+[node name="Metal Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Metal Indicator Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.5
+offset_right = 42.0
+offset_bottom = 73.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_lbhrr")
+theme_override_font_sizes/font_size = 74
+text = "12"
+
+[node name="Metal Icon" type="TextureRect" parent="CanvasLayer/UI Control/HealthBar/Metal Indicator Control"]
+layout_mode = 1
+offset_right = 91.0
+offset_bottom = 71.0
+texture = SubResource("AtlasTexture_p57ef")
+stretch_mode = 4
