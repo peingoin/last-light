@@ -13,9 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="8_textbox"]
 [ext_resource type="PackedScene" path="res://scenes/storm.tscn" id="8_storm"]
-[ext_resource type="PackedScene" uid="uid://b4yj3vwmg5j2x" path="res://scenes/TestNPC.tscn" id="9_testnpc"]
-[ext_resource type="PackedScene" uid="uid://bmachineuid123" path="res://scenes/Machine.tscn" id="10_machine"]
-[ext_resource type="PackedScene" uid="uid://bmachinelifeui" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
+[ext_resource type="PackedScene" uid="uid://gyhj0rm05pfq" path="res://scenes/TestNPC.tscn" id="9_testnpc"]
+[ext_resource type="PackedScene" uid="uid://dqtv01a3a5fqo" path="res://scenes/Machine.tscn" id="10_machine"]
+[ext_resource type="PackedScene" uid="uid://dqtv01ata6ri3" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
 [ext_resource type="TileSet" uid="uid://cthy5whhkciiq" path="res://van_tile_set.tres" id="13_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]

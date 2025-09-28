@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmachineuid123"]
+[gd_scene load_steps=4 format=3 uid="uid://dqtv01a3a5fqo"]
 
 [ext_resource type="Script" path="res://scripts/Machine.gd" id="1_machine"]
 [ext_resource type="Texture2D" path="res://assets/Machine.png" id="2_sprite"]

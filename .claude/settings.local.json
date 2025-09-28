@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scripts/Machine.gd)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scripts/MachineLifeForceUI.gd)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scripts/player.gd)",
+      "Bash(do)",
+      "Bash(if [ ! -f \"$file\" ])",
+      "Bash(then)",
+      "Bash(echo \"Missing file: $file\")"
     ],
     "deny": [],
     "ask": []

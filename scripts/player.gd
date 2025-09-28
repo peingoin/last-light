@@ -67,7 +67,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_interact()
 
 func _handle_interact() -> void:
-	if Dialogue and Dialogue.current_lines.size() > 0:
+	if has_node("/root/Dialogue") and get_node("/root/Dialogue").current_lines.size() > 0:
 		return
 	
 	if closest_interactable:
