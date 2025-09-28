@@ -3,7 +3,9 @@
     "allow": [
       "WebSearch",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(where godot)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
