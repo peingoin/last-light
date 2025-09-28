@@ -1,11 +1,12 @@
 extends CharacterBody2D
 
+
 signal health_changed(new_health)
 signal weapon_equipped(weapon_name)
 signal weapon_unequipped
 
-const speed: float = 400.0
-const accel: float = 2.0
+const speed: float = 150.0
+const accel: float = 1.0
 
 var input: Vector2
 var player_health: int = 5
@@ -40,12 +41,12 @@ func get_input() -> Vector2:
 				animated_sprite.play("run")
 
 	return input.normalized()
-	
-	
 
-func _process(delta: float) -> void:
-	var player_input := get_input()
-	velocity = lerp(velocity, player_input * speed, delta * accel)
+func _process(delta):
+	var player_input = get_input()
+
+	velocity = player_input * speed
+
 	move_and_slide()
 
 	# Handle weapon attack input

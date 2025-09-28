@@ -1,0 +1,49 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "when I go behind the tree, i'm above the tree. The tree is supposed to be above me - collision-based depth sorting system not working"
+scope:
+  allowedPaths:
+    - "scenes/player.tscn"
+    - "scripts/object_factory.gd"
+  forbiddenPaths:
+    - "scenes/game.tscn"
+    - "scenes/perlin.tscn"
+    - "scripts/perlin.gd"
+    - "scripts/player.gd"
+  newFiles: []
+apiContracts:
+  - name: "create_depth_detection_area"
+    type: "function"
+    params:
+      - name: "size"
+        type: "Vector2"
+    returns: "Area2D"
+    required: true
+    modification: "add collision_mask configuration"
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Player collision layer configured for detection"
+    given: "Player CharacterBody2D exists with CollisionShape2D"
+    when: "Player collision_layer is set to 1"
+    then: "Player can be detected by Area2D collision masks"
+  - id: "AC-002"
+    description: "Area2D collision mask configured to detect player"
+    given: "Area2D created for object depth detection"
+    when: "Area2D collision_mask is set to 1"
+    then: "Area2D can detect player body entering/exiting"
+  - id: "AC-003"
+    description: "Depth sorting functions when player moves"
+    given: "Player moving around objects with configured collision layers"
+    when: "Player enters object detection area"
+    then: "Player z_index changes based on Y-position comparison"
+nonGoals:
+  - "Changing existing signal architecture"
+  - "Modifying player movement or camera systems"
+  - "Adding new collision shapes or detection methods"
+  - "Performance optimizations"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 10
+  maxDependencies: 0

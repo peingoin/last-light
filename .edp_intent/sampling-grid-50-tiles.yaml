@@ -1,0 +1,58 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T17:15:00Z"
+originalIntent: "Change sampling grid from every 4 tiles to every 50 tiles to prevent building overlap, since buildings are 150 pixels wide and current 64-pixel spacing causes guaranteed overlap"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+  forbiddenPaths:
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/object_factory.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scenes/"
+    - "assets/"
+  newFiles: []
+apiContracts:
+  - name: "generate_object_layer_multipass"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "50-tile sampling grid prevents overlap"
+    given: "Buildings are 150 pixels wide"
+    when: "Sampling every 50 tiles (800 pixels)"
+    then: "Buildings have 650+ pixels clearance, no overlap possible"
+  - id: "AC-002"
+    description: "Reduced sample position count"
+    given: "256x128 world with 50-tile sampling"
+    when: "Sample positions calculated"
+    then: "~10 total sample positions (5x2 grid)"
+  - id: "AC-003"
+    description: "All object types still spawn"
+    given: "Multi-pass system with 50-tile spacing"
+    when: "World generation runs"
+    then: "Buildings, trees, garbage, props all appear with proper spacing"
+  - id: "AC-004"
+    description: "Buildings spawn at reasonable rate"
+    given: "~10 sample positions, 40% building rate"
+    when: "Multiple world generations"
+    then: "~4 buildings per world, well-spaced"
+nonGoals:
+  - "Spawn frequency changes"
+  - "Exclusion zone modifications"
+  - "Object type additions"
+  - "Performance optimizations"
+  - "Multi-pass architecture changes"
+  - "Building scene modifications"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 5
+  maxDependencies: 0

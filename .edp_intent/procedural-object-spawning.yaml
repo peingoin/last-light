@@ -1,0 +1,107 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "I like Option 3: Multi-Layer Probability Cascade, I want a bias for things, read and follow C:\\Users\\Isabe\\Documents\\Coding Documents\\last-light\\docs\\object_spawning_prd.md like your bible"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/object_factory.gd"
+    - "scripts/interaction_components/"
+    - "scripts/objects/"
+    - "scenes/objects/"
+  forbiddenPaths:
+    - "scripts/player.gd"
+    - "scenes/player.tscn"
+    - "scenes/game.tscn"
+    - "scenes/buidling_2.tscn"
+  newFiles:
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/object_factory.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scripts/objects/base_spawnable_object.gd"
+    - "scenes/objects/garbage_pile.tscn"
+    - "scenes/objects/tree_variants.tscn"
+    - "scenes/objects/barrel_variants.tscn"
+apiContracts:
+  - name: "SpawnRuleEngine"
+    type: "class"
+    params:
+      - name: "bias_config"
+        type: "SpawnBiasConfig"
+      - name: "terrain_context"
+        type: "TerrainContext"
+    returns: "SpawnDecision"
+    required: true
+  - name: "evaluate_spawn_rules"
+    type: "function"
+    params:
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+    returns: "SpawnDecision"
+    required: true
+  - name: "ObjectFactory"
+    type: "class"
+    params:
+      - name: "object_type"
+        type: "String"
+      - name: "position"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+  - name: "TerrainContext"
+    type: "class"
+    params:
+      - name: "position"
+        type: "Vector2"
+      - name: "noise_values"
+        type: "Dictionary"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Buildings spawn at <5% frequency and act as attractors"
+    given: "Procedural world generation runs"
+    when: "Building spawn evaluation occurs"
+    then: "Buildings appear rarely and increase nearby prop density"
+  - id: "AC-002"
+    description: "Trees spawn with biome-specific color variants"
+    given: "Tree spawning in different terrain types"
+    when: "Terrain context analysis runs"
+    then: "Appropriate tree color variant selected based on biome"
+  - id: "AC-003"
+    description: "Bias system allows frequency adjustment"
+    given: "Spawn bias configuration exists"
+    when: "Object spawning evaluation occurs"
+    then: "Object frequencies match configured bias multipliers"
+  - id: "AC-004"
+    description: "Occupancy grid prevents object overlap"
+    given: "Multiple objects spawning in same area"
+    when: "Spawn placement validation occurs"
+    then: "No objects overlap inappropriately"
+  - id: "AC-005"
+    description: "All PRD object types spawn visually"
+    given: "Enhanced object spawning system active"
+    when: "World generation occurs"
+    then: "Garbage piles, trees, barrels, and other props appear with correct visual variety"
+nonGoals:
+  - "Player movement system modifications"
+  - "Building interior functionality"
+  - "Any inventory management functionality"
+  - "Pickup interaction systems"
+  - "Rummage interaction systems"
+  - "Destructible interaction systems"
+  - "Resource drop systems"
+  - "Player interaction detection"
+  - "Save/load system for placed objects"
+  - "Multiplayer synchronization"
+  - "Advanced physics simulations"
+complexityBudget:
+  maxNewFunctions: 10
+  maxNewFiles: 7
+  maxLinesOfCode: 500
+  maxDependencies: 0

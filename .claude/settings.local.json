@@ -1,11 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(where godot)",
-      "Bash(git checkout:*)"
+      "Bash(git pull:*)"
     ],
     "deny": [],
     "ask": []

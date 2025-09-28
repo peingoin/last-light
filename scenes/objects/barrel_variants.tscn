@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx4xas2k7n6va"]
+
+[ext_resource type="Script" path="res://scripts/objects/base_spawnable_object.gd" id="1_3j9k4"]
+[ext_resource type="Texture2D" uid="uid://dm5x48rngt7va1o" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Barrel_rust_red_1.png" id="2_8k3m2"]
+
+[node name="BarrelVariant" type="Node2D"]
+script = ExtResource("1_3j9k4")
+object_type = "barrel"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8k3m2")

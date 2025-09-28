@@ -1,0 +1,102 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "give all objects a collision box (misc objects only, not buildings/player)"
+scope:
+  allowedPaths:
+    - "scripts/object_factory.gd"
+  forbiddenPaths:
+    - "scenes/game.tscn"
+    - "scenes/player.tscn"
+    - "scenes/buidling_2.tscn"
+    - "scripts/player.gd"
+    - "scripts/perlin.gd"
+    - "scenes/objects/garbage_pile.tscn"
+    - "scenes/objects/barrel_variants.tscn"
+    - "scenes/objects/tree_variants.tscn"
+  newFiles: []
+apiContracts:
+  - name: "create_tree_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+      - name: "color_variant"
+        type: "String"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_garbage_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_barrel_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_pallet_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_bin_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_bench_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+  - name: "create_default_object"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "All misc factory objects return StaticBody2D with collision"
+    given: "ObjectFactory creates any misc object type"
+    when: "Object is spawned in game world"
+    then: "Object has StaticBody2D root with CollisionShape2D child"
+  - id: "AC-002"
+    description: "Collision shapes are appropriate rectangular sizes"
+    given: "StaticBody2D misc object exists"
+    when: "Object is inspected for collision"
+    then: "CollisionShape2D contains RectangleShape2D with reasonable dimensions"
+  - id: "AC-003"
+    description: "Building collision remains unchanged"
+    given: "Building objects exist in game"
+    when: "Building is spawned"
+    then: "Building collision system works exactly as before"
+  - id: "AC-004"
+    description: "Player collision remains unchanged"
+    given: "Player exists in game"
+    when: "Player moves around"
+    then: "Player collision works exactly as before"
+nonGoals:
+  - "Modifying building collision systems"
+  - "Changing player collision behavior"
+  - "Optimizing collision performance"
+  - "Adding complex collision shapes"
+  - "Modifying scene files for collision"
+  - "Adding collision layers or masks"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 60
+  maxDependencies: 0

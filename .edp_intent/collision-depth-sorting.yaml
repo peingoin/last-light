@@ -1,0 +1,71 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "when I go behind the tree, i'm above the tree. The tree is supposed to be above me"
+scope:
+  allowedPaths:
+    - "scripts/object_factory.gd"
+    - "scripts/player.gd"
+  forbiddenPaths:
+    - "scenes/player.tscn"
+    - "scenes/game.tscn"
+    - "scenes/perlin.tscn"
+    - "scripts/perlin.gd"
+  newFiles: []
+apiContracts:
+  - name: "add_depth_detection_area"
+    type: "function"
+    params:
+      - name: "object_node"
+        type: "Node2D"
+      - name: "collision_size"
+        type: "Vector2"
+    returns: "Area2D"
+    required: true
+  - name: "handle_area_entered"
+    type: "function"
+    params:
+      - name: "area"
+        type: "Area2D"
+      - name: "object_position"
+        type: "Vector2"
+    returns: "void"
+    required: true
+  - name: "handle_area_exited"
+    type: "function"
+    params:
+      - name: "area"
+        type: "Area2D"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Player renders behind objects when positioned behind them"
+    given: "Player overlaps with object area and player Y > object Y"
+    when: "Player enters object detection area"
+    then: "Player z_index set to 1 (behind object)"
+  - id: "AC-002"
+    description: "Player renders in front of objects when positioned in front"
+    given: "Player overlaps with object area and player Y < object Y"
+    when: "Player enters object detection area"
+    then: "Player z_index set to 3 (in front of object)"
+  - id: "AC-003"
+    description: "Player returns to neutral when not overlapping objects"
+    given: "Player was overlapping object area"
+    when: "Player exits object detection area"
+    then: "Player z_index reset to 2 (neutral)"
+  - id: "AC-004"
+    description: "Performance remains optimal with event-driven updates"
+    given: "Multiple objects with Area2D detection"
+    when: "Player moves around scene"
+    then: "Z-index updates only occur on area enter/exit events"
+nonGoals:
+  - "YSort hierarchy modifications"
+  - "Camera system changes"
+  - "Object-to-object depth sorting"
+  - "Continuous position monitoring"
+complexityBudget:
+  maxNewFunctions: 4
+  maxNewFiles: 0
+  maxLinesOfCode: 100
+  maxDependencies: 0

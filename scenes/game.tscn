@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=15 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c7g47ul4jt3ti" path="res://scenes/enemies/orc.tscn" id="2_orc"]
 [ext_resource type="PackedScene" uid="uid://b8r2hsxdk7k0l" path="res://scenes/spawner.tscn" id="2_spawner"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="3_lnu2h"]
@@ -26,6 +27,9 @@ player_scene = ExtResource("1_uwrxv")
 spawner_scene = ExtResource("2_spawner")
 
 [node name="Storm" parent="." instance=ExtResource("8_storm")]
+
+[node name="Perlin" parent="." instance=ExtResource("1_yqjtg")]
+position = Vector2(-65, -22)
 
 [node name="Spawner" parent="." instance=ExtResource("2_spawner")]
 player_path = NodePath("../Player")
