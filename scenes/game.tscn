@@ -34,8 +34,7 @@ spawner_scene = ExtResource("2_spawner")
 [node name="Storm" parent="." instance=ExtResource("8_storm")]
 
 [node name="Perlin" parent="." instance=ExtResource("1_yqjtg")]
-position = Vector2(-14278, -9260.001)
-rotation = -0.2617994
+position = Vector2(0, 0)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("13_tileset")

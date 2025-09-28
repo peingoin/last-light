@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var storm_radius: float = 100.0
+@export var storm_radius: float = 250.0
 @export var storm_color: Color = Color(0.6, 0.2, 0.8, 0.3)  # Purple with transparency
 @export var storm_border_width: float = 50.0
 @export var storm_damage: int = 1000  # Instant kill damage

@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvsm4c0i2xo8t"]
+[gd_scene load_steps=2 format=3 uid="uid://ci4kx1msqqo0q"]
 
 [ext_resource type="Script" uid="uid://d2ascplibpshi" path="res://scripts/storm.gd" id="1_storm"]
 
