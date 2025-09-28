@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var storm_radius: float = 1000.0
+@export var storm_radius: float = 100.0
 @export var storm_color: Color = Color(0.6, 0.2, 0.8, 0.3)  # Purple with transparency
 @export var storm_border_width: float = 50.0
 @export var storm_damage: int = 1000  # Instant kill damage
@@ -13,8 +13,8 @@ func _ready() -> void:
 	await get_tree().process_frame
 	player = get_tree().get_first_node_in_group("player")
 	if not player:
-		# Fallback: search for player node
-		player = get_node_or_null("../Player")
+		# Fallback: search for player node in new location
+		player = get_node_or_null("../Perlin/ObjectContainer/ObjectLayer/Player")
 
 	if player and not player.is_in_group("player"):
 		player.add_to_group("player")

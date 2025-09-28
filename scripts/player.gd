@@ -45,7 +45,7 @@ func get_input() -> Vector2:
 func _process(delta):
 	var player_input = get_input()
 
-	velocity = lerp(velocity, player_input * speed, delta * accel)
+	velocity = player_input * speed
 
 	move_and_slide()
 
