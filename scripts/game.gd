@@ -4,10 +4,12 @@ extends Node2D
 @export var environment_scene: PackedScene   # e.g. res://scenes/environment.tscn
 @export var spawner_scene: PackedScene       # optional, e.g. res://scenes/spawner.tscn
 
+
 @onready var player = $Player
 @onready var health_bar = $"CanvasLayer/UI Control/HealthBar"
 @onready var wood_label = $"CanvasLayer/UI Control/HealthBar/Wood Indicator Control/Wood Label"
 @onready var metal_label = $"CanvasLayer/UI Control/HealthBar/Metal Indicator Control/Metal Label"
+@onready var textbox = $"CanvasLayer/UI Control/TextBox"
 
 func _ready() -> void:
 	# Wait a frame to ensure all nodes are ready
@@ -18,14 +20,16 @@ func _ready() -> void:
 		health_bar.init_health(player.player_health)
 		
 		# Connect to player's health changes
-		if not player.is_connected("health_changed", _on_player_health_changed):
-			player.connect("health_changed", _on_player_health_changed)
+		if not player.health_changed.is_connected(_on_player_health_changed):
+			player.health_changed.connect(_on_player_health_changed)
 	
 	# Start spawner if it exists
 	if has_node("Spawner"):
 		var spawner = $Spawner
 		if spawner.has_method("spawn_monsters"):
 			spawner.spawn_monsters()
+	
+	
 
 func _spawn_environment() -> void:
 	if environment_scene:
@@ -68,3 +72,4 @@ func add_metal(amount: int):
 	if metal_label:
 		var current_metal = int(metal_label.text)
 		set_metal_count(current_metal + amount)
+

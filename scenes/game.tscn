@@ -1,15 +1,20 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=14 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://b8r2hsxdk7k0l" path="res://scenes/spawner.tscn" id="2_spawner"]
 [ext_resource type="PackedScene" uid="uid://c7g47ul4jt3ti" path="res://scenes/enemies/orc.tscn" id="2_orc"]
+[ext_resource type="PackedScene" uid="uid://b8r2hsxdk7k0l" path="res://scenes/spawner.tscn" id="2_spawner"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="3_lnu2h"]
+[ext_resource type="FontFile" uid="uid://dwdegyba7w14f" path="res://assets/Font/VT323/VT323-Regular.ttf" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://c3og38mfq76d3" path="res://scenes/enemies/zombie_big.tscn" id="5_gee14"]
 [ext_resource type="PackedScene" uid="uid://cp3nsyopw8s8s" path="res://scenes/enemies/zombie_axe.tscn" id="6_0tnpc"]
-[ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
-[ext_resource type="FontFile" uid="uid://dwdegyba7w14f" path="res://assets/Font/VT323/VT323-Regular.ttf" id="4_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://dobyt11lpisfo" path="res://assets/Item_Icons/Tiny Wonder RPG Icons Pack FREE/free preview.png" id="6_p57ef"]
+[ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
+[ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="8_textbox"]
+[ext_resource type="PackedScene" uid="uid://b4yj3vwmg5j2x" path="res://scenes/TestNPC.tscn" id="9_testnpc"]
+[ext_resource type="PackedScene" uid="uid://c2pwf282ejdl5" path="res://village_guard.tscn" id="10_villageguard"]
+[ext_resource type="PackedScene" uid="uid://c4pxf282ejdl6" path="res://scenes/ShopkeeperNPC.tscn" id="11_shopkeeper"]
+[ext_resource type="TileSet" uid="uid://cthy5whhkciiq" path="res://van_tile_set.tres" id="13_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
@@ -24,6 +29,10 @@ script = ExtResource("1_game")
 player_scene = ExtResource("1_uwrxv")
 spawner_scene = ExtResource("2_spawner")
 
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("13_tileset")
+
+
 [node name="Spawner" parent="." instance=ExtResource("2_spawner")]
 player_path = NodePath("../Player")
 monster_scenes = Array[PackedScene]([ExtResource("2_orc"), ExtResource("5_gee14"), ExtResource("6_0tnpc"), ExtResource("7_vtaks")])
@@ -31,6 +40,15 @@ default_radius = 30.0
 default_count = 3
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
+
+[node name="TestNPC" parent="." instance=ExtResource("9_testnpc")]
+position = Vector2(100, 50)
+
+[node name="VillageGuard" parent="." instance=ExtResource("10_villageguard")]
+position = Vector2(200, 50)
+
+[node name="ShopkeeperNPC" parent="." instance=ExtResource("11_shopkeeper")]
+position = Vector2(300, 50)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_orc")]
 position = Vector2(-99, -1)
@@ -53,17 +71,17 @@ anchor_top = 0.9691358
 anchor_right = 0.3246528
 anchor_bottom = 1.0432099
 offset_left = 1.0
-offset_top = -68.0
+offset_top = -598.0
 offset_right = 1.0
-offset_bottom = -68.0
+offset_bottom = -598.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Wood Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
 anchors_preset = 0
 offset_left = -30.0
-offset_top = -190.0
+offset_top = 70.0
 offset_right = 206.0
-offset_bottom = -99.0
+offset_bottom = 161.0
 
 [node name="Wood Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Wood Indicator Control"]
 layout_mode = 1
@@ -87,10 +105,10 @@ stretch_mode = 4
 
 [node name="Metal Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
 anchors_preset = 0
-offset_left = -30.0
-offset_top = -104.0
-offset_right = 206.0
-offset_bottom = -13.0
+offset_left = -31.0
+offset_top = 160.0
+offset_right = 205.0
+offset_bottom = 251.0
 
 [node name="Metal Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Metal Indicator Control"]
 layout_mode = 1
@@ -111,3 +129,6 @@ offset_right = 91.0
 offset_bottom = 71.0
 texture = SubResource("AtlasTexture_p57ef")
 stretch_mode = 4
+
+[node name="TextBox" parent="CanvasLayer/UI Control" instance=ExtResource("8_textbox")]
+visible = false
