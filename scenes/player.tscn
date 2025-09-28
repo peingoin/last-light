@@ -170,4 +170,7 @@ shape = SubResource("CircleShape2D_f1ek2")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 limit_enabled = false
-position_smoothing_speed = 0.5
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+
+[node name="Node2D" type="Node2D" parent="."]
