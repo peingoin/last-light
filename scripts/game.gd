@@ -10,16 +10,22 @@ extends Node2D
 @onready var metal_label = $"CanvasLayer/UI Control/HealthBar/Metal Indicator Control/Metal Label"
 
 func _ready() -> void:
+	# Wait a frame to ensure all nodes are ready
+	await get_tree().process_frame
+	
 	# Initialize health bar with player's max health
-	health_bar.init_health(player.player_health)
+	if health_bar and player:
+		health_bar.init_health(player.player_health)
+		
+		# Connect to player's health changes
+		if not player.is_connected("health_changed", _on_player_health_changed):
+			player.connect("health_changed", _on_player_health_changed)
 	
-	# Connect to player's health changes
-	player.connect("health_changed", _on_player_health_changed)
-	
-	#_spawn_environment()
-	#_spawn_player()
-	#_start_spawner()
-	$Spawner.spawn_monsters()
+	# Start spawner if it exists
+	if has_node("Spawner"):
+		var spawner = $Spawner
+		if spawner.has_method("spawn_monsters"):
+			spawner.spawn_monsters()
 
 func _spawn_environment() -> void:
 	if environment_scene:
@@ -42,18 +48,23 @@ func _start_spawner() -> void:
 			s.start()
 
 func _on_player_health_changed(new_health):
-	health_bar.health = new_health
+	if health_bar:
+		health_bar.health = new_health
 
 func set_wood_count(amount: int):
-	wood_label.text = str(amount)
+	if wood_label:
+		wood_label.text = str(amount)
 
 func set_metal_count(amount: int):
-	metal_label.text = str(amount)
+	if metal_label:
+		metal_label.text = str(amount)
 
 func add_wood(amount: int):
-	var current_wood = int(wood_label.text)
-	set_wood_count(current_wood + amount)
+	if wood_label:
+		var current_wood = int(wood_label.text)
+		set_wood_count(current_wood + amount)
 
 func add_metal(amount: int):
-	var current_metal = int(metal_label.text)
-	set_metal_count(current_metal + amount)
+	if metal_label:
+		var current_metal = int(metal_label.text)
+		set_metal_count(current_metal + amount)

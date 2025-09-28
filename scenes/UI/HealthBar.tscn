@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cckcn2hxkgddw"]
 
-[ext_resource type="Script" uid="uid://bgv5wt0jqlvwk" path="res://healthbar.gd" id="1_ewdeo"]
+[ext_resource type="Script" path="res://scripts/healthbar.gd" id="1_ewdeo"]
 [ext_resource type="Texture2D" uid="uid://8rnqf7k4rvrm" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/UI/HP/HP-Bar.png" id="2_4ljn0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cjc5r"]

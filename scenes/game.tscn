@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://dbnfe5rbtn0vc" path="res://scenes/spawner.tscn" id="2_spawner"]
+[ext_resource type="PackedScene" uid="uid://b8r2hsxdk7k0l" path="res://scenes/spawner.tscn" id="2_spawner"]
 [ext_resource type="PackedScene" uid="uid://c7g47ul4jt3ti" path="res://scenes/enemies/orc.tscn" id="2_orc"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="3_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://c3og38mfq76d3" path="res://scenes/enemies/zombie_big.tscn" id="5_gee14"]
