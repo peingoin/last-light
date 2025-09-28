@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 signal health_changed(new_health)
+signal weapon_equipped(weapon_name)
+signal weapon_unequipped
 
 const speed: float = 400.0
 const accel: float = 2.0
@@ -11,7 +13,11 @@ var player_health: int = 20
 @export var invuln_duration: float = 0.6
 var is_invulnerable: bool = false
 
+# Weapon system variables
+var current_weapon: Node2D = null
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var weapon_slot: Node2D = $WeaponSlot
 
 
 func get_input() -> Vector2:
@@ -41,6 +47,9 @@ func _process(delta: float) -> void:
 	var player_input := get_input()
 	velocity = lerp(velocity, player_input * speed, delta * accel)
 	move_and_slide()
+
+	# Handle weapon attack input
+	handle_weapon_attack()
 
 func can_take_damage() -> bool:
 	# Return TRUE only when the player is NOT invulnerable
@@ -83,3 +92,38 @@ func start_flicker(duration: float) -> void:
 
 	# reset alpha at the end
 	sprite.modulate.a = 1.0
+
+# Weapon management methods
+func equip_weapon(weapon_scene_path: String) -> void:
+	unequip_weapon()  # Remove current weapon if any
+	var weapon_scene = load(weapon_scene_path)
+	if weapon_scene:
+		current_weapon = weapon_scene.instantiate()
+		weapon_slot.add_child(current_weapon)
+		current_weapon.weapon_hit.connect(_on_weapon_hit)
+		current_weapon.equip()
+		weapon_equipped.emit(current_weapon.weapon_name)
+		print("Player equipped weapon: ", current_weapon.weapon_name, " at slot position: ", weapon_slot.position)
+	else:
+		print("Failed to load weapon scene: ", weapon_scene_path)
+
+func unequip_weapon() -> void:
+	if current_weapon:
+		current_weapon.queue_free()
+		current_weapon = null
+		weapon_unequipped.emit()
+
+func handle_weapon_attack() -> void:
+	if Input.is_action_just_pressed("left_click") and current_weapon and current_weapon.can_attack():
+		var attack_direction = get_mouse_attack_direction()
+		current_weapon.attack(attack_direction)
+
+func get_mouse_attack_direction() -> Vector2:
+	var mouse_pos = get_global_mouse_position()
+	var player_pos = global_position
+	return (mouse_pos - player_pos).normalized()
+
+func _on_weapon_hit(enemy, damage: int) -> void:
+	# Handle weapon hit events
+	if enemy.has_method("take_damage"):
+		enemy.call("take_damage", damage)

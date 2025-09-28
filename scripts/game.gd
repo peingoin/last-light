@@ -12,15 +12,18 @@ extends Node2D
 func _ready() -> void:
 	# Wait a frame to ensure all nodes are ready
 	await get_tree().process_frame
-	
+
 	# Initialize health bar with player's max health
 	if health_bar and player:
 		health_bar.init_health(player.player_health)
-		
+
 		# Connect to player's health changes
 		if not player.is_connected("health_changed", _on_player_health_changed):
 			player.connect("health_changed", _on_player_health_changed)
-	
+
+		# Equip weapon after player is ready
+		player.equip_weapon("res://scenes/weapons/iron_sword.tscn")
+
 	# Start spawner if it exists
 	if has_node("Spawner"):
 		var spawner = $Spawner

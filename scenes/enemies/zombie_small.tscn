@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://g0a1vh6i2lf2"]
+[gd_scene load_steps=24 format=3 uid="uid://g0a1vh6i2lf2"]
 
 [ext_resource type="Script" uid="uid://c2t5c2vo0gj4x" path="res://scripts/enemies/zombie_small.gd" id="1_mb1iq"]
 [ext_resource type="Texture2D" uid="uid://cyhom8ly4twot" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Small/Zombie_Small_Side_Idle-Sheet6.png" id="2_cy1wy"]
@@ -138,6 +138,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_lr5g7"]
 radius = 0.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_hurtbox"]
+radius = 8.0
+
 [node name="Zombie_small" type="CharacterBody2D"]
 script = ExtResource("1_mb1iq")
 speed = 80.0
@@ -152,3 +155,11 @@ offset = Vector2(-1.545, -13.805)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, -7)
 shape = SubResource("CircleShape2D_lr5g7")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-1, -16)
+shape = SubResource("CircleShape2D_hurtbox")

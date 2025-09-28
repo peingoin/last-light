@@ -172,6 +172,6 @@ shape = SubResource("CircleShape2D_f1ek2")
 zoom = Vector2(4, 4)
 limit_enabled = false
 position_smoothing_enabled = true
-position_smoothing_speed = 5.0
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="WeaponSlot" type="Node2D" parent="."]
+position = Vector2(-7, -7)

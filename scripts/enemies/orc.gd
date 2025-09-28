@@ -9,6 +9,7 @@ extends CharacterBody2D
 @export var swing_hit_frame: int = 3
 @export var swing_max_distance: float = 15.0
 @export var attack_interrupt_factor: float = 1.25 # leave swing if target gets this far
+@export var enemy_health: float = 20.0
 
 var player: Node2D
 var cooldown_timer := 0.0
@@ -22,6 +23,11 @@ func _ready() -> void:
 	$AnimatedSprite2D.animation_finished.connect(_on_anim_finished)
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AnimatedSprite2D.play("idle")
+
+	# Connect hurtbox for weapon damage
+	if has_node("Hurtbox"):
+		$Hurtbox.area_entered.connect(_on_hurtbox_hit)
+
 	# Make sure "swing" does NOT loop in the SpriteFrames resource (editor).
 
 func _physics_process(delta: float) -> void:
@@ -133,3 +139,20 @@ func pause_for(seconds: float) -> void:
 	$AnimatedSprite2D.play("idle")
 	await get_tree().create_timer(seconds).timeout
 	recovering = false
+
+# Handle weapon damage
+func _on_hurtbox_hit(hitbox: Area2D) -> void:
+	# This will be called when weapon hitbox hits this enemy's hurtbox
+	# The actual damage will be handled by the player's weapon system
+	pass
+
+func take_damage(damage: int) -> void:
+	enemy_health = enemy_health - damage
+	print("Orc health: ", enemy_health)
+	$AnimatedSprite2D.play("hurt")
+	if enemy_health <= 0:
+		die()
+
+func die() -> void:
+	print("Orc died!")
+	queue_free()
