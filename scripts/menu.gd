@@ -11,11 +11,8 @@ func _ready() -> void:
 	quit_btn.pressed.connect(_on_quit)
 
 func _on_play() -> void:
-	# Either use the exported PackedScene...
-	get_tree().change_scene_to_packed(game_scene)
-	# ...or if you prefer a path:
-	# get_tree().change_scene_to_file("res://scenes/game.tscn")
+	# Start the game by loading the van interior first
+	get_tree().change_scene_to_file("res://scenes/VanInterior.tscn")
 
 func _on_quit() -> void:
-	
 	get_tree().quit()

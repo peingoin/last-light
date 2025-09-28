@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://ccwyhu83j70rm"]
+[gd_scene load_steps=38 format=3 uid="uid://ccwyhu83j70rm"]
 
 [ext_resource type="Script" uid="uid://qek86wbpfe1m" path="res://scenes/van_interior.gd" id="1_1rbwi"]
 [ext_resource type="Script" uid="uid://sixh2u2ge1fx" path="res://scripts/MedicNPC.gd" id="1_medic"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://8cgn4wmmpyll" path="res://scenes/van.tscn" id="16_h5usi"]
 [ext_resource type="PackedScene" path="res://scenes/BaseNPC.tscn" id="17_84ysd"]
 [ext_resource type="Texture2D" uid="uid://c2uwolu2cwwk8" path="res://assets/Machine.png" id="18_1rbwi"]
+[ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="19_player"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_medic"]
 size = Vector2(32, 32)
@@ -176,10 +177,6 @@ animations = [{
 size = Vector2(20, 18.489998)
 
 [node name="VanInterior" type="Node2D"]
-script = ExtResource("1_1rbwi")
-target_scene = "uid://dbnfe5rbtn0vc"
-one_shot = null
-delay_seconds = null
 
 [node name="MedicNPC" type="Area2D" parent="."]
 position = Vector2(-90, 227)
@@ -333,6 +330,13 @@ position = Vector2(-58, 173)
 [node name="Sprite2D" type="Sprite2D" parent="BaseNPC"]
 texture = ExtResource("18_1rbwi")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Player" parent="." instance=ExtResource("19_player")]
+position = Vector2(0, 250)
+
+[node name="ExitDoor" type="Area2D" parent="."]
 position = Vector2(-61, 306)
+script = ExtResource("1_1rbwi")
+target_scene = "res://scenes/game.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor"]
 shape = SubResource("RectangleShape2D_84ysd")

@@ -8,7 +8,9 @@
       "Bash(do)",
       "Bash(if [ ! -f \"$file\" ])",
       "Bash(then)",
-      "Bash(echo \"Missing file: $file\")"
+      "Bash(echo \"Missing file: $file\")",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scripts/menu.gd)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scenes/van_interior.gd)"
     ],
     "deny": [],
     "ask": []
