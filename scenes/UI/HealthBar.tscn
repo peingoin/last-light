@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://cckcn2hxkgddw"]
+
+[ext_resource type="Script" uid="uid://bgv5wt0jqlvwk" path="res://healthbar.gd" id="1_ewdeo"]
+[ext_resource type="Texture2D" uid="uid://8rnqf7k4rvrm" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/UI/HP/HP-Bar.png" id="2_4ljn0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cjc5r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbafj"]
+bg_color = Color(0.36465633, 0.6702896, 0.5635393, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ljn0"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="HealthBar" type="ProgressBar"]
+z_index = 1
+offset_left = -1.0
+offset_right = 129.0
+offset_bottom = 14.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_cjc5r")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gbafj")
+value = 90.0
+show_percentage = false
+script = ExtResource("1_ewdeo")
+
+[node name="DamageBar" type="ProgressBar" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_cjc5r")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4ljn0")
+value = 90.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="Border Overlay" type="TextureRect" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -37.0
+offset_top = -15.0
+offset_right = 27.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_4ljn0")
+expand_mode = 1
+stretch_mode = 4
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

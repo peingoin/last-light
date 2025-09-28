@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal health_changed(new_health)
+
 const speed: float = 400.0
 const accel: float = 2.0
 
@@ -49,6 +51,7 @@ func take_damage(damage: int) -> void:
 		return
 
 	player_health -= damage
+	health_changed.emit(player_health)
 	is_invulnerable = true
 
 	# play hit anim immediately
