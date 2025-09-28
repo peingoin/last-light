@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b7gw8r3k5naxa"]
 
 [ext_resource type="Script" path="res://scripts/objects/base_spawnable_object.gd" id="1_2j8k3"]
-[ext_resource type="Texture2D" uid="uid://cl4y38ndf5va1o" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Nature/Green/Tree_1_Spruce_Green.png" id="2_7k2m1"]
+[ext_resource type="Texture2D" uid="uid://cl4y38ndf5va1o" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Nature/Green/Tree_1_Spruce_Green.png" id="2_7k2m1"]
 
 [node name="TreeVariant" type="Node2D"]
 script = ExtResource("1_2j8k3")

@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://dem5xrxb1bguc"]
 
 [ext_resource type="Script" uid="uid://cpkxcy430vadc" path="res://scripts/perlin.gd" id="1_5aqiu"]
-[ext_resource type="Texture2D" uid="uid://crm745q7kfvl4" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Background_Green_TileSet.png" id="2_6gasc"]
-[ext_resource type="Texture2D" uid="uid://dqx1kihnsr752" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Background_Dark-Green_TileSet.png" id="3_4hjkl"]
-[ext_resource type="Texture2D" uid="uid://drqnwww3p6vm1" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Background_Bleak-Yellow_TileSet.png" id="4_2mnop"]
+[ext_resource type="Texture2D" uid="uid://crm745q7kfvl4" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Background_Green_TileSet.png" id="2_6gasc"]
+[ext_resource type="Texture2D" uid="uid://dqx1kihnsr752" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Background_Dark-Green_TileSet.png" id="3_4hjkl"]
+[ext_resource type="Texture2D" uid="uid://drqnwww3p6vm1" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Background_Bleak-Yellow_TileSet.png" id="4_2mnop"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_non4g"]
 texture = ExtResource("2_6gasc")
