@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed: float = 80.0
+@export var speed: float = 50.0
 @export var detect_range: float = 200.0
 @export var attack_range: float = 20.0
 @export var pause_time: float = 0.5
@@ -9,12 +9,16 @@ extends CharacterBody2D
 @export var swing_hit_frame: int = 3
 @export var swing_max_distance: float = 15.0
 @export var attack_interrupt_factor: float = 1.25 # leave swing if target gets this far
+@export var enemy_health: float = 20.0
+@export var knockback_resistance: float = 1.0
 
 var player: Node2D
 var cooldown_timer := 0.0
 var is_attacking := false
 var swing_already_hit := false
 var recovering := false   # <-- new: short pause after a landed hit
+var knockback_velocity := Vector2.ZERO
+var is_dying := false
 
 func _ready() -> void:
 	if get_parent().has_node("Player"):
@@ -22,10 +26,22 @@ func _ready() -> void:
 	$AnimatedSprite2D.animation_finished.connect(_on_anim_finished)
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AnimatedSprite2D.play("idle")
+
+	# Connect hurtbox for weapon damage
+	if has_node("Hurtbox"):
+		$Hurtbox.area_entered.connect(_on_hurtbox_hit)
+
 	# Make sure "swing" does NOT loop in the SpriteFrames resource (editor).
 
 func _physics_process(delta: float) -> void:
-	if player == null:
+	if player == null or is_dying:
+		return
+
+	# Apply knockback velocity and reduce it over time
+	if knockback_velocity != Vector2.ZERO:
+		velocity = knockback_velocity
+		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, 500.0 * delta)
+		move_and_slide()
 		return
 
 	# cooldown tick
@@ -111,6 +127,11 @@ func _on_frame_changed() -> void:
 		await pause_for(pause_time)
 
 func _on_anim_finished(anim_name: String) -> void:
+	# Handle death animation completion
+	if anim_name == "death":
+		queue_free()
+		return
+
 	# Keep this for the case when a swing completes naturally
 	if anim_name == "swing":
 		is_attacking = false
@@ -133,3 +154,36 @@ func pause_for(seconds: float) -> void:
 	$AnimatedSprite2D.play("idle")
 	await get_tree().create_timer(seconds).timeout
 	recovering = false
+
+# Handle weapon damage
+func _on_hurtbox_hit(hitbox: Area2D) -> void:
+	# This will be called when weapon hitbox hits this enemy's hurtbox
+	# The actual damage will be handled by the player's weapon system
+	pass
+
+func take_damage(damage: int) -> void:
+	if is_dying:
+		return
+	enemy_health = enemy_health - damage
+	print("Orc health: ", enemy_health)
+	$AnimatedSprite2D.play("hurt")
+	if enemy_health <= 0:
+		die()
+
+func die() -> void:
+	if is_dying:
+		return
+	print("Orc died!")
+	is_dying = true
+	# Play death animation
+	$AnimatedSprite2D.play("death")
+	# Disable movement and attacking
+	is_attacking = false
+	recovering = true
+	velocity = Vector2.ZERO
+	queue_free()
+
+func apply_knockback(force: float, direction: Vector2) -> void:
+	# Apply knockback based on resistance
+	var actual_force = force / knockback_resistance
+	knockback_velocity = direction * actual_force

@@ -1,0 +1,81 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-27T19:57:00Z"
+originalIntent: "I want perlin noise procedural map generation created with the given assets"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+    - "scenes/perlin.tscn"
+  forbiddenPaths:
+    - "scripts/player.gd"
+    - "scenes/player.tscn"
+    - "scenes/game.tscn"
+    - "docs/prd.md"
+  newFiles:
+    - "scripts/terrain_generator.gd"
+    - "scripts/asset_manager.gd"
+apiContracts:
+  - name: "generate_map"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+      - name: "seed"
+        type: "int"
+    returns: "void"
+    required: true
+  - name: "setup_noise_layers"
+    type: "function"
+    params:
+      - name: "base_frequency"
+        type: "float"
+      - name: "octaves"
+        type: "int"
+    returns: "void"
+    required: true
+  - name: "place_terrain_tile"
+    type: "function"
+    params:
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+      - name: "tile_type"
+        type: "int"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Generate random terrain using perlin noise"
+    given: "A map size and seed value"
+    when: "generate_map function is called"
+    then: "A procedurally generated terrain map is created using perlin noise"
+  - id: "AC-002"
+    description: "Use PostApocalypse assets for terrain"
+    given: "Available PostApocalypse tileset assets"
+    when: "Terrain is generated"
+    then: "Different terrain types use appropriate tilesets (Green, Dark-Green, Bleak-Yellow)"
+  - id: "AC-003"
+    description: "Place random objects on the map"
+    given: "Generated terrain"
+    when: "Object placement phase executes"
+    then: "PostApocalypse objects are randomly distributed across the map"
+  - id: "AC-004"
+    description: "Support map regeneration"
+    given: "An existing generated map"
+    when: "Randomize button is pressed"
+    then: "A new random map is generated with different layout"
+nonGoals:
+  - "Van movement mechanics"
+  - "Survival game logic"
+  - "Interior van systems"
+  - "Player interaction systems"
+  - "Resource management"
+  - "Game progression mechanics"
+complexityBudget:
+  maxNewFunctions: 8
+  maxNewFiles: 2
+  maxLinesOfCode: 300
+  maxDependencies: 1

@@ -1,0 +1,107 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T18:00:00Z"
+originalIntent: "Implement proper Perlin noise-driven object spawning system following PRD requirements with building attractors and contextual object selection, replacing grid-based system"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+  forbiddenPaths:
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/object_factory.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scenes/"
+    - "assets/"
+  newFiles: []
+apiContracts:
+  - name: "generate_object_layer"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+    returns: "void"
+    required: true
+  - name: "generate_buildings_pass"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+    returns: "Array"
+    required: true
+  - name: "generate_objects_pass"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+      - name: "building_positions"
+        type: "Array"
+    returns: "void"
+    required: true
+  - name: "calculate_proximity_boost"
+    type: "function"
+    params:
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+      - name: "buildings"
+        type: "Array"
+    returns: "float"
+    required: true
+  - name: "select_contextual_object"
+    type: "function"
+    params:
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+      - name: "buildings"
+        type: "Array"
+      - name: "noise_value"
+        type: "float"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Objects spawn via noise thresholds not grid sampling"
+    given: "World generation runs"
+    when: "Object spawning system executes"
+    then: "Every tile sampled for noise value, PRD thresholds applied (Buildings: 0.95+, Garbage: 0.6+, Trees: 0.4+, Props: 0.5+)"
+  - id: "AC-002"
+    description: "Building attractors increase nearby object density"
+    given: "Buildings spawn in Pass 1"
+    when: "Pass 2 evaluates positions near buildings"
+    then: "Proximity boost increases spawn probability within 32 tiles of buildings"
+  - id: "AC-003"
+    description: "Contextual object selection based on building proximity"
+    given: "Object meets spawn threshold"
+    when: "Object type selection occurs"
+    then: "Urban objects (garbage_bin, barrel, bench) spawn near buildings, rural objects (tree, pallet) spawn away from buildings"
+  - id: "AC-004"
+    description: "Terrain generation pattern reused for objects"
+    given: "Noise-driven object spawning implementation"
+    when: "Code structure compared to terrain generation"
+    then: "Same for x in range(width): for y in range(height): loop pattern with noise sampling"
+  - id: "AC-005"
+    description: "All object types spawn in same world"
+    given: "Two-pass noise-driven system"
+    when: "World generation completes"
+    then: "Buildings, trees, garbage, barrels, pallets, bins, benches all visible with proper distribution"
+nonGoals:
+  - "New object types beyond PRD specification"
+  - "Visual or asset modifications"
+  - "Performance optimizations beyond basic two-pass requirement"
+  - "Multi-pass system preservation"
+  - "Grid-based sampling retention"
+  - "Spawn frequency tuning beyond PRD thresholds"
+complexityBudget:
+  maxNewFunctions: 5
+  maxNewFiles: 0
+  maxLinesOfCode: 150
+  maxDependencies: 0

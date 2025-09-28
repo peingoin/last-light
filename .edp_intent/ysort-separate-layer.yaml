@@ -1,0 +1,53 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "Implement Option 2: Separate YSort Layer Approach for implementing YSort without breaking camera following. Create separate YSort container at Game level parallel to Player, move object spawning to new layer with proper z_index ordering."
+scope:
+  allowedPaths:
+    - "scenes/game.tscn"
+    - "scripts/perlin.gd"
+    - "scripts/object_factory.gd"
+  forbiddenPaths:
+    - "scenes/player.tscn"
+    - "scripts/player.gd"
+    - "scenes/perlin.tscn" # Only reference, not modify
+  newFiles: []
+apiContracts:
+  - name: "redirect_object_spawning"
+    type: "function"
+    params:
+      - name: "object_container"
+        type: "Node2D"
+    returns: "void"
+    required: true
+  - name: "setup_ysort_layer"
+    type: "function"
+    params: []
+    returns: "Node2D"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Objects are depth-sorted by Y position"
+    given: "Multiple objects spawned at different Y coordinates"
+    when: "Objects are rendered in the scene"
+    then: "Objects with higher Y values appear in front of objects with lower Y values"
+  - id: "AC-002"
+    description: "Camera following remains unaffected"
+    given: "Player moves around the scene"
+    when: "Player position changes"
+    then: "Camera smoothly follows player without disruption or stuttering"
+  - id: "AC-003"
+    description: "Object spawning works with new container"
+    given: "Terrain generation is triggered"
+    when: "Objects are spawned via noise thresholds"
+    then: "Objects appear in the new YSort layer instead of old ObjectContainer"
+nonGoals:
+  - "Modifying player hierarchy or position"
+  - "Changing camera behavior or smoothing settings"
+  - "Restructuring perlin terrain generation logic"
+  - "Performance optimizations beyond YSort"
+complexityBudget:
+  maxNewFunctions: 3
+  maxNewFiles: 0
+  maxLinesOfCode: 50
+  maxDependencies: 0

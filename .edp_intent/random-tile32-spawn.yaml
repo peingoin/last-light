@@ -1,0 +1,50 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T14:00:00Z"
+originalIntent: "i want to add a spawn tile 3.,2 function that runs completely randomly and will override the perline tile that would have been there. This would run after all perlin tiles have been generated. this would beadded at the end of the function before the final return or function."
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+  forbiddenPaths:
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/object_factory.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scenes/"
+  newFiles: []
+apiContracts:
+  - name: "spawn_random_tile32"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Random tile 3,2 spawning function exists"
+    given: "Terrain generation is complete"
+    when: "spawn_random_tile32 is called"
+    then: "Some tiles are randomly replaced with tile 3,2"
+  - id: "AC-002"
+    description: "Function runs after perlin generation"
+    given: "generate_terrain_layer is executing"
+    when: "All perlin tiles are generated"
+    then: "spawn_random_tile32 is called before function ends"
+  - id: "AC-003"
+    description: "Tile 3,2 uses correct atlas coordinates"
+    given: "A position is selected for tile 3,2"
+    when: "Tile placement occurs"
+    then: "tilemap.set_cell uses Vector2i(3, 2) atlas coordinates"
+nonGoals:
+  - "Modifying perlin noise generation logic"
+  - "Changing object spawning systems"
+  - "Performance optimization or caching"
+  - "Configurable probability settings"
+complexityBudget:
+  maxNewFunctions: 1
+  maxNewFiles: 0
+  maxLinesOfCode: 20
+  maxDependencies: 0

@@ -1,0 +1,109 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "move all buildings and miscellaneous items z axis to 2"
+scope:
+  allowedPaths:
+    - "scripts/object_factory.gd"
+    - "scenes/buidling_2.tscn"
+    - "scenes/objects/garbage_pile.tscn"
+    - "scenes/objects/barrel_variants.tscn"
+    - "scenes/objects/tree_variants.tscn"
+  forbiddenPaths:
+    - "scenes/game.tscn"
+    - "scripts/player.gd"
+    - "scripts/perlin.gd"
+    - "scenes/player.tscn"
+    - "scenes/perlin.tscn"
+  newFiles: []
+apiContracts:
+  - name: "create_building_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+  - name: "create_tree_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+      - name: "color_variant"
+        type: "String"
+    returns: "Node2D"
+    required: true
+  - name: "create_garbage_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+  - name: "create_barrel_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+  - name: "create_pallet_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+  - name: "create_bin_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+  - name: "create_bench_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+  - name: "create_default_object"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "All factory-created objects have z_index = 2"
+    given: "ObjectFactory creates any object type"
+    when: "Object is instantiated via factory methods"
+    then: "Object z_index property equals 2"
+  - id: "AC-002"
+    description: "Building scene has z_index = 2"
+    given: "Building scene is loaded and instantiated"
+    when: "Building is placed in game world"
+    then: "Building root node z_index equals 2"
+  - id: "AC-003"
+    description: "All miscellaneous object scenes have z_index = 2"
+    given: "Any object scene file exists"
+    when: "Scene is loaded in Godot editor or game"
+    then: "Root node z_index property equals 2"
+  - id: "AC-004"
+    description: "Player and terrain z_index values remain unchanged"
+    given: "Game scene with player and terrain"
+    when: "Game is running"
+    then: "Player z_index = 1, terrain z_index = -1"
+nonGoals:
+  - "Performance optimization of object spawning"
+  - "Refactoring factory pattern architecture"
+  - "Adding new object types or variants"
+  - "Modifying spawning probability or placement logic"
+  - "UI or visual improvements beyond z_index"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 30
+  maxDependencies: 0

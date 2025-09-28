@@ -1,0 +1,59 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T16:30:00Z"
+originalIntent: "Fix exclusion zone algorithm bug causing only trees to spawn in multi-pass object spawning system"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+  forbiddenPaths:
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/object_factory.gd"
+    - "scripts/terrain_context.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scenes/"
+    - "assets/"
+  newFiles: []
+apiContracts:
+  - name: "mark_exclusion_zone"
+    type: "function"
+    params:
+      - name: "x"
+        type: "int"
+      - name: "y"
+        type: "int"
+      - name: "radius"
+        type: "int"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Buildings mark proper exclusion zones"
+    given: "Building spawns at position with 64 pixel radius"
+    when: "mark_exclusion_zone called"
+    then: "~64 positions marked as occupied in grid pattern"
+  - id: "AC-002"
+    description: "Trees mark proper exclusion zones"
+    given: "Tree spawns at position with 16 pixel radius"
+    when: "mark_exclusion_zone called"
+    then: "~16 positions marked as occupied in grid pattern"
+  - id: "AC-003"
+    description: "All object types spawn together"
+    given: "Multi-pass system runs with fixed exclusion zones"
+    when: "World generation completes"
+    then: "Buildings, trees, garbage, barrels, pallets, bins, and benches all visible"
+  - id: "AC-004"
+    description: "Exclusion zones prevent overlap"
+    given: "Building spawns first"
+    when: "Tree pass runs"
+    then: "Trees do not spawn within building exclusion radius"
+nonGoals:
+  - "Spawn frequency adjustments"
+  - "New object types"
+  - "Performance optimizations"
+  - "Visual improvements"
+  - "Architecture changes"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 10
+  maxDependencies: 0

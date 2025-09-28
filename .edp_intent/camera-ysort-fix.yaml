@@ -1,0 +1,60 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "Fix camera positioning issue after YSort implementation - camera view is wrong despite correct position calculations"
+scope:
+  allowedPaths:
+    - "scenes/game.tscn"
+    - "scenes/perlin.tscn"
+  forbiddenPaths:
+    - "scripts/perlin.gd"
+    - "scripts/player.gd"
+    - "scenes/player.tscn"
+    - "scripts/object_factory.gd"
+  newFiles: []
+apiContracts:
+  - name: "separate_camera_from_ysort"
+    type: "scene_modification"
+    params:
+      - name: "camera_hierarchy"
+        type: "Node2D"
+    returns: "void"
+    required: true
+  - name: "maintain_ysort_functionality"
+    type: "scene_modification"
+    params:
+      - name: "ysort_hierarchy"
+        type: "YSort"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Camera displays correct 4x zoom view of player"
+    given: "Game scene is loaded"
+    when: "Player is positioned in scene"
+    then: "Camera shows 4x zoomed view centered on player"
+  - id: "AC-002"
+    description: "Camera follows player movement smoothly"
+    given: "Player moves around the scene"
+    when: "Player position changes"
+    then: "Camera smoothly follows player with position smoothing"
+  - id: "AC-003"
+    description: "YSort depth sorting continues to work"
+    given: "Player and objects are in scene"
+    when: "Player moves relative to objects"
+    then: "Depth sorting works - player renders behind/in front based on Y position"
+  - id: "AC-004"
+    description: "No hierarchy conflicts between camera and YSort"
+    given: "Camera and YSort systems are both active"
+    when: "Both systems operate simultaneously"
+    then: "No transform interference or positioning conflicts occur"
+nonGoals:
+  - "Changing camera settings (zoom, smoothing speed)"
+  - "Modifying player movement or collision systems"
+  - "Optimizing YSort performance"
+  - "Adding new camera features or functionality"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 20
+  maxDependencies: 0

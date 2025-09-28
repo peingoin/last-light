@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxmw8n3u2l8ya"]
+
+[ext_resource type="Script" path="res://scripts/objects/base_spawnable_object.gd" id="1_1h5l7"]
+[ext_resource type="Texture2D" uid="uid://bde01jj8n3usv" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Garbage-Bin_1.png" id="2_5h9j1"]
+
+[node name="GarbagePile" type="Node2D"]
+script = ExtResource("1_1h5l7")
+object_type = "garbage"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5h9j1")

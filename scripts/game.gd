@@ -14,22 +14,25 @@ extends Node2D
 func _ready() -> void:
 	# Wait a frame to ensure all nodes are ready
 	await get_tree().process_frame
-	
+
 	# Initialize health bar with player's max health
 	if health_bar and player:
 		health_bar.init_health(player.player_health)
-		
+
 		# Connect to player's health changes
 		if not player.health_changed.is_connected(_on_player_health_changed):
 			player.health_changed.connect(_on_player_health_changed)
-	
+
+		# Equip weapon after player is ready
+		if player.has_method("equip_weapon"):
+			player.equip_weapon("res://scenes/weapons/iron_sword.tscn")
+
 	# Start spawner if it exists
 	if has_node("Spawner"):
 		var spawner = $Spawner
-		if spawner.has_method("spawn_monsters"):
-			spawner.spawn_monsters()
-	
-	
+		if spawner.has_method("spawn_monsters") and player:
+			# Spawn monsters around the player
+			spawner.spawn_monsters(player.global_position)
 
 func _spawn_environment() -> void:
 	if environment_scene:
@@ -45,11 +48,7 @@ func _spawn_player() -> void:
 			p.global_position = get_viewport_rect().size / 2
 
 func _start_spawner() -> void:
-	if spawner_scene:
-		var s = spawner_scene.instantiate()
-		add_child(s)
-		if "start" in s:
-			s.start()
+	$Spawner.spawn_monsters()
 
 func _on_player_health_changed(new_health):
 	if health_bar:
@@ -72,4 +71,3 @@ func add_metal(amount: int):
 	if metal_label:
 		var current_metal = int(metal_label.text)
 		set_metal_count(current_metal + amount)
-

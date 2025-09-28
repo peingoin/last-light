@@ -1,0 +1,99 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T12:00:00Z"
+originalIntent: "Add missing PRD prop types (wooden pallets, garbage bins, benches) to ObjectFactory, then implement multi-pass spawning system with equalized tree/prop frequencies and increased building frequency"
+scope:
+  allowedPaths:
+    - "scripts/perlin.gd"
+    - "scripts/spawn_rule_engine.gd"
+    - "scripts/object_factory.gd"
+  forbiddenPaths:
+    - "scripts/terrain_context.gd"
+    - "scripts/spawn_bias_config.gd"
+    - "scripts/objects/"
+    - "scenes/objects/"
+  newFiles: []
+apiContracts:
+  - name: "generate_object_layer_multipass"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+    returns: "void"
+    required: true
+  - name: "spawn_pass_buildings"
+    type: "function"
+    params:
+      - name: "positions"
+        type: "Array"
+    returns: "void"
+    required: true
+  - name: "spawn_pass_trees"
+    type: "function"
+    params:
+      - name: "positions"
+        type: "Array"
+    returns: "void"
+    required: true
+  - name: "spawn_pass_props"
+    type: "function"
+    params:
+      - name: "positions"
+        type: "Array"
+    returns: "void"
+    required: true
+  - name: "create_pallet_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+  - name: "create_bin_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+  - name: "create_bench_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+    returns: "Node2D"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "All PRD object types spawn in same world"
+    given: "World generation runs with multi-pass system"
+    when: "Different spawn passes execute"
+    then: "Buildings, trees, garbage piles, barrels, wooden pallets, garbage bins, and benches all appear in same generated world"
+  - id: "AC-002"
+    description: "Buildings claim exclusion zones"
+    given: "Building spawns in pass 1"
+    when: "Subsequent passes evaluate same area"
+    then: "Other objects respect building exclusion radius"
+  - id: "AC-003"
+    description: "Adjusted frequency ratios implemented"
+    given: "Multi-pass system active"
+    when: "Multiple worlds generated"
+    then: "Buildings spawn much more frequently (30-40%), trees spawn at exactly same frequency as props (barrels, pallets, bins)"
+  - id: "AC-004"
+    description: "Performance maintained"
+    given: "Multi-pass system vs single-pass"
+    when: "World generation time measured"
+    then: "Generation time increases by <50%"
+nonGoals:
+  - "Interaction system changes (pickup, rummage, destructible)"
+  - "Player movement or mechanics changes"
+  - "New asset creation or modification"
+  - "Bias system logic changes"
+  - "Performance optimizations beyond basic multi-pass requirement"
+complexityBudget:
+  maxNewFunctions: 8
+  maxNewFiles: 0
+  maxLinesOfCode: 250
+  maxDependencies: 0
