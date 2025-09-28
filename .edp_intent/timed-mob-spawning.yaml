@@ -1,0 +1,54 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "make it spawn mobs around the player every 10 seconds"
+scope:
+  allowedPaths:
+    - "scripts/spawner.gd"
+    - "scripts/game.gd"
+    - "scenes/spawner.tscn"
+  forbiddenPaths:
+    - "scripts/enemies/"
+    - "scripts/terrainGeneration/"
+    - "assets/"
+  newFiles: []
+apiContracts:
+  - name: "start_timed_spawning"
+    type: "function"
+    params:
+      - name: "interval"
+        type: "float"
+    returns: "void"
+    required: true
+  - name: "_on_spawn_timer_timeout"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Mobs spawn around player every 10 seconds"
+    given: "Game is running with player active"
+    when: "10 seconds have elapsed since last spawn"
+    then: "New mobs appear in circle around player position"
+  - id: "AC-002"
+    description: "Map-wide spawning is replaced with timed spawning"
+    given: "Game starts"
+    when: "Spawning system initializes"
+    then: "No immediate mass spawning occurs, timer starts instead"
+  - id: "AC-003"
+    description: "Spawning continues throughout gameplay"
+    given: "Player is alive and game is active"
+    when: "Timer reaches 10-second intervals repeatedly"
+    then: "Mobs continue spawning around current player position"
+nonGoals:
+  - "Performance optimization beyond basic timer implementation"
+  - "Advanced mob AI improvements"
+  - "Complex spawn positioning algorithms"
+  - "Dynamic spawn rate adjustment"
+  - "Mob despawning or cleanup systems"
+complexityBudget:
+  maxNewFunctions: 3
+  maxNewFiles: 0
+  maxLinesOfCode: 50
+  maxDependencies: 0

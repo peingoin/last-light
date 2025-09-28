@@ -34,12 +34,10 @@ func _ready() -> void:
 		# Equip weapon after player is ready
 		player.equip_weapon("res://scenes/weapons/iron_sword.tscn")
 
-	# Start spawner if it exists
+	# Start spawner if it exists (timer will handle spawning automatically)
 	if has_node("Spawner"):
 		var spawner = $Spawner
-		if spawner.has_method("spawn_monsters") and player:
-			# Spawn monsters around the player
-			spawner.spawn_monsters(player.global_position)
+		# Timer-based spawning starts automatically in spawner._ready()
 
 func _spawn_environment() -> void:
 	if environment_scene:
