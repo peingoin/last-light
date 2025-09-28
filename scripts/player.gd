@@ -8,7 +8,7 @@ const speed: float = 400.0
 const accel: float = 2.0
 
 var input: Vector2
-var player_health: int = 20
+var player_health: int = 5
 
 @export var invuln_duration: float = 0.6
 var is_invulnerable: bool = false
@@ -61,6 +61,12 @@ func take_damage(damage: int) -> void:
 
 	player_health -= damage
 	health_changed.emit(player_health)
+
+	# Check if player died
+	if player_health <= 0:
+		die()
+		return
+
 	is_invulnerable = true
 
 	# play hit anim immediately
@@ -129,3 +135,49 @@ func _on_weapon_hit(enemy, damage: int, knockback_force: float, knockback_direct
 		enemy.call("take_damage", damage)
 	if enemy.has_method("apply_knockback"):
 		enemy.call("apply_knockback", knockback_force, knockback_direction)
+
+func die() -> void:
+	print("Player died!")
+	# Disable player movement and input
+	set_physics_process(false)
+	set_process(false)
+
+	# Play death animation if available, otherwise show hit animation
+	animated_sprite.play("hit")
+
+	# Create death message UI
+	show_death_message()
+
+	# Wait a moment for visual feedback
+	await get_tree().create_timer(3.0).timeout
+
+	# Return to main menu
+	get_tree().change_scene_to_file("res://scenes/menu.tscn")
+
+func show_death_message() -> void:
+	# Create a CanvasLayer for the death message overlay
+	var death_overlay = CanvasLayer.new()
+	death_overlay.layer = 100  # Ensure it's on top of everything
+	get_tree().current_scene.add_child(death_overlay)
+
+	# Create a ColorRect for dark background
+	var background = ColorRect.new()
+	background.color = Color(0, 0, 0, 0.7)  # Semi-transparent black
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	death_overlay.add_child(background)
+
+	# Create the death message label
+	var death_label = Label.new()
+	death_label.text = "YOU DIED"
+	death_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	death_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	death_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+
+	# Set large red text
+	death_label.add_theme_font_size_override("font_size", 72)
+	death_label.add_theme_color_override("font_color", Color.RED)
+	death_label.add_theme_color_override("font_shadow_color", Color.BLACK)
+	death_label.add_theme_constant_override("shadow_offset_x", 4)
+	death_label.add_theme_constant_override("shadow_offset_y", 4)
+
+	death_overlay.add_child(death_label)

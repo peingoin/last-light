@@ -6,33 +6,33 @@
 [ext_resource type="Texture2D" uid="uid://c1atdbrpveo1d" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Big/Zombie_Big_Down_Walk-Sheet8.png" id="4_k83td"]
 [ext_resource type="Texture2D" uid="uid://mbchkgdgcc0p" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Big/Zombie_Big_Side_First-Death-Sheet7.png" id="5_death1"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_death1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_upgf5"]
 atlas = ExtResource("5_death1")
-region = Rect2(0, 0, 16, 22)
+region = Rect2(0, 0, 29, 23)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_death2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bqvo"]
 atlas = ExtResource("5_death1")
-region = Rect2(16, 0, 16, 22)
+region = Rect2(29, 0, 29, 23)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_death3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_43r3m"]
 atlas = ExtResource("5_death1")
-region = Rect2(32, 0, 16, 22)
+region = Rect2(58, 0, 29, 23)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_death4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwbw5"]
 atlas = ExtResource("5_death1")
-region = Rect2(48, 0, 16, 22)
+region = Rect2(87, 0, 29, 23)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_death5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mmo0"]
 atlas = ExtResource("5_death1")
-region = Rect2(64, 0, 16, 22)
+region = Rect2(116, 0, 29, 23)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_death6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb03c"]
 atlas = ExtResource("5_death1")
-region = Rect2(80, 0, 16, 22)
+region = Rect2(145, 0, 29, 23)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_death7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o43m"]
 atlas = ExtResource("5_death1")
-region = Rect2(96, 0, 16, 22)
+region = Rect2(174, 0, 29, 23)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_af0k6"]
 atlas = ExtResource("1_wgty3")
@@ -154,25 +154,25 @@ region = Rect2(112, 0, 16, 24)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_death1")
+"texture": SubResource("AtlasTexture_upgf5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_death2")
+"texture": SubResource("AtlasTexture_6bqvo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_death3")
+"texture": SubResource("AtlasTexture_43r3m")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_death4")
+"texture": SubResource("AtlasTexture_iwbw5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_death5")
+"texture": SubResource("AtlasTexture_7mmo0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_death6")
+"texture": SubResource("AtlasTexture_cb03c")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_death7")
+"texture": SubResource("AtlasTexture_8o43m")
 }],
 "loop": false,
 "name": &"death",
@@ -292,7 +292,7 @@ script = ExtResource("1_k83td")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_b5xhy")
-animation = &"swing"
+animation = &"death"
 autoplay = "idle"
 offset = Vector2(-1.545, -13.805)
 

@@ -1,10 +1,34 @@
-[gd_scene load_steps=37 format=3 uid="uid://cp3nsyopw8s8s"]
+[gd_scene load_steps=38 format=3 uid="uid://cp3nsyopw8s8s"]
 
 [ext_resource type="Script" uid="uid://cfd65hgmv2r61" path="res://scripts/enemies/zombie_axe.gd" id="1_mqi2r"]
 [ext_resource type="Texture2D" uid="uid://8emrs06q8tni" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Axe/Zombie_Axe_Side-left_Idle-Sheet6.png" id="1_wgty3"]
 [ext_resource type="Texture2D" uid="uid://cy0c31df8qnvq" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Axe/Zombie_Axe_Side-left_Second-Attack-Sheet9.png" id="2_mb1iq"]
+[ext_resource type="Texture2D" uid="uid://bspd16fd4l4xa" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Axe/Zombie_Axe_Side-left_First-Death-Sheet6.png" id="2_pvshg"]
 [ext_resource type="Texture2D" uid="uid://muk435tfjjin" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Axe/Zombie_Axe_Side_Walk-Sheet8.png" id="3_y4bo2"]
-[ext_resource type="Texture2D" uid="uid://cv0itryhh5w2o" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Axe/Zombie_Axe_Side_First-Death-Sheet6.png" id="4_death1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e08w3"]
+atlas = ExtResource("2_pvshg")
+region = Rect2(0, 0, 27, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vjo0"]
+atlas = ExtResource("2_pvshg")
+region = Rect2(27, 0, 27, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlg8b"]
+atlas = ExtResource("2_pvshg")
+region = Rect2(54, 0, 27, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c1aii"]
+atlas = ExtResource("2_pvshg")
+region = Rect2(81, 0, 27, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfrlw"]
+atlas = ExtResource("2_pvshg")
+region = Rect2(108, 0, 27, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0yna"]
+atlas = ExtResource("2_pvshg")
+region = Rect2(135, 0, 27, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5yfcw"]
 atlas = ExtResource("1_wgty3")
@@ -98,32 +122,31 @@ region = Rect2(126, 0, 21, 19)
 atlas = ExtResource("3_y4bo2")
 region = Rect2(147, 0, 21, 19)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_death1"]
-atlas = ExtResource("4_death1")
-region = Rect2(0, 0, 22, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_death2"]
-atlas = ExtResource("4_death1")
-region = Rect2(22, 0, 22, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_death3"]
-atlas = ExtResource("4_death1")
-region = Rect2(44, 0, 22, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_death4"]
-atlas = ExtResource("4_death1")
-region = Rect2(66, 0, 22, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_death5"]
-atlas = ExtResource("4_death1")
-region = Rect2(88, 0, 22, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_death6"]
-atlas = ExtResource("4_death1")
-region = Rect2(110, 0, 22, 18)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_b5xhy"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e08w3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vjo0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlg8b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c1aii")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfrlw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0yna")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5yfcw")
@@ -207,29 +230,6 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 7.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_death1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_death2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_death3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_death4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_death5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_death6")
-}],
-"loop": false,
-"name": &"death",
-"speed": 8.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lr5g7"]
@@ -237,14 +237,13 @@ radius = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hurtbox"]
 
-[node name="Orc" type="CharacterBody2D"]
+[node name="Orc2" type="CharacterBody2D"]
 script = ExtResource("1_mqi2r")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_b5xhy")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
-frame_progress = 0.85511124
 offset = Vector2(-1.545, -13.805)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
