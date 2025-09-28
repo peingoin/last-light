@@ -26,6 +26,21 @@ var bias_config: SpawnBiasConfig
 func _init(config: SpawnBiasConfig):
 	bias_config = config
 
+func safe_load_texture(path: String) -> Texture2D:
+	var texture = load(path)
+	if texture and texture is Texture2D and texture.get_width() > 0 and texture.get_height() > 0:
+		return texture
+	else:
+		print("Failed to load or invalid texture: ", path)
+		return null
+
+func create_fallback_rect(sprite: Sprite2D, size: Vector2, color: Color):
+	var image = Image.create(int(size.x), int(size.y), false, Image.FORMAT_RGB8)
+	image.fill(color)
+	var texture = ImageTexture.new()
+	texture.set_image(image)
+	sprite.texture = texture
+
 static func create_bottom_collision(size: Vector2) -> CollisionShape2D:
 	var collision = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
@@ -71,10 +86,13 @@ func create_tree_visual(pos: Vector2, color_variant: String, player: Node = null
 	var collision = create_bottom_collision(TREE_COLLISION_SIZE)
 	tree.add_child(collision)
 
-
 	var sprite = Sprite2D.new()
-	var tree_path = "res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Nature/" + color_variant + "/Tree_1_Spruce_" + color_variant + ".png"
-	sprite.texture = load(tree_path)
+	var tree_path = "res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Nature/" + color_variant + "/Tree_1_Spruce_" + color_variant + ".png"
+	var texture = safe_load_texture(tree_path)
+	if texture:
+		sprite.texture = texture
+	else:
+		create_fallback_rect(sprite, TREE_SPRITE_SIZE, Color.DARK_GREEN)
 	tree.add_child(sprite)
 
 	return tree
@@ -86,9 +104,12 @@ func create_garbage_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var collision = create_bottom_collision(GARBAGE_COLLISION_SIZE)
 	garbage.add_child(collision)
 
-
 	var sprite = Sprite2D.new()
-	sprite.texture = load("res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Garbage-Bin_1.png")
+	var texture = safe_load_texture("res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Garbage-Bin_1.png")
+	if texture:
+		sprite.texture = texture
+	else:
+		create_fallback_rect(sprite, GARBAGE_SPRITE_SIZE, Color.BROWN)
 	garbage.add_child(sprite)
 
 	return garbage
@@ -100,9 +121,12 @@ func create_barrel_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var collision = create_bottom_collision(BARREL_COLLISION_SIZE)
 	barrel.add_child(collision)
 
-
 	var sprite = Sprite2D.new()
-	sprite.texture = load("res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Barrel_rust_red_1.png")
+	var texture = safe_load_texture("res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Barrel_rust_red_1.png")
+	if texture:
+		sprite.texture = texture
+	else:
+		create_fallback_rect(sprite, BARREL_SPRITE_SIZE, Color.ORANGE_RED)
 	barrel.add_child(sprite)
 
 	return barrel
@@ -114,10 +138,13 @@ func create_pallet_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var collision = create_bottom_collision(PALLET_COLLISION_SIZE)
 	pallet.add_child(collision)
 
-
 	var sprite = Sprite2D.new()
 	var pallet_variant = randi() % 2 + 1  # Choose between Pallet_1 and Pallet_2
-	sprite.texture = load("res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Pallet_" + str(pallet_variant) + ".png")
+	var texture = safe_load_texture("res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Pallet_" + str(pallet_variant) + ".png")
+	if texture:
+		sprite.texture = texture
+	else:
+		create_fallback_rect(sprite, PALLET_SPRITE_SIZE, Color.SADDLE_BROWN)
 	pallet.add_child(sprite)
 
 	return pallet
@@ -129,10 +156,13 @@ func create_bin_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var collision = create_bottom_collision(BIN_COLLISION_SIZE)
 	bin.add_child(collision)
 
-
 	var sprite = Sprite2D.new()
 	var bin_variant = randi() % 4 + 1  # Choose between Garbage-Bin_1 through Garbage-Bin_4
-	sprite.texture = load("res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Garbage-Bin_" + str(bin_variant) + ".png")
+	var texture = safe_load_texture("res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Garbage-Bin_" + str(bin_variant) + ".png")
+	if texture:
+		sprite.texture = texture
+	else:
+		create_fallback_rect(sprite, BIN_SPRITE_SIZE, Color.GRAY)
 	bin.add_child(sprite)
 
 	return bin
@@ -144,14 +174,19 @@ func create_bench_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var collision = create_bottom_collision(BENCH_COLLISION_SIZE)
 	bench.add_child(collision)
 
-
 	var sprite = Sprite2D.new()
 	var is_overgrown = randi() % 2 == 0  # 50% chance for overgrown
+	var texture: Texture2D
 
 	if is_overgrown:
-		sprite.texture = load("res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Bench_2_down_Overgrown_Green.png")
+		texture = safe_load_texture("res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Bench_2_down_Overgrown_Green.png")
 	else:
-		sprite.texture = load("res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Bench_1_down.png")
+		texture = safe_load_texture("res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Bench_1_down.png")
+
+	if texture:
+		sprite.texture = texture
+	else:
+		create_fallback_rect(sprite, BENCH_SPRITE_SIZE, Color.SANDY_BROWN)
 
 	bench.add_child(sprite)
 

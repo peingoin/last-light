@@ -5,7 +5,7 @@ var map_height = 500
 
 @onready var tilemap: TileMapLayer = $TileMapLayer
 @onready var object_container: Node2D = $ObjectContainer
-@onready var object_layer: Node2D = get_node("../ObjectLayer")
+@onready var object_layer: Node2D = $ObjectContainer
 
 # Multi-layer noise system
 var base_noise: FastNoiseLite
