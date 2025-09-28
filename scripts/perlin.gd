@@ -1,7 +1,7 @@
 extends Node2D
 
-var map_width = 256
-var map_height = 128
+var map_width = 1000
+var map_height = 1000
 
 @onready var tilemap: TileMapLayer = $TileMapLayer
 @onready var object_container: Node2D = $ObjectContainer
