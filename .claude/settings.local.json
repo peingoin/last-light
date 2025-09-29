@@ -10,7 +10,19 @@
       "Bash(then)",
       "Bash(echo \"Missing file: $file\")",
       "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scripts/menu.gd)",
-      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scenes/van_interior.gd)"
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scenes/van_interior.gd)",
+      "mcp__ct-devmcp__do_dis",
+      "mcp__ct-devmcp__do_ide",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "WebSearch",
+      "mcp__ct-devmcp__do_pla",
+      "Bash(mkdir:*)",
+      "mcp__ct-devmcp__do_bld",
+      "mcp__ct-devmcp__do_trace",
+      "mcp__ct-devmcp__do_fix",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

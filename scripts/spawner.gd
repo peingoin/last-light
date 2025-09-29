@@ -14,12 +14,31 @@ extends Node2D
 @export var radial_thickness: float = 0.0
 @export var spawn_parent_path: NodePath      # optional target container (e.g., "Enemies")
 
+# --- Map-wide spawning settings ---
+@export var map_spawn_count: int = 2844      # Number of monsters to spawn across the map (1 every ~150px)
+@export var map_width: float = 8000.0        # Map width in pixels (500 tiles * 16 pixels/tile)
+@export var map_height: float = 8000.0       # Map height in pixels (500 tiles * 16 pixels/tile)
+@export var min_distance_from_player: float = 300.0  # Minimum distance from player to spawn
+
 var _rng := RandomNumberGenerator.new()
 var _player: Node2D = null
+var spawn_timer: Timer
 
 func _ready() -> void:
 	_rng.randomize()
 	_resolve_player()
+	setup_spawn_timer()
+
+func setup_spawn_timer() -> void:
+	spawn_timer = Timer.new()
+	spawn_timer.wait_time = 10.0
+	spawn_timer.autostart = true
+	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
+	add_child(spawn_timer)
+
+func _on_spawn_timer_timeout() -> void:
+	if _player:
+		spawn_monsters(_player.global_position, 8)
 
 func _resolve_player() -> void:
 	# 1) Inspector path
@@ -95,6 +114,61 @@ func spawn_monsters(center: Vector2 = global_position, count: int = default_coun
 				mob.look_at(center)
 		elif mob.has_method("set_global_position"):
 			mob.set_global_position(pos)
+
+		parent.add_child(mob)
+		spawned.append(mob)
+
+	return spawned
+
+## Spawns random monsters across the entire map
+## Returns an array of the spawned nodes.
+func spawn_monsters_across_map(count: int = map_spawn_count) -> Array:
+	print("spawning ", count, " monsters across the map")
+	var spawned: Array = []
+	var parent := _resolve_spawn_parent()
+
+	if monster_scenes.is_empty():
+		push_warning("Spawner: monster_scenes is empty; nothing to spawn.")
+		return spawned
+	if count <= 0:
+		return spawned
+
+	var player_pos := Vector2.ZERO
+	if _player:
+		player_pos = _player.global_position
+
+	# Spawn monsters at random positions across the map
+	for i in count:
+		var attempts = 0
+		var max_attempts = 20
+		var spawn_pos: Vector2
+
+		# Try to find a valid spawn position (not too close to player)
+		while attempts < max_attempts:
+			spawn_pos = Vector2(
+				_rng.randf_range(0, map_width),
+				_rng.randf_range(0, map_height)
+			)
+
+			# Check if position is far enough from player
+			if _player == null or spawn_pos.distance_to(player_pos) >= min_distance_from_player:
+				break
+
+			attempts += 1
+
+		# If we couldn't find a good position after max attempts, use the last generated one
+		if attempts >= max_attempts:
+			print("Warning: Could not find ideal spawn position for monster ", i, ", using fallback position")
+
+		# Pick a random monster type
+		var scene: PackedScene = monster_scenes[_rng.randi_range(0, monster_scenes.size() - 1)]
+		var mob := scene.instantiate()
+
+		# Set position
+		if mob is Node2D:
+			mob.global_position = spawn_pos
+		elif mob.has_method("set_global_position"):
+			mob.set_global_position(spawn_pos)
 
 		parent.add_child(mob)
 		spawned.append(mob)

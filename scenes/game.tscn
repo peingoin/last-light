@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cp3nsyopw8s8s" path="res://scenes/enemies/zombie_axe.tscn" id="6_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dobyt11lpisfo" path="res://assets/Item_Icons/Tiny Wonder RPG Icons Pack FREE/free preview.png" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
-[ext_resource type="PackedScene" uid="uid://ci4kx1msqqo0q" path="res://scenes/storm.tscn" id="8_storm"]
+[ext_resource type="PackedScene" uid="uid://bvsm4c0i2xo8t" path="res://scenes/storm.tscn" id="8_storm"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="8_textbox"]
 [ext_resource type="PackedScene" path="res://scenes/Machine.tscn" id="10_machine"]
 [ext_resource type="PackedScene" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
@@ -33,6 +33,8 @@ spawner_scene = ExtResource("2_spawner")
 [node name="Storm" parent="." instance=ExtResource("8_storm")]
 
 [node name="Perlin" parent="." instance=ExtResource("1_yqjtg")]
+position = Vector2(-750, -750)
+rotation = 0
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("13_tileset")
@@ -134,3 +136,40 @@ layout_mode = 1
 [node name="MachineLifeForceUI" parent="CanvasLayer/UI Control" instance=ExtResource("11_machineui")]
 layout_mode = 0
 anchors_preset = 0
+
+[node name="LoadingScreen" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="CanvasLayer/LoadingScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="LoadingLabel" type="Label" parent="CanvasLayer/LoadingScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -37.0
+offset_right = 50.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_lbhrr")
+theme_override_font_sizes/font_size = 48
+text = "Loading..."
+horizontal_alignment = 1
+vertical_alignment = 1

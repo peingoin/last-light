@@ -1,0 +1,40 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "I want to add text at the top of the menu screen that says last light"
+scope:
+  allowedPaths:
+    - "scenes/menu.tscn"
+  forbiddenPaths:
+    - "scripts/menu.gd"
+    - "scenes/game.tscn"
+    - "project.godot"
+  newFiles: []
+apiContracts: []
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Title text displays at top of menu"
+    given: "User launches the game"
+    when: "Menu screen appears"
+    then: "Text 'last light' is visible at the top of the menu"
+  - id: "AC-002"
+    description: "Menu functionality preserved"
+    given: "Title text is added"
+    when: "User clicks PLAY or QUIT buttons"
+    then: "Menu buttons work exactly as before"
+  - id: "AC-003"
+    description: "Text positioning is appropriate"
+    given: "Title text is added"
+    when: "Menu is displayed"
+    then: "Text appears above existing buttons with proper spacing"
+nonGoals:
+  - "Custom font theming"
+  - "Text animations or effects"
+  - "Menu layout restructuring"
+  - "Additional menu options"
+  - "Complex styling or themes"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 10
+  maxDependencies: 0

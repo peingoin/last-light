@@ -10,10 +10,20 @@ extends Node2D
 @onready var wood_label = $"CanvasLayer/UI Control/HealthBar/Wood Indicator Control/Wood Label"
 @onready var metal_label = $"CanvasLayer/UI Control/HealthBar/Metal Indicator Control/Metal Label"
 @onready var textbox = $"CanvasLayer/UI Control/TextBox"
+@onready var loading_screen = $"CanvasLayer/LoadingScreen"
 
 func _ready() -> void:
+	# Show loading screen immediately when game scene loads
+	show_loading_screen()
+
 	# Wait a frame to ensure all nodes are ready
 	await get_tree().process_frame
+
+	# Start map generation now that loading screen is visible
+	if has_node("Perlin"):
+		var perlin = $Perlin
+		if perlin.has_method("start_map_generation"):
+			perlin.start_map_generation()
 
 	# Initialize health bar with player's max health
 	if health_bar and player:
@@ -27,12 +37,10 @@ func _ready() -> void:
 		if player.has_method("equip_weapon"):
 			player.equip_weapon("res://scenes/weapons/iron_sword.tscn")
 
-	# Start spawner if it exists
+	# Start spawner if it exists (timer will handle spawning automatically)
 	if has_node("Spawner"):
 		var spawner = $Spawner
-		if spawner.has_method("spawn_monsters") and player:
-			# Spawn monsters around the player
-			spawner.spawn_monsters(player.global_position)
+		# Timer-based spawning starts automatically in spawner._ready()
 
 func _spawn_environment() -> void:
 	if environment_scene:
@@ -71,3 +79,11 @@ func add_metal(amount: int):
 	if metal_label:
 		var current_metal = int(metal_label.text)
 		set_metal_count(current_metal + amount)
+
+func show_loading_screen():
+	if loading_screen:
+		loading_screen.visible = true
+
+func hide_loading_screen():
+	if loading_screen:
+		loading_screen.visible = false

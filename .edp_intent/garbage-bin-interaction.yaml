@@ -1,0 +1,81 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "I want to set up an interaction system so that when I press the E key while looking at the garbage bin in my game, it triggers an interaction event. The garbage bin should be a recognized interactable object, and pressing E should allow the player to interact with it to collect 6-10 total resources (wood + steel combined). The system should be extensible for other interactable objects in the future."
+
+scope:
+  allowedPaths:
+    - "project.godot"
+    - "scripts/player.gd"
+    - "scripts/terrainGeneration/objects/base_spawnable_object.gd"
+    - "scripts/terrainGeneration/object_factory.gd"
+    - "scenes/objects/garbage_pile.tscn"
+  forbiddenPaths:
+    - "scripts/enemies/"
+    - "scripts/weapons/"
+    - "scenes/UI/"
+    - "scripts/healthbar.gd"
+  newFiles:
+    - "scripts/interactions/interactable.gd"
+
+apiContracts:
+  - name: "can_interact"
+    type: "function"
+    params: []
+    returns: "bool"
+    required: true
+  - name: "interact_with"
+    type: "function"
+    params:
+      - name: "player"
+        type: "Node"
+    returns: "void"
+    required: true
+  - name: "handle_interaction"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+  - name: "resources_collected"
+    type: "signal"
+    params:
+      - name: "resources"
+        type: "Dictionary"
+    returns: "void"
+    required: true
+
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Player can press E key to interact with garbage bin"
+    given: "Player is within interaction range of garbage bin"
+    when: "Player presses E key"
+    then: "Interaction is triggered and resources are collected"
+  - id: "AC-002"
+    description: "Garbage bin provides 6-10 total resources"
+    given: "Player interacts with unused garbage bin"
+    when: "Interaction completes"
+    then: "Player receives between 6-10 total resources (wood + steel combined)"
+  - id: "AC-003"
+    description: "Garbage bin becomes non-interactable after use"
+    given: "Player has already interacted with garbage bin"
+    when: "Player tries to interact again"
+    then: "No interaction occurs and no resources are given"
+  - id: "AC-004"
+    description: "System is extensible for other objects"
+    given: "Interaction system is implemented"
+    when: "New object type needs interaction capability"
+    then: "Object can implement interaction interface without modifying core system"
+
+nonGoals:
+  - "Complex inventory UI system"
+  - "Sound effects and particle systems"
+  - "Animation sequences for interaction"
+  - "Multiple interaction types (examine, use, etc.)"
+  - "Resource crafting or management systems"
+  - "Visual feedback beyond basic console output"
+
+complexityBudget:
+  maxNewFunctions: 5
+  maxNewFiles: 2
+  maxLinesOfCode: 150
+  maxDependencies: 0
