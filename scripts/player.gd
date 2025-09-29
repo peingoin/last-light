@@ -25,13 +25,9 @@ var inventory: Dictionary = {"wood": 0, "steel": 0}
 @onready var weapon_slot: Node2D = $WeaponSlot
 @onready var interaction_area: Area2D = $InteractionArea
 
-var nearby_interactables: Array[Interactable] = []
-var closest_interactable: Interactable = null
-var current_interactable = null
+var nearby_interactables: Array = []
+var closest_interactable = null
 
-func _ready():
-	interaction_area.body_entered.connect(_on_interaction_area_body_entered)
-	interaction_area.body_exited.connect(_on_interaction_area_body_exited)
 
 func get_input() -> Vector2:
 	input.x = Input.get_action_strength("right") - Input.get_action_strength("left")
@@ -57,6 +53,11 @@ func get_input() -> Vector2:
 func _ready() -> void:
 	add_to_group("player")
 	
+	# Connect interaction area signals
+	interaction_area.body_entered.connect(_on_interaction_area_body_entered)
+	interaction_area.body_exited.connect(_on_interaction_area_body_exited)
+	
+	# Connect interact sensor signals if available
 	if interact_sensor:
 		interact_sensor.area_entered.connect(_on_interactable_entered)
 		interact_sensor.area_exited.connect(_on_interactable_exited)
@@ -136,12 +137,12 @@ func start_flicker(duration: float) -> void:
 	sprite.modulate.a = original_alpha
 
 func _on_interactable_entered(area: Area2D) -> void:
-	if area is Interactable:
+	if area.is_in_group("interactable"):
 		nearby_interactables.append(area)
 		_update_closest_interactable()
 
 func _on_interactable_exited(area: Area2D) -> void:
-	if area is Interactable:
+	if area.is_in_group("interactable"):
 		nearby_interactables.erase(area)
 		_update_closest_interactable()
 
@@ -151,7 +152,7 @@ func _update_closest_interactable() -> void:
 		return
 	
 	var closest_distance := INF
-	var new_closest: Interactable = null
+	var new_closest = null
 	
 	for interactable in nearby_interactables:
 		if not is_instance_valid(interactable):

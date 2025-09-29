@@ -22,7 +22,16 @@
       "mcp__ct-devmcp__do_bld",
       "mcp__ct-devmcp__do_trace",
       "mcp__ct-devmcp__do_fix",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scripts/game.gd)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scripts/storm.gd)",
+      "Bash(rm:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(ls:*)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --quit)",
+      "Bash(cat:*)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --import)"
     ],
     "deny": [],
     "ask": []

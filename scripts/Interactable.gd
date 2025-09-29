@@ -1,5 +1,5 @@
 extends Area2D
-class_name Interactable
+class_name InteractableArea
 
 @onready var prompt: Label = $Prompt
 

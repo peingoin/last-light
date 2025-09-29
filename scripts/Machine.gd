@@ -1,4 +1,4 @@
-extends Interactable
+extends InteractableArea
 class_name Machine
 
 signal life_force_changed(new_value: int)

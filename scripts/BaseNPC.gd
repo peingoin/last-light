@@ -1,4 +1,4 @@
-extends Interactable
+extends InteractableArea
 class_name BaseNPC
 
 @export var display_name: StringName = "NPC"
