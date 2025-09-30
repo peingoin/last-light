@@ -35,7 +35,6 @@ func _ready() -> void:
 		slash_effect.visible = false
 
 	# Debug weapon sprite
-	print("Weapon ready - sprite texture: ", weapon_sprite.texture, " visible: ", weapon_sprite.visible)
 
 func _process(delta: float) -> void:
 	if cooldown_timer > 0.0:
@@ -116,7 +115,6 @@ func disable_hitbox() -> void:
 
 func equip() -> void:
 	visible = true
-	print("Weapon equipped - visible: ", visible, " position: ", global_position)
 
 func unequip() -> void:
 	visible = false

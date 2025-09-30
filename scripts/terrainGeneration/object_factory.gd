@@ -31,7 +31,6 @@ func safe_load_texture(path: String) -> Texture2D:
 	if texture and texture is Texture2D and texture.get_width() > 0 and texture.get_height() > 0:
 		return texture
 	else:
-		print("Failed to load or invalid texture: ", path)
 		return null
 
 func create_fallback_rect(sprite: Sprite2D, size: Vector2, color: Color):

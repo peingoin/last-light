@@ -115,7 +115,6 @@ func _on_frame_changed() -> void:
 	if dist <= swing_max_distance + 7:
 		# Respect player i-frames: only hit if they CAN take damage
 		if not player.call("can_take_damage"):
-			print("target is invulnerable (i-frames)")
 			return
 
 		if player.has_method("take_damage"):
@@ -165,14 +164,12 @@ func take_damage(damage: int) -> void:
 	if is_dying:
 		return
 	enemy_health = enemy_health - damage
-	print("Zombie Axe health: ", enemy_health)
 	if enemy_health <= 0:
 		die()
 
 func die() -> void:
 	if is_dying:
 		return
-	print("Zombie Axe died!")
 	is_dying = true
 	# Play death animation
 	$AnimatedSprite2D.play("death")

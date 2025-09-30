@@ -33,10 +33,6 @@ var exclusion_radii = {
 func _ready() -> void:
 	setup_enhanced_spawning_system()
 	setup_noise_layers(0.05, 3)
-	print("ObjectLayer reference: ", object_layer)
-	print("ObjectLayer node type: ", object_layer.get_class() if object_layer else "null")
-	print("FIXED: Player is now INSIDE ObjectLayer YSort container")
-	print("YSort should now work for player and objects together!")
 
 func start_map_generation() -> void:
 	generate_map(map_width, map_height, randi())
@@ -315,8 +311,6 @@ func place_enhanced_object(x: int, y: int, spawn_decision: Dictionary, terrain_c
 	)
 
 	object_layer.add_child(object_instance)
-	print("Added ", spawn_decision.object_type, " to ObjectLayer at Y position: ", object_instance.position.y)
-	print("ObjectLayer children count: ", object_layer.get_child_count())
 	var radius = exclusion_radii.get(spawn_decision.object_type, 1)
 	mark_position_occupied_with_radius(x, y, radius)
 
@@ -435,7 +429,6 @@ func place_random_object(x: int, y: int):
 		object_sprite.color = Color.GRAY  # Metal/scrap
 
 	object_layer.add_child(object_sprite)
-	print("Added random object to ObjectLayer at Y position: ", object_sprite.position.y)
 
 func clear_objects():
 	for child in object_container.get_children():

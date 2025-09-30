@@ -65,7 +65,7 @@ func check_player_storm_collision() -> void:
 	if currently_in_storm and not player_in_storm:
 		# Player just entered storm
 		player_in_storm = true
-		print("Player entered storm - instant death!")
+		# Player entered storm - instant death
 		if player.has_method("take_damage"):
 			player.take_damage(storm_damage)
 	elif not currently_in_storm:

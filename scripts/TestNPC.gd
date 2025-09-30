@@ -20,24 +20,18 @@ func _ready() -> void:
 
 func _get_dialogue_system():
 	var dialogue_system = get_node_or_null("/root/Dialogue")
-	print("TestNPC: _get_dialogue_system() returning: ", dialogue_system)
 	return dialogue_system
 
 func interact(player: Node) -> void:
-	print("TestNPC: interact() called with player: ", player)
 	
 	if is_talking:
-		print("TestNPC: Already talking, returning")
 		return
 	
-	print("TestNPC: max_interactions=", max_interactions, " interaction_count=", interaction_count)
 	
 	# Check interaction limits first
 	if max_interactions == 0:
-		print("TestNPC: max_interactions is 0, no interactions allowed")
 		return
 	elif max_interactions > 0 and interaction_count >= max_interactions:
-		print("TestNPC: Reached interaction limit")
 		is_talking = true
 		if animated_sprite and animated_sprite.sprite_frames.has_animation(anim_talk):
 			animated_sprite.play(anim_talk)
@@ -46,7 +40,6 @@ func interact(player: Node) -> void:
 			dialogue_system.open_single(display_name, interaction_limit_message)
 		return
 	
-	print("TestNPC: Starting interaction ", interaction_count + 1)
 	is_talking = true
 	interaction_count += 1
 	
@@ -55,10 +48,8 @@ func interact(player: Node) -> void:
 	
 	# Show different dialogue based on interaction count
 	if interaction_count == 1:
-		print("TestNPC: Showing first meeting dialogue")
 		_show_first_meeting()
 	else:
-		print("TestNPC: Showing regular dialogue")
 		_show_regular_dialogue()
 
 func _show_first_meeting() -> void:
@@ -116,7 +107,6 @@ What would you like to talk about?
 
 func _on_choice_picked(choice_id: String) -> void:
 	# This function now only handles fallback cases since we use specific callbacks
-	print("Warning: Fallback choice handler called for: ", choice_id)
 	var dialogue_system = _get_dialogue_system()
 	if dialogue_system and dialogue_system.has_method("open_single"):
 		dialogue_system.open_single(display_name, "Villager: I'm sorry, I didn't quite catch that.")
@@ -154,45 +144,38 @@ func _on_dialogue_finished() -> void:
 
 # Callback functions for dialogue options
 func _on_hello_callback() -> void:
-	print("TestNPC: Hello callback triggered!")
 	player_name = "friendly traveler"
 	var dialogue_system = _get_dialogue_system()
 	if dialogue_system and dialogue_system.has_method("open_single"):
 		dialogue_system.open_single(display_name, "Villager: Wonderful to meet you, friendly traveler! May the roads be kind to you on your journey.")
 
 func _on_explore_callback() -> void:
-	print("TestNPC: Explore callback triggered!")
 	player_name = "curious explorer"
 	player_interests.append("exploration")
 	_show_exploration_dialogue()
 
 func _on_trade_callback() -> void:
-	print("TestNPC: Trade callback triggered! Player is interested in commerce.")
 	player_name = "shrewd trader"
 	var dialogue_system = _get_dialogue_system()
 	if dialogue_system and dialogue_system.has_method("open_single"):
 		dialogue_system.open_single(display_name, "Villager: A trader! How exciting! You should definitely visit our shopkeeper - she has the finest goods in the region. The market square is bustling this time of day!")
 
 func _on_quiet_callback() -> void:
-	print("TestNPC: Quiet callback triggered! Player prefers solitude.")
 	player_name = "mysterious stranger"
 	var dialogue_system = _get_dialogue_system()
 	if dialogue_system and dialogue_system.has_method("open_single"):
 		dialogue_system.open_single(display_name, "Villager: I understand completely, mysterious stranger. Sometimes the soul needs silence. Our village is peaceful - perfect for quiet contemplation.")
 
 func _on_village_callback() -> void:
-	print("TestNPC: Village callback triggered! Player wants to learn about the village.")
 	conversation_history["asked_about_village"] = true
 	_show_village_info_dialogue()
 
 func _on_people_callback() -> void:
-	print("TestNPC: People callback triggered! Player is interested in villagers.")
 	var dialogue_system = _get_dialogue_system()
 	if dialogue_system and dialogue_system.has_method("open_single"):
 		dialogue_system.open_single(display_name, "Villager: Well, there's our brave village guard who keeps us safe from bandits, the shopkeeper with her amazing wares, and our wise elder who gives the best advice. Each person here has a story worth hearing!")
 
 func _on_goodbye_callback() -> void:
-	print("TestNPC: Goodbye callback triggered! Player is leaving.")
 	var dialogue_system = _get_dialogue_system()
 	if dialogue_system and dialogue_system.has_method("open_single"):
 		var farewell_message = "Villager: Safe travels"
@@ -202,7 +185,6 @@ func _on_goodbye_callback() -> void:
 		dialogue_system.open_single(display_name, farewell_message)
 
 func _on_routes_callback() -> void:
-	print("TestNPC: Routes callback triggered! Player is interested in travel routes.")
 	player_interests.append("routes")
 	conversation_history["asked_about_routes"] = true
 	var dialogue_system = _get_dialogue_system()
@@ -215,7 +197,6 @@ func _on_routes_callback() -> void:
 		dialogue_system.open_single(display_name, routes_response)
 
 func _on_ruins_callback() -> void:
-	print("TestNPC: Ruins callback triggered! Player is interested in ancient ruins.")
 	player_interests.append("ruins")
 	conversation_history["asked_about_ruins"] = true
 	var dialogue_system = _get_dialogue_system()
@@ -228,13 +209,11 @@ func _on_ruins_callback() -> void:
 		dialogue_system.open_single(display_name, ruins_response)
 
 func _on_dangers_callback() -> void:
-	print("TestNPC: Dangers callback triggered! Player wants to know about hazards.")
 	var dialogue_system = _get_dialogue_system()
 	if dialogue_system and dialogue_system.has_method("open_single"):
 		dialogue_system.open_single(display_name, "Villager: Watch out for wolves in the deep forest - they hunt in packs at night! Bandits sometimes lurk on the mountain roads, so travel in daylight and stick to well-traveled paths. The old ruins can be treacherous too - unstable floors and hidden pitfalls!")
 
 func _on_history_callback() -> void:
-	print("TestNPC: History callback triggered! Player wants to learn village history.")
 	player_interests.append("history")
 	conversation_history["asked_about_history"] = true
 	var dialogue_system = _get_dialogue_system()
@@ -247,7 +226,6 @@ func _on_history_callback() -> void:
 		dialogue_system.open_single(display_name, history_response)
 
 func _on_festivals_callback() -> void:
-	print("TestNPC: Festivals callback triggered! Player is interested in celebrations.")
 	player_interests.append("festivals")
 	conversation_history["asked_about_festivals"] = true
 	var dialogue_system = _get_dialogue_system()
@@ -260,13 +238,11 @@ func _on_festivals_callback() -> void:
 		dialogue_system.open_single(display_name, festivals_response)
 
 func _on_problems_callback() -> void:
-	print("TestNPC: Problems callback triggered! Player is asking about village issues.")
 	var dialogue_system = _get_dialogue_system()
 	if dialogue_system and dialogue_system.has_method("open_single"):
 		dialogue_system.open_single(display_name, "Villager: Nothing too serious! Just the occasional wild animal near the farms and some bandits on the outer roads. Our guard handles most threats well. Sometimes merchants are late with deliveries, but that's life in a small village!")
 
 func _on_weather_callback() -> void:
-	print("TestNPC: Weather callback triggered! Player is making small talk.")
 	conversation_history["talked_about_weather"] = true
 	var dialogue_system = _get_dialogue_system()
 	if dialogue_system and dialogue_system.has_method("open_single"):

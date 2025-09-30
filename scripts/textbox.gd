@@ -244,9 +244,7 @@ func set_options(options: Array, keymap: OptionKeymap = null) -> void:
 			if option.key != "" and option.id != "" and option.text != "":
 				valid_options.append(option)
 			else:
-				print("Warning: Skipping option with empty values: ", option)
 		else:
-			print("Warning: Skipping malformed option: ", option)
 	
 	current_options = valid_options
 	current_keymap = keymap

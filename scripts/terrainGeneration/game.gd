@@ -5,11 +5,7 @@ extends Node2D
 
 func _ready():
 	if player and camera:
-		print("Camera following setup complete")
 
 func _process(_delta):
 	if player and camera:
 		camera.global_position = player.global_position
-		# Debug player position every 60 frames
-		if Engine.get_process_frames() % 60 == 0:
-			print("Player Y position: ", player.position.y)

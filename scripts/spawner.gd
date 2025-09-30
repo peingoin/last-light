@@ -75,7 +75,6 @@ func _resolve_spawn_parent() -> Node:
 ## Spawns `count` monsters on a circle of `radius` around `center`.
 ## Returns an array of the spawned nodes.
 func spawn_monsters(center: Vector2 = global_position, count: int = default_count, radius: float = default_radius) -> Array:
-	print("spawning monsters")
 	var spawned: Array = []
 	var parent := _resolve_spawn_parent()
 
@@ -123,7 +122,6 @@ func spawn_monsters(center: Vector2 = global_position, count: int = default_coun
 ## Spawns random monsters across the entire map
 ## Returns an array of the spawned nodes.
 func spawn_monsters_across_map(count: int = map_spawn_count) -> Array:
-	print("spawning ", count, " monsters across the map")
 	var spawned: Array = []
 	var parent := _resolve_spawn_parent()
 
@@ -158,7 +156,6 @@ func spawn_monsters_across_map(count: int = map_spawn_count) -> Array:
 
 		# If we couldn't find a good position after max attempts, use the last generated one
 		if attempts >= max_attempts:
-			print("Warning: Could not find ideal spawn position for monster ", i, ", using fallback position")
 
 		# Pick a random monster type
 		var scene: PackedScene = monster_scenes[_rng.randi_range(0, monster_scenes.size() - 1)]

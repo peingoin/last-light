@@ -175,9 +175,9 @@ func equip_weapon(weapon_scene_path: String) -> void:
 		current_weapon.weapon_hit.connect(_on_weapon_hit)
 		current_weapon.equip()
 		weapon_equipped.emit(current_weapon.weapon_name)
-		print("Player equipped weapon: ", current_weapon.weapon_name, " at slot position: ", weapon_slot.position)
+		# Weapon equipped successfully
 	else:
-		print("Failed to load weapon scene: ", weapon_scene_path)
+		# Failed to load weapon scene
 
 func unequip_weapon() -> void:
 	if current_weapon:
@@ -203,7 +203,7 @@ func _on_weapon_hit(enemy, damage: int, knockback_force: float, knockback_direct
 		enemy.call("apply_knockback", knockback_force, knockback_direction)
 
 func die() -> void:
-	print("Player died!")
+	# Player died
 	# Disable player movement and input
 	set_physics_process(false)
 	set_process(false)
@@ -256,14 +256,14 @@ func handle_interaction() -> void:
 func _on_resources_collected(resources: Dictionary) -> void:
 	for resource_type in resources:
 		inventory[resource_type] += resources[resource_type]
-	print("Collected: ", resources, " | Total inventory: ", inventory)
+	# Resources collected and added to inventory
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
 	if body.has_method("can_interact"):
 		current_interactable = body
-		print("Near interactable: Press E to interact")
+		# Near interactable
 
 func _on_interaction_area_body_exited(body: Node2D) -> void:
 	if body == current_interactable:
 		current_interactable = null
-		print("Left interactable area")
+		# Left interactable area

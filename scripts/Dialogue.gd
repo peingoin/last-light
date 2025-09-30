@@ -94,7 +94,7 @@ func show_dialogue_with_options(speaker_name: String, content: String, callback_
 		_find_dialogue_ui()
 	
 	if not dialogue_ui:
-		print("Error: Could not find dialogue UI")
+		# Error: Could not find dialogue UI
 		return
 	
 	# Set the callback owner for this dialogue
@@ -134,7 +134,7 @@ func show_dialogue_with_options(speaker_name: String, content: String, callback_
 		if dialogue_ui.has_method("set_options"):
 			dialogue_ui.set_options(options)
 		else:
-			print("Warning: DialogueUI does not have set_options method")
+			# Warning: DialogueUI does not have set_options method
 
 func _on_choice_picked(choice_id: String) -> void:
 	# Check if there's a callback for this choice
@@ -143,6 +143,6 @@ func _on_choice_picked(choice_id: String) -> void:
 		if current_callback_owner.has_method(callback_name):
 			current_callback_owner.call(callback_name)
 		else:
-			print("Warning: Callback method '", callback_name, "' not found on ", current_callback_owner.name)
+			# Warning: Callback method not found
 	
 	choice_picked.emit(choice_id)

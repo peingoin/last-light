@@ -2,7 +2,6 @@ extends BaseSpawnableObject
 
 func interact_with(player: Node) -> void:
 	if has_been_looted:
-		print("This garbage bin has already been searched.")
 		return
 
 	# Generate 6-10 total resources split between wood and steel
@@ -22,4 +21,3 @@ func interact_with(player: Node) -> void:
 	resources_collected.emit(loot)
 	has_been_looted = true
 
-	print("Searched garbage bin - found resources!")
