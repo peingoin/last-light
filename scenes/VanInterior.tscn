@@ -1,6 +1,6 @@
 [gd_scene load_steps=38 format=3 uid="uid://ccwyhu83j70rm"]
 
-[ext_resource type="Script" uid="uid://qek86wbpfe1m" path="res://scenes/van_interior.gd" id="1_1rbwi"]
+[ext_resource type="Script" uid="uid://qek86wbpfe1m" path="res://scripts/van_interior.gd" id="1_1rbwi"]
 [ext_resource type="Script" uid="uid://sixh2u2ge1fx" path="res://scripts/MedicNPC.gd" id="1_medic"]
 [ext_resource type="Texture2D" uid="uid://bel0tu12ejffn" path="res://assets/NPC/character-pack-full_version/sprite_split/character_2/character_2_frame16x20.png" id="2_8lxem"]
 [ext_resource type="Script" uid="uid://byxl8m5uffgg" path="res://scripts/ForagerNPC.gd" id="2_forager"]
@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://df7uraxxkie1e" path="res://assets/NPC/character-pack-full_version/sprite_split/character_9/character_9_frame32x32.png" id="10_scout"]
 [ext_resource type="Texture2D" uid="uid://opmwkkayx41f" path="res://assets/NPC/character-pack-full_version/sprite_split/character_9/character_9_frame16x20.png" id="14_jkhij"]
 [ext_resource type="PackedScene" uid="uid://8cgn4wmmpyll" path="res://scenes/van.tscn" id="16_h5usi"]
-[ext_resource type="PackedScene" path="res://scenes/BaseNPC.tscn" id="17_84ysd"]
+[ext_resource type="PackedScene" uid="uid://bqm3vvwmg5j2k" path="res://scenes/BaseNPC.tscn" id="17_84ysd"]
 [ext_resource type="Texture2D" uid="uid://c2uwolu2cwwk8" path="res://assets/Machine.png" id="18_1rbwi"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="19_player"]
 
@@ -327,6 +327,14 @@ position = Vector2(-99, 157)
 
 [node name="BaseNPC" parent="." instance=ExtResource("17_84ysd")]
 position = Vector2(-58, 173)
+display_name = null
+lines = null
+anim_idle = null
+anim_talk = null
+max_interactions = null
+interaction_limit_message = null
+max_health = null
+current_health = null
 
 [node name="Sprite2D" type="Sprite2D" parent="BaseNPC"]
 texture = ExtResource("18_1rbwi")

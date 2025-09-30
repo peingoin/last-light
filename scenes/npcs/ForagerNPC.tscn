@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://d7n3p8q2k5m9x"]
+
+[ext_resource type="PackedScene" path="res://scenes/BaseNPC.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/ForagerNPC.gd" id="2_script"]
+[ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="3_frames"]
+
+[node name="ForagerNPC" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+display_name = &"Willow Greenthumb"
+frames = ExtResource("3_frames")
+max_health = 70
+current_health = 70
+
+[node name="AnimatedSprite2D" parent="." index="2"]
+sprite_frames = ExtResource("3_frames")

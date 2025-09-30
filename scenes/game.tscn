@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" path="res://scenes/Machine.tscn" id="10_machine"]
 [ext_resource type="PackedScene" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
 [ext_resource type="TileSet" uid="uid://cthy5whhkciiq" path="res://van_tile_set.tres" id="13_tileset"]
+[ext_resource type="PackedScene" uid="uid://bdkfp3k7n8r9c" path="res://scenes/npcs/MedicNPC.tscn" id="14_medic"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
@@ -48,6 +49,9 @@ monster_scenes = Array[PackedScene]([ExtResource("2_orc"), ExtResource("5_gee14"
 
 [node name="Machine" parent="." instance=ExtResource("10_machine")]
 position = Vector2(200, 100)
+
+[node name="MedicNPC" parent="." instance=ExtResource("14_medic")]
+position = Vector2(-200, 150)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_orc")]
 position = Vector2(-99, -1)

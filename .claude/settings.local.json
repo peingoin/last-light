@@ -34,7 +34,11 @@
       "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --import)",
       "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --export-debug \"HTML5\" temp_test.html)",
       "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --export-debug \"Web\" temp_test.html)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(for file in \"/Users/charliegao/Documents/CODE/Hack Club/last-light/scripts/\"*NPC*.gd)",
+      "Bash(do echo \"=== Checking $file ===\")",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script \"$file\")",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

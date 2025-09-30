@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://g8h5w4v9x2k7m"]
+
+[ext_resource type="PackedScene" path="res://scenes/BaseNPC.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/TechnicianNPC.gd" id="2_script"]
+[ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="3_frames"]
+
+[node name="TechnicianNPC" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+display_name = &"Ada Circuitweaver"
+frames = ExtResource("3_frames")
+max_health = 75
+current_health = 75
+
+[node name="AnimatedSprite2D" parent="." index="2"]
+sprite_frames = ExtResource("3_frames")
