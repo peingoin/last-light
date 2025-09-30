@@ -7,6 +7,7 @@
 [node name="TechnicianNPC" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 display_name = &"Ada Circuitweaver"
+lines = PackedStringArray("Ada: Greetings! I'm the village technician. Got any electronic devices that need fixing?", "Ada: Technology is only as good as its maintenance.")
 frames = ExtResource("3_frames")
 max_health = 75
 current_health = 75

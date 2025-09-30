@@ -7,6 +7,7 @@
 [node name="EngineerNPC" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 display_name = &"Marcus Gearwright"
+lines = PackedStringArray("Marcus: Greetings! I'm the village engineer. Need any mechanical repairs?", "Marcus: These contraptions won't fix themselves!")
 frames = ExtResource("3_frames")
 max_health = 90
 current_health = 90

@@ -7,6 +7,7 @@
 [node name="ForagerNPC" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 display_name = &"Willow Greenthumb"
+lines = PackedStringArray("Willow: Hello there! I'm the local forager. Know of any good gathering spots?", "Willow: The forest provides for those who know where to look.")
 frames = ExtResource("3_frames")
 max_health = 70
 current_health = 70

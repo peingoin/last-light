@@ -7,6 +7,7 @@
 [node name="ScoutNPC" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 display_name = &"Raven Swiftarrow"
+lines = PackedStringArray("Raven: Well met, traveler! I scout these lands for dangers. Stay alert out there!", "Raven: Always keep your eyes on the horizon.")
 frames = ExtResource("3_frames")
 max_health = 85
 current_health = 85

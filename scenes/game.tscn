@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
 [ext_resource type="TileSet" uid="uid://cthy5whhkciiq" path="res://van_tile_set.tres" id="13_tileset"]
 [ext_resource type="PackedScene" uid="uid://bdkfp3k7n8r9c" path="res://scenes/npcs/MedicNPC.tscn" id="14_medic"]
+[ext_resource type="PackedScene" uid="uid://c5k2m9q4t8e1w" path="res://scenes/npcs/EngineerNPC.tscn" id="15_engineer"]
+[ext_resource type="PackedScene" uid="uid://je3eq2q7k6nx" path="res://scenes/TestNPC.tscn" id="16_testnpc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
@@ -52,6 +54,12 @@ position = Vector2(200, 100)
 
 [node name="MedicNPC" parent="." instance=ExtResource("14_medic")]
 position = Vector2(-200, 150)
+
+[node name="EngineerNPC" parent="." instance=ExtResource("15_engineer")]
+position = Vector2(300, 150)
+
+[node name="TestNPC" parent="." instance=ExtResource("16_testnpc")]
+position = Vector2(0, 200)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_orc")]
 position = Vector2(-99, -1)

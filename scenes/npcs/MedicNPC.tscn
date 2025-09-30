@@ -7,6 +7,7 @@
 [node name="MedicNPC" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 display_name = &"Dr. Elena Brightwater"
+lines = PackedStringArray("Dr. Elena: Hello! I'm the village medic. Is there anything I can help you with?", "Dr. Elena: Stay healthy out there!")
 frames = ExtResource("3_frames")
 max_health = 80
 current_health = 80
