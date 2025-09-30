@@ -38,7 +38,8 @@
       "Bash(for file in \"/Users/charliegao/Documents/CODE/Hack Club/last-light/scripts/\"*NPC*.gd)",
       "Bash(do echo \"=== Checking $file ===\")",
       "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script \"$file\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot:*)"
     ],
     "deny": [],
     "ask": []

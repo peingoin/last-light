@@ -178,6 +178,7 @@ func equip_weapon(weapon_scene_path: String) -> void:
 		# Weapon equipped successfully
 	else:
 		# Failed to load weapon scene
+		pass
 
 func unequip_weapon() -> void:
 	if current_weapon:

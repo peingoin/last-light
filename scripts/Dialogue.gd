@@ -135,6 +135,7 @@ func show_dialogue_with_options(speaker_name: String, content: String, callback_
 			dialogue_ui.set_options(options)
 		else:
 			# Warning: DialogueUI does not have set_options method
+			pass
 
 func _on_choice_picked(choice_id: String) -> void:
 	# Check if there's a callback for this choice
@@ -144,5 +145,6 @@ func _on_choice_picked(choice_id: String) -> void:
 			current_callback_owner.call(callback_name)
 		else:
 			# Warning: Callback method not found
+			pass
 	
 	choice_picked.emit(choice_id)

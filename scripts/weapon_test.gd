@@ -19,10 +19,13 @@ func _ready() -> void:
 		player.weapon_equipped.connect(_on_weapon_equipped)
 		player.weapon_unequipped.connect(_on_weapon_unequipped)
 	else:
+		pass
 
 func _on_weapon_equipped(weapon_name: String) -> void:
+	pass
 
 func _on_weapon_unequipped() -> void:
+	pass
 
 func _input(event: InputEvent) -> void:
 	# Test keys for weapon system

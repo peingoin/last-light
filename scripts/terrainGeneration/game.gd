@@ -5,6 +5,7 @@ extends Node2D
 
 func _ready():
 	if player and camera:
+		pass
 
 func _process(_delta):
 	if player and camera:

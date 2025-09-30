@@ -244,7 +244,9 @@ func set_options(options: Array, keymap: OptionKeymap = null) -> void:
 			if option.key != "" and option.id != "" and option.text != "":
 				valid_options.append(option)
 			else:
+				pass
 		else:
+			pass
 	
 	current_options = valid_options
 	current_keymap = keymap

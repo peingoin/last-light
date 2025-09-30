@@ -156,6 +156,7 @@ func spawn_monsters_across_map(count: int = map_spawn_count) -> Array:
 
 		# If we couldn't find a good position after max attempts, use the last generated one
 		if attempts >= max_attempts:
+			pass
 
 		# Pick a random monster type
 		var scene: PackedScene = monster_scenes[_rng.randi_range(0, monster_scenes.size() - 1)]

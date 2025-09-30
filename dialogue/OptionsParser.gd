@@ -36,6 +36,7 @@ static func parse_options(input) -> Dictionary:
 				options.append(option)
 			else:
 				# Warning: Malformed option line skipped
+				pass
 	
 	# Extract question text (everything before the options block)
 	var question_text = ""
