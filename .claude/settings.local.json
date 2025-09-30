@@ -40,7 +40,8 @@
       "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script \"$file\")",
       "Bash(done)",
       "Bash(/Applications/Godot.app/Contents/MacOS/Godot:*)",
-      "Bash(true)"
+      "Bash(true)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
