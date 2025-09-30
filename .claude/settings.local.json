@@ -39,7 +39,8 @@
       "Bash(do echo \"=== Checking $file ===\")",
       "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script \"$file\")",
       "Bash(done)",
-      "Bash(/Applications/Godot.app/Contents/MacOS/Godot:*)"
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot:*)",
+      "Bash(true)"
     ],
     "deny": [],
     "ask": []

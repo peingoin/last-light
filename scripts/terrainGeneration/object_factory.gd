@@ -34,7 +34,11 @@ func safe_load_texture(path: String) -> Texture2D:
 		return null
 
 func create_fallback_rect(sprite: Sprite2D, size: Vector2, color: Color):
-	var image = Image.create(int(size.x), int(size.y), false, Image.FORMAT_RGB8)
+	# Ensure minimum size of 1x1 pixels
+	var width = max(1, int(size.x))
+	var height = max(1, int(size.y))
+	
+	var image = Image.create(width, height, false, Image.FORMAT_RGB8)
 	image.fill(color)
 	var texture = ImageTexture.new()
 	texture.set_image(image)
