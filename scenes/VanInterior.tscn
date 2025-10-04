@@ -1,7 +1,7 @@
 [gd_scene load_steps=38 format=3 uid="uid://ccwyhu83j70rm"]
 
-[ext_resource type="Script" uid="uid://qek86wbpfe1m" path="res://scripts/van_interior.gd" id="1_1rbwi"]
-[ext_resource type="Script" uid="uid://sixh2u2ge1fx" path="res://scripts/MedicNPC.gd" id="1_medic"]
+[ext_resource type="Script" uid="uid://bwl6fpxodiei3" path="res://scripts/van_interior.gd" id="1_1rbwi"]
+[ext_resource type="Script" uid="uid://hfaffk2mdvlg" path="res://scripts/MedicNPC.gd" id="1_medic"]
 [ext_resource type="Texture2D" uid="uid://bel0tu12ejffn" path="res://assets/NPC/character-pack-full_version/sprite_split/character_2/character_2_frame16x20.png" id="2_8lxem"]
 [ext_resource type="Script" uid="uid://byxl8m5uffgg" path="res://scripts/ForagerNPC.gd" id="2_forager"]
 [ext_resource type="Script" uid="uid://x5wkcd35ciny" path="res://scripts/EngineerNPC.gd" id="3_engineer"]

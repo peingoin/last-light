@@ -1,34 +1,17 @@
-[gd_scene load_steps=31 format=3 uid="uid://g0a1vh6i2lf2"]
+[gd_scene load_steps=33 format=3 uid="uid://g0a1vh6i2lf2"]
 
 [ext_resource type="Script" uid="uid://c2t5c2vo0gj4x" path="res://scripts/enemies/zombie_small.gd" id="1_mb1iq"]
 [ext_resource type="Texture2D" uid="uid://cyhom8ly4twot" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Small/Zombie_Small_Side_Idle-Sheet6.png" id="2_cy1wy"]
+[ext_resource type="Texture2D" uid="uid://dsy337rrikp1t" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM081/SM081.png" id="2_smoke1"]
 [ext_resource type="Texture2D" uid="uid://cm5hpukw4c3nd" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Small/Zombie_Small_Side_First-Attack-Sheet4.png" id="3_ruii8"]
+[ext_resource type="Texture2D" uid="uid://t710mrg0enyt" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM081/SM082.png" id="3_smoke2"]
 [ext_resource type="Texture2D" uid="uid://dpwujooelx7u3" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Small/Zombie_Small_Side_Walk-Sheet6.png" id="4_n0rtd"]
-[ext_resource type="Texture2D" uid="uid://d4nbeild5g4x5" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Small/Zombie_Small_Side_First-Death-Sheet6.png" id="5_death1"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_njb6x"]
-atlas = ExtResource("5_death1")
-region = Rect2(0, 0, 16, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g82is"]
-atlas = ExtResource("5_death1")
-region = Rect2(16, 0, 16, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rc3b2"]
-atlas = ExtResource("5_death1")
-region = Rect2(32, 0, 16, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yvsri"]
-atlas = ExtResource("5_death1")
-region = Rect2(48, 0, 16, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fvn6d"]
-atlas = ExtResource("5_death1")
-region = Rect2(64, 0, 16, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8em3b"]
-atlas = ExtResource("5_death1")
-region = Rect2(80, 0, 16, 14)
+[ext_resource type="Texture2D" uid="uid://13k8504njj55" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM081/SM083.png" id="4_smoke3"]
+[ext_resource type="Texture2D" uid="uid://dlh5a5mtfay05" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM081/SM084.png" id="5_smoke4"]
+[ext_resource type="Texture2D" uid="uid://ceh7vsxastbgb" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM081/SM085.png" id="6_smoke5"]
+[ext_resource type="Texture2D" uid="uid://c4htkc2o5t7km" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM081/SM086.png" id="7_smoke6"]
+[ext_resource type="Texture2D" uid="uid://bjuq4w605hj8c" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM081/SM087.png" id="8_smoke7"]
+[ext_resource type="Texture2D" uid="uid://dknebt88ypkq8" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM081/SM088.png" id="9_smoke8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_af0k6"]
 atlas = ExtResource("2_cy1wy")
@@ -98,26 +81,32 @@ region = Rect2(65, 0, 13, 15)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_njb6x")
+"texture": ExtResource("2_smoke1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g82is")
+"texture": ExtResource("3_smoke2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rc3b2")
+"texture": ExtResource("4_smoke3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yvsri")
+"texture": ExtResource("5_smoke4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fvn6d")
+"texture": ExtResource("6_smoke5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8em3b")
+"texture": ExtResource("7_smoke6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_smoke7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_smoke8")
 }],
 "loop": false,
 "name": &"death",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,

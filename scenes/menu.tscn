@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dcvf44rlys1qm"]
 
 [ext_resource type="Script" uid="uid://8ls1x4o6rhts" path="res://scripts/menu.gd" id="1_yqeox"]
-[ext_resource type="PackedScene" uid="uid://ccwyhu83j70rm" path="res://scenes/VanInterior.tscn" id="2_vjb58"]
+[ext_resource type="PackedScene" path="res://scenes/VanInterior.tscn" id="2_vjb58"]
 
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_yqeox")
@@ -21,13 +21,13 @@ layout_mode = 2
 text = "last light"
 horizontal_alignment = 1
 
-[node name="quit_button" type="Button" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "QUIT"
-
 [node name="play_button" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "PLAY"
+
+[node name="quit_button" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "QUIT"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
