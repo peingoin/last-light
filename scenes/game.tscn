@@ -42,6 +42,13 @@ corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cooldown_overlay"]
+bg_color = Color(1, 1, 1, 0.8)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
 player_scene = ExtResource("1_uwrxv")
@@ -201,6 +208,7 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_active_circle")
 
 [node name="ActiveWeaponIcon" type="TextureRect" parent="CanvasLayer/UI Control/WeaponUI/ActiveWeaponCircle"]
+z_index = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -215,6 +223,16 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
+
+[node name="CooldownOverlay" type="Panel" parent="CanvasLayer/UI Control/WeaponUI/ActiveWeaponCircle"]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cooldown_overlay")
 
 [node name="InactiveWeaponCircle" type="Panel" parent="CanvasLayer/UI Control/WeaponUI"]
 layout_mode = 1

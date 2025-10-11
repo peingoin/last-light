@@ -19,6 +19,5 @@ func _ready() -> void:
 	# Defense
 	enemy_health = 10.0
 	knockback_resistance = 0.8
-	invuln_duration = 0.4
 
 	super._ready()

@@ -4,6 +4,7 @@ class_name BaseWeapon
 signal weapon_hit(target, damage, knockback_force, knockback_direction)
 signal attack_started
 signal attack_finished
+signal cooldown_changed(cooldown_percent)
 
 @export var weapon_name: String = "Base Weapon"
 @export var damage: int = 10
@@ -48,6 +49,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if cooldown_timer > 0.0:
 		cooldown_timer = max(0.0, cooldown_timer - delta)
+		# Emit cooldown progress (1.0 = full cooldown, 0.0 = ready)
+		var cooldown_percent = cooldown_timer / attack_cooldown
+		cooldown_changed.emit(cooldown_percent)
 
 	# Only track mouse direction when not attacking to rotate hitbox
 	if not is_attacking:

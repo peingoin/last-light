@@ -30,6 +30,7 @@ var inventory: Dictionary = {"wood": 0, "steel": 0}
 var weapon_ui_container: Control  # Will be set by game.gd
 var weapon_active_icon: TextureRect
 var weapon_inactive_icon: TextureRect
+var cooldown_overlay: Panel  # Will be set by game.gd
 
 var nearby_interactables: Array = []
 var closest_interactable = null
@@ -255,6 +256,9 @@ func swap_weapons() -> void:
 	weapon_equipped.emit(target_weapon.weapon_name)
 	update_weapon_ui()
 
+	# Reconnect cooldown to UI
+	_reconnect_cooldown_to_ui()
+
 func switch_to_weapon(slot: int) -> void:
 	if slot < 1 or slot > 2:
 		return
@@ -275,6 +279,11 @@ func switch_to_weapon(slot: int) -> void:
 
 func get_current_weapon() -> Node2D:
 	return weapon_slot_1 if active_weapon_slot == 1 else weapon_slot_2
+
+# Property to get active weapon (for easier access)
+var active_weapon: Node2D:
+	get:
+		return get_current_weapon()
 
 func unequip_weapon() -> void:
 	if weapon_slot_1:
@@ -368,3 +377,9 @@ func _on_interaction_area_body_exited(body: Node2D) -> void:
 	if body == current_interactable:
 		current_interactable = null
 		# Left interactable area
+
+func _reconnect_cooldown_to_ui() -> void:
+	# Call the game's reconnection function
+	var game = get_parent()
+	if game and game.has_method("_connect_weapon_cooldown"):
+		game._connect_weapon_cooldown()

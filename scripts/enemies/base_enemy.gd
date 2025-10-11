@@ -19,7 +19,7 @@ var swing_hit_frame: int
 var swing_max_distance: float
 var attack_interrupt_factor: float
 var knockback_resistance: float
-var invuln_duration: float
+var invuln_duration := 0.6
 var enemy_health: float
 
 var player: Node2D

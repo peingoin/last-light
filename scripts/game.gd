@@ -12,6 +12,7 @@ extends Node2D
 @onready var textbox = $"CanvasLayer/UI Control/TextBox"
 @onready var loading_screen = $"CanvasLayer/LoadingScreen"
 @onready var weapon_ui_container = $"CanvasLayer/UI Control/WeaponUI"
+@onready var cooldown_overlay = $"CanvasLayer/UI Control/WeaponUI/ActiveWeaponCircle/CooldownOverlay"
 
 func _ready() -> void:
 	# Show loading screen immediately when game scene loads
@@ -39,11 +40,15 @@ func _ready() -> void:
 			player.weapon_ui_container = weapon_ui_container
 			player.weapon_active_icon = weapon_ui_container.get_node("ActiveWeaponCircle/ActiveWeaponIcon")
 			player.weapon_inactive_icon = weapon_ui_container.get_node("InactiveWeaponCircle/InactiveWeaponIcon")
+			player.cooldown_overlay = cooldown_overlay
 
 		# Equip starting weapons
 		player.equip_weapon("res://scenes/weapons/ranged/fire_staff.tscn", 1)
 		player.equip_weapon("res://scenes/weapons/axe.tscn", 2)
 		player.update_weapon_ui()
+
+		# Connect active weapon cooldown to UI
+		_connect_weapon_cooldown()
 
 	# Start spawner if it exists (timer will handle spawning automatically)
 	if has_node("Spawner"):
@@ -95,3 +100,24 @@ func show_loading_screen():
 func hide_loading_screen():
 	if loading_screen:
 		loading_screen.visible = false
+
+func _connect_weapon_cooldown():
+	if player and player.active_weapon and cooldown_overlay:
+		# Disconnect any existing connections
+		if player.active_weapon.cooldown_changed.is_connected(_on_weapon_cooldown_changed):
+			player.active_weapon.cooldown_changed.disconnect(_on_weapon_cooldown_changed)
+		# Connect to the active weapon
+		player.active_weapon.cooldown_changed.connect(_on_weapon_cooldown_changed)
+		# Initialize - hide overlay when ready
+		cooldown_overlay.visible = false
+
+func _on_weapon_cooldown_changed(cooldown_percent: float):
+	if cooldown_overlay:
+		if cooldown_percent > 0.0:
+			# Show overlay during cooldown
+			cooldown_overlay.visible = true
+			# Fade out as cooldown decreases
+			cooldown_overlay.modulate.a = cooldown_percent
+		else:
+			# Hide overlay when cooldown is complete
+			cooldown_overlay.visible = false
