@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cp3nsyopw8s8s"]
+[gd_scene load_steps=39 format=3 uid="uid://cp3nsyopw8s8s"]
 
 [ext_resource type="Script" uid="uid://cfd65hgmv2r61" path="res://scripts/enemies/zombie_axe.gd" id="1_mqi2r"]
 [ext_resource type="Texture2D" uid="uid://8emrs06q8tni" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Axe/Zombie_Axe_Side-left_Idle-Sheet6.png" id="1_wgty3"]
@@ -226,7 +226,7 @@ radius = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hurtbox"]
 
-[node name="Orc2" type="CharacterBody2D"]
+[node name="zombie_axe" type="CharacterBody2D"]
 script = ExtResource("1_mqi2r")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

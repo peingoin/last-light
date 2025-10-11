@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bqm3vvwmg5j2k"]
 
-[ext_resource type="Script" path="res://scripts/BaseNPC.gd" id="1_1hqmr"]
+[ext_resource type="Script" uid="uid://curhk0hirmc3" path="res://scripts/NPC/BaseNPC.gd" id="1_1hqmr"]
 [ext_resource type="PackedScene" uid="uid://bqm3vvwnpcbar" path="res://scenes/UI/NPCHealthBar.tscn" id="2_hbar"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1xypv"]

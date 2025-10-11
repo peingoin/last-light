@@ -14,7 +14,9 @@ var player_health: int = 5
 var is_invulnerable: bool = false
 
 # Weapon system variables
-var current_weapon: Node2D = null
+var weapon_slot_1: Node2D = null  # First weapon slot
+var weapon_slot_2: Node2D = null  # Second weapon slot
+var active_weapon_slot: int = 1   # Which slot is currently active (1 or 2)
 
 # Interaction system variables
 var current_interactable: Node = null
@@ -24,6 +26,10 @@ var inventory: Dictionary = {"wood": 0, "steel": 0}
 @onready var interact_sensor: Area2D = $InteractSensor
 @onready var weapon_slot: Node2D = $WeaponSlot
 @onready var interaction_area: Area2D = $InteractionArea
+
+var weapon_ui_container: Control  # Will be set by game.gd
+var weapon_active_icon: TextureRect
+var weapon_inactive_icon: TextureRect
 
 var nearby_interactables: Array = []
 var closest_interactable = null
@@ -52,11 +58,11 @@ func get_input() -> Vector2:
 
 func _ready() -> void:
 	add_to_group("player")
-	
+
 	# Connect interaction area signals
 	interaction_area.body_entered.connect(_on_interaction_area_body_entered)
 	interaction_area.body_exited.connect(_on_interaction_area_body_exited)
-	
+
 	# Connect interact sensor signals if available
 	if interact_sensor:
 		interact_sensor.area_entered.connect(_on_interactable_entered)
@@ -69,13 +75,21 @@ func _process(delta):
 	velocity = player_input * speed
 
 	move_and_slide()
-	
+
+	# Flip weapon to match player direction
+	if weapon_slot and animated_sprite:
+		weapon_slot.scale.x = -1 if animated_sprite.flip_h else 1
+
 	# Handle weapon attacks
 	handle_weapon_attack()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		_handle_interact()
+
+	# Switch between weapons with E key
+	if event.is_action_pressed("switch_weapon"):
+		swap_weapons()
 
 func _handle_interact() -> void:
 	if has_node("/root/Dialogue") and get_node("/root/Dialogue").current_lines.size() > 0:
@@ -166,27 +180,113 @@ func _update_closest_interactable() -> void:
 	closest_interactable = new_closest
 
 # Weapon management methods
-func equip_weapon(weapon_scene_path: String) -> void:
-	unequip_weapon()  # Remove current weapon if any
+func equip_weapon(weapon_scene_path: String, slot: int = 1) -> void:
+	if slot < 1 or slot > 2:
+		return
+
 	var weapon_scene = load(weapon_scene_path)
-	if weapon_scene:
-		current_weapon = weapon_scene.instantiate()
-		weapon_slot.add_child(current_weapon)
-		current_weapon.weapon_hit.connect(_on_weapon_hit)
-		current_weapon.equip()
-		weapon_equipped.emit(current_weapon.weapon_name)
-		# Weapon equipped successfully
+	if not weapon_scene:
+		return
+
+	# Remove existing weapon in this slot
+	if slot == 1 and weapon_slot_1:
+		weapon_slot_1.queue_free()
+		weapon_slot_1 = null
+	elif slot == 2 and weapon_slot_2:
+		weapon_slot_2.queue_free()
+		weapon_slot_2 = null
+
+	# Create and add new weapon
+	var new_weapon = weapon_scene.instantiate()
+	weapon_slot.add_child(new_weapon)
+	new_weapon.weapon_hit.connect(_on_weapon_hit)
+
+	# Assign to appropriate slot
+	if slot == 1:
+		weapon_slot_1 = new_weapon
 	else:
-		# Failed to load weapon scene
-		pass
+		weapon_slot_2 = new_weapon
+
+	# Show only if this is the active slot
+	if slot == active_weapon_slot:
+		new_weapon.equip()
+		weapon_equipped.emit(new_weapon.weapon_name)
+	else:
+		new_weapon.unequip()
+
+	# Update UI
+	update_weapon_ui()
+
+func update_weapon_ui() -> void:
+	if not weapon_active_icon or not weapon_inactive_icon:
+		return
+
+	var active_weapon = weapon_slot_1 if active_weapon_slot == 1 else weapon_slot_2
+	var inactive_weapon = weapon_slot_2 if active_weapon_slot == 1 else weapon_slot_1
+
+	# Update active weapon icon
+	if active_weapon and active_weapon.has_node("WeaponSprite"):
+		weapon_active_icon.texture = active_weapon.get_node("WeaponSprite").texture
+	else:
+		weapon_active_icon.texture = null
+
+	# Update inactive weapon icon
+	if inactive_weapon and inactive_weapon.has_node("WeaponSprite"):
+		weapon_inactive_icon.texture = inactive_weapon.get_node("WeaponSprite").texture
+	else:
+		weapon_inactive_icon.texture = null
+
+func swap_weapons() -> void:
+	# Switch to the other slot
+	var new_slot = 2 if active_weapon_slot == 1 else 1
+	var target_weapon = weapon_slot_1 if new_slot == 1 else weapon_slot_2
+
+	if not target_weapon:
+		return  # No weapon in the other slot
+
+	# Hide current weapon
+	var current_weapon = weapon_slot_1 if active_weapon_slot == 1 else weapon_slot_2
+	if current_weapon:
+		current_weapon.unequip()
+
+	# Show new weapon
+	active_weapon_slot = new_slot
+	target_weapon.equip()
+	weapon_equipped.emit(target_weapon.weapon_name)
+	update_weapon_ui()
+
+func switch_to_weapon(slot: int) -> void:
+	if slot < 1 or slot > 2:
+		return
+
+	var target_weapon = weapon_slot_1 if slot == 1 else weapon_slot_2
+	if not target_weapon:
+		return  # No weapon in this slot
+
+	# Hide current weapon
+	var current_weapon = weapon_slot_1 if active_weapon_slot == 1 else weapon_slot_2
+	if current_weapon:
+		current_weapon.unequip()
+
+	# Show new weapon
+	active_weapon_slot = slot
+	target_weapon.equip()
+	weapon_equipped.emit(target_weapon.weapon_name)
+
+func get_current_weapon() -> Node2D:
+	return weapon_slot_1 if active_weapon_slot == 1 else weapon_slot_2
 
 func unequip_weapon() -> void:
-	if current_weapon:
-		current_weapon.queue_free()
-		current_weapon = null
-		weapon_unequipped.emit()
+	if weapon_slot_1:
+		weapon_slot_1.queue_free()
+		weapon_slot_1 = null
+	if weapon_slot_2:
+		weapon_slot_2.queue_free()
+		weapon_slot_2 = null
+	weapon_unequipped.emit()
 
 func handle_weapon_attack() -> void:
+	var current_weapon = get_current_weapon()
 	if Input.is_action_just_pressed("left_click") and current_weapon and current_weapon.can_attack():
 		var attack_direction = get_mouse_attack_direction()
 		current_weapon.attack(attack_direction)

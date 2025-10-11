@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://byigt3yah65th" path="res://assets/Ui/Pixelarium - Interfaces Bundle - Free version/Pack Content/DarkMode Interface/Dialogue interfaces/spr_dialogue_box_button.png" id="1_81jq1"]
 [ext_resource type="FontFile" uid="uid://dwdegyba7w14f" path="res://assets/Font/VT323/VT323-Regular.ttf" id="2_oijin"]
-[ext_resource type="Script" uid="uid://byxmrrv3fndrq" path="res://scripts/textbox.gd" id="3_script"]
+[ext_resource type="Script" uid="uid://byxmrrv3fndrq" path="res://scripts/NPC/textbox.gd" id="3_script"]
 [ext_resource type="AudioStream" uid="uid://cmb6n0x2jv1bq" path="res://assets/Audio/SFX/video-game-text-330163.mp3" id="4_audio"]
 
 [node name="Control" type="Control"]

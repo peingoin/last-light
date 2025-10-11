@@ -9,17 +9,18 @@
 class_name BaseEnemy
 extends CharacterBody2D
 
-@export var speed: float = 30.0
-@export var detect_range: float = 200.0
-@export var attack_range: float = 30.0
-@export var pause_time: float = 0.5
-@export var attack_cooldown: float = pause_time
-@export var damage: int = 1
-@export var swing_hit_frame: int = 3
-@export var swing_max_distance: float = 15.0
-@export var attack_interrupt_factor: float = 1.25 # leave swing if target gets this far
-@export var enemy_health: float = 10.0
-@export var knockback_resistance: float = 0.8
+var speed: float
+var detect_range: float
+var attack_range: float
+var pause_time: float
+var attack_cooldown: float
+var damage: int
+var swing_hit_frame: int
+var swing_max_distance: float
+var attack_interrupt_factor: float
+var knockback_resistance: float
+var invuln_duration: float
+var enemy_health: float
 
 var player: Node2D
 var cooldown_timer := 0.0
@@ -28,6 +29,7 @@ var swing_already_hit := false
 var recovering := false   # <-- new: short pause after a landed hit
 var knockback_velocity := Vector2.ZERO
 var is_dying := false
+var is_invulnerable := false
 
 func _ready() -> void:
 	if get_parent().has_node("Player"):
@@ -134,7 +136,8 @@ func _on_frame_changed() -> void:
 		# Exit attack and pause briefly (1s) before resuming normal logic
 		await pause_for(pause_time)
 
-func _on_anim_finished(anim_name: String) -> void:
+func _on_anim_finished() -> void:
+	var anim_name = $AnimatedSprite2D.animation
 	# Handle death animation completion
 	if anim_name == "death":
 		queue_free()
@@ -170,8 +173,11 @@ func _on_hurtbox_hit(hitbox: Area2D) -> void:
 	pass
 
 func take_damage(damage: int) -> void:
-	if is_dying:
+	if is_dying or is_invulnerable:
+		print("invun")
 		return
+
+	print("Taking damage: ", damage, " | Current health: ", enemy_health, " | New health: ", enemy_health - damage)
 	enemy_health = enemy_health - damage
 
 	# White flash effect
@@ -182,6 +188,12 @@ func take_damage(damage: int) -> void:
 
 	if enemy_health <= 0:
 		die()
+		return
+
+	# Start invulnerability period
+	is_invulnerable = true
+	await get_tree().create_timer(invuln_duration).timeout
+	is_invulnerable = false
 
 func die() -> void:
 	if is_dying:

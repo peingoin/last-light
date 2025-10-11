@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://g0a1vh6i2lf2"]
+[gd_scene load_steps=32 format=3 uid="uid://g0a1vh6i2lf2"]
 
 [ext_resource type="Script" uid="uid://c2t5c2vo0gj4x" path="res://scripts/enemies/zombie_small.gd" id="1_mb1iq"]
 [ext_resource type="Texture2D" uid="uid://cyhom8ly4twot" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Enemies/Zombie_Small/Zombie_Small_Side_Idle-Sheet6.png" id="2_cy1wy"]
@@ -182,6 +182,7 @@ radius = 8.0
 script = ExtResource("1_mb1iq")
 speed = 80.0
 attack_range = 20.0
+enemy_health = 35.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_b5xhy")

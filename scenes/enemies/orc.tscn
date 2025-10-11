@@ -235,7 +235,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lr5g7"]
-radius = 0.0
+radius = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hurtbox"]
 
@@ -244,7 +244,7 @@ script = ExtResource("1_h411a")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_b5xhy")
-animation = &"death"
+animation = &"walk"
 autoplay = "idle"
 offset = Vector2(-6.46, -6.98)
 

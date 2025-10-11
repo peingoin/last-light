@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://scenes/BaseNPC.tscn" id="1_test"]
 [ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="2_frames"]
-[ext_resource type="Script" uid="uid://c7as2wmn2y1qq" path="res://scripts/TestNPC.gd" id="3_script"]
+[ext_resource type="Script" uid="uid://c7as2wmn2y1qq" path="res://scripts/NPC/TestNPC.gd" id="3_script"]
 
 [node name="TestNPC" instance=ExtResource("1_test")]
 script = ExtResource("3_script")

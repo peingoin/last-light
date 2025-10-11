@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ci4kx1msqqo0q"]
+[gd_scene load_steps=2 format=3 uid="uid://bvsm4c0i2xo8t"]
 
 [ext_resource type="Script" uid="uid://d2ascplibpshi" path="res://scripts/storm.gd" id="1_storm"]
 
 [node name="Storm" type="Node2D"]
-z_index = -100
+z_index = 100
 script = ExtResource("1_storm")

@@ -28,20 +28,27 @@ animations = [{
 }],
 "loop": false,
 "name": &"slash",
-"speed": 15.0
+"speed": 20.0
 }]
 
 [node name="IronSword" instance=ExtResource("1_r7vnx")]
 weapon_name = "Iron Sword"
 damage = 15
-attack_range = 60.0
 attack_cooldown = 0.8
+knockback_force = 100.0
+hitbox_start_frame = 0
+hitbox_end_frame = 2
 
 [node name="WeaponSprite" parent="." index="0"]
+position = Vector2(3.9999995, 3)
+rotation = -0.89884454
+scale = Vector2(0.68896556, 0.78571427)
 texture = ExtResource("2_w8q3k")
-offset = Vector2(14.52, 0)
+offset = Vector2(13.155, 0)
 
 [node name="SlashEffect" parent="AttackEffects" index="0"]
+position = Vector2(12, -2)
+scale = Vector2(0.575, 0.53125)
 sprite_frames = SubResource("SpriteFrames_s7k1a")
 animation = &"slash"
 frame = 4

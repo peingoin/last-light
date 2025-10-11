@@ -11,6 +11,7 @@ extends Node2D
 @onready var metal_label = $"CanvasLayer/UI Control/HealthBar/Metal Indicator Control/Metal Label"
 @onready var textbox = $"CanvasLayer/UI Control/TextBox"
 @onready var loading_screen = $"CanvasLayer/LoadingScreen"
+@onready var weapon_ui_container = $"CanvasLayer/UI Control/WeaponUI"
 
 func _ready() -> void:
 	# Show loading screen immediately when game scene loads
@@ -33,9 +34,16 @@ func _ready() -> void:
 		if not player.health_changed.is_connected(_on_player_health_changed):
 			player.health_changed.connect(_on_player_health_changed)
 
-		# Equip weapon after player is ready
-		if player.has_method("equip_weapon"):
-			player.equip_weapon("res://scenes/weapons/iron_sword.tscn")
+		# Set up weapon UI
+		if weapon_ui_container:
+			player.weapon_ui_container = weapon_ui_container
+			player.weapon_active_icon = weapon_ui_container.get_node("ActiveWeaponCircle/ActiveWeaponIcon")
+			player.weapon_inactive_icon = weapon_ui_container.get_node("InactiveWeaponCircle/InactiveWeaponIcon")
+
+		# Equip starting weapons
+		player.equip_weapon("res://scenes/weapons/iron_sword.tscn", 1)
+		player.equip_weapon("res://scenes/weapons/axe.tscn", 2)
+		player.update_weapon_ui()
 
 	# Start spawner if it exists (timer will handle spawning automatically)
 	if has_node("Spawner"):

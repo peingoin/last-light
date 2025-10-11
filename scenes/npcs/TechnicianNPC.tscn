@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://g8h5w4v9x2k7m"]
+[gd_scene load_steps=4 format=3 uid="uid://dd3bc2y1eupgu"]
 
-[ext_resource type="PackedScene" path="res://scenes/BaseNPC.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/TechnicianNPC.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://bqm3vvwmg5j2k" path="res://scenes/BaseNPC.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://c0hp7l813yixg" path="res://scripts/NPC/TechnicianNPC.gd" id="2_script"]
 [ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="3_frames"]
 
 [node name="TechnicianNPC" instance=ExtResource("1_base")]

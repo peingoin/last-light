@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://f9k6r1s7t3p2n"]
+[gd_scene load_steps=4 format=3 uid="uid://ce6b6yvyavubv"]
 
-[ext_resource type="PackedScene" path="res://scenes/BaseNPC.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/ScoutNPC.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://bqm3vvwmg5j2k" path="res://scenes/BaseNPC.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://cwpp0tqvlqvcy" path="res://scripts/NPC/ScoutNPC.gd" id="2_script"]
 [ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="3_frames"]
 
 [node name="ScoutNPC" instance=ExtResource("1_base")]

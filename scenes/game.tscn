@@ -1,8 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=24 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" path="res://scenes/perlin.tscn" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c7g47ul4jt3ti" path="res://scenes/enemies/orc.tscn" id="2_orc"]
 [ext_resource type="PackedScene" uid="uid://b8r2hsxdk7k0l" path="res://scenes/spawner.tscn" id="2_spawner"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="3_lnu2h"]
@@ -13,11 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bvsm4c0i2xo8t" path="res://scenes/storm.tscn" id="8_storm"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="8_textbox"]
-[ext_resource type="PackedScene" path="res://scenes/Machine.tscn" id="10_machine"]
-[ext_resource type="PackedScene" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
+[ext_resource type="PackedScene" uid="uid://dqtv01a3a5fqo" path="res://scenes/Machine.tscn" id="10_machine"]
+[ext_resource type="PackedScene" uid="uid://dqtv01ata6ri3" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
 [ext_resource type="TileSet" uid="uid://cthy5whhkciiq" path="res://van_tile_set.tres" id="13_tileset"]
-[ext_resource type="PackedScene" uid="uid://bdkfp3k7n8r9c" path="res://scenes/npcs/MedicNPC.tscn" id="14_medic"]
-[ext_resource type="PackedScene" uid="uid://c5k2m9q4t8e1w" path="res://scenes/npcs/EngineerNPC.tscn" id="15_engineer"]
+[ext_resource type="PackedScene" uid="uid://bdkfp3k7n8sac" path="res://scenes/npcs/MedicNPC.tscn" id="14_medic"]
+[ext_resource type="PackedScene" uid="uid://c5k2naq4t8e1w" path="res://scenes/npcs/EngineerNPC.tscn" id="15_engineer"]
 [ext_resource type="PackedScene" uid="uid://je3eq2q7k6nx" path="res://scenes/TestNPC.tscn" id="16_testnpc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
@@ -28,6 +28,20 @@ region = Rect2(16.81281, 32.816788, 14.552509, 14.520523)
 atlas = ExtResource("6_p57ef")
 region = Rect2(-0.2072525, 16.752626, 16.751667, 15.37929)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_active_circle"]
+bg_color = Color(0.3, 0.3, 0.3, 0.6)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inactive_circle"]
+bg_color = Color(0.3, 0.3, 0.3, 0.6)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
 player_scene = ExtResource("1_uwrxv")
@@ -37,7 +51,6 @@ spawner_scene = ExtResource("2_spawner")
 
 [node name="Perlin" parent="." instance=ExtResource("1_yqjtg")]
 position = Vector2(-750, -750)
-rotation = 0
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("13_tileset")
@@ -54,9 +67,11 @@ position = Vector2(200, 100)
 
 [node name="MedicNPC" parent="." instance=ExtResource("14_medic")]
 position = Vector2(-200, 150)
+lines = []
 
 [node name="EngineerNPC" parent="." instance=ExtResource("15_engineer")]
 position = Vector2(300, 150)
+lines = []
 
 [node name="TestNPC" parent="." instance=ExtResource("16_testnpc")]
 position = Vector2(0, 200)
@@ -93,6 +108,7 @@ offset_left = -30.0
 offset_top = 70.0
 offset_right = 206.0
 offset_bottom = 161.0
+scale = Vector2(0.5, 0.5)
 
 [node name="Wood Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Wood Indicator Control"]
 layout_mode = 1
@@ -116,10 +132,11 @@ stretch_mode = 4
 
 [node name="Metal Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
 anchors_preset = 0
-offset_left = -31.0
-offset_top = 160.0
-offset_right = 205.0
-offset_bottom = 251.0
+offset_left = -30.0
+offset_top = 110.0
+offset_right = 206.0
+offset_bottom = 201.0
+scale = Vector2(0.5, 0.5)
 
 [node name="Metal Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Metal Indicator Control"]
 layout_mode = 1
@@ -144,10 +161,84 @@ stretch_mode = 4
 [node name="TextBox" parent="CanvasLayer/UI Control" instance=ExtResource("8_textbox")]
 visible = false
 layout_mode = 1
+script = null
 
 [node name="MachineLifeForceUI" parent="CanvasLayer/UI Control" instance=ExtResource("11_machineui")]
 layout_mode = 0
 anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 400.0
+offset_top = 0.0
+offset_right = 630.0
+offset_bottom = 80.0
+
+[node name="WeaponUI" type="Control" parent="CanvasLayer/UI Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -130.0
+offset_top = -130.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ActiveWeaponCircle" type="Panel" parent="CanvasLayer/UI Control/WeaponUI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_active_circle")
+
+[node name="ActiveWeaponIcon" type="TextureRect" parent="CanvasLayer/UI Control/WeaponUI/ActiveWeaponCircle"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InactiveWeaponCircle" type="Panel" parent="CanvasLayer/UI Control/WeaponUI"]
+layout_mode = 1
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 35.0
+offset_bottom = 35.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_inactive_circle")
+
+[node name="InactiveWeaponIcon" type="TextureRect" parent="CanvasLayer/UI Control/WeaponUI/InactiveWeaponCircle"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="LoadingScreen" type="Control" parent="CanvasLayer"]
 visible = false

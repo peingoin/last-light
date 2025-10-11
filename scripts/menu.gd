@@ -12,7 +12,7 @@ func _ready() -> void:
 
 func _on_play() -> void:
 	# Start the game by loading the van interior first
-	get_tree().change_scene_to_file("res://scenes/VanInterior.tscn")
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 func _on_quit() -> void:
 	get_tree().quit()
