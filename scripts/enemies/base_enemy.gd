@@ -32,6 +32,7 @@ var is_dying := false
 var is_invulnerable := false
 
 func _ready() -> void:
+	add_to_group("enemies")
 	if get_parent().has_node("Player"):
 		player = get_parent().get_node("Player")
 	$AnimatedSprite2D.animation_finished.connect(_on_anim_finished)

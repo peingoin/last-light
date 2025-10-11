@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://b8laxn3ko8rsq"]
+
+[ext_resource type="PackedScene" uid="uid://c8j5xm2kn7pqr" path="res://scenes/weapons/ranged/projectile.tscn" id="1_fireball"]
+[ext_resource type="Texture2D" uid="uid://4vag21ad54dn" path="res://assets/Effect and Bullet 16x16/Effect and Bullet 16x16/Fire Effect and Bullet 16x16.png" id="2_fireball_texture"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fireball"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fireball_1"]
+atlas = ExtResource("2_fireball_texture")
+region = Rect2(384, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fireball_2"]
+atlas = ExtResource("2_fireball_texture")
+region = Rect2(400, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fireball_3"]
+atlas = ExtResource("2_fireball_texture")
+region = Rect2(416, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fireball_4"]
+atlas = ExtResource("2_fireball_texture")
+region = Rect2(432, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fireball"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fireball_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fireball_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fireball_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fireball_4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Fireball" instance=ExtResource("1_fireball")]
+speed = 100.0
+homing_activation_distance = 1.0
+homing_turn_rate = 1000.0
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CircleShape2D_fireball")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_fireball")
+autoplay = "default"

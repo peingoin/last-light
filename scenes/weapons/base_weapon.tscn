@@ -10,6 +10,7 @@ z_index = 1
 script = ExtResource("1_1qqvq")
 
 [node name="WeaponSprite" type="Sprite2D" parent="."]
+region_rect = Rect2(0, 0, 448, 448)
 
 [node name="AttackAnimation" type="AnimationPlayer" parent="."]
 

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm4k7xp9n8vwq"]
+
+[ext_resource type="PackedScene" uid="uid://bv0k6xo4yh8xj" path="res://scenes/weapons/base_weapon.tscn" id="1_ranged_base"]
+
+[node name="RangedWeapon" instance=ExtResource("1_ranged_base")]
+
+[node name="SlashEffect" parent="AttackEffects" index="0"]
+visible = false
+
+[node name="HitboxShape" parent="Hitbox" index="0"]
+disabled = true

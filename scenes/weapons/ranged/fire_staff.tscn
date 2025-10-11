@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpq8laxm4rstv"]
+
+[ext_resource type="PackedScene" uid="uid://dm4k7xqan8vwq" path="res://scenes/weapons/ranged/ranged_weapon.tscn" id="1_fire_staff_base"]
+[ext_resource type="Script" uid="uid://c50w8d553ha3s" path="res://scripts/weapons/ranged/fire_staff.gd" id="2_fire_staff_script"]
+[ext_resource type="Texture2D" uid="uid://dqlnhhoxpxxlq" path="res://assets/32x32_PixelWeapons_Free.png" id="3_staff_texture"]
+[ext_resource type="PackedScene" uid="uid://b8laxn3ko8rsq" path="res://scenes/weapons/ranged/fireball.tscn" id="4_fireball"]
+
+[node name="FireStaff" instance=ExtResource("1_fire_staff_base")]
+script = ExtResource("2_fire_staff_script")
+projectile_scene = ExtResource("4_fireball")
+weapon_name = "Fire Staff"
+damage = 0
+attack_cooldown = 0.2
+
+[node name="WeaponSprite" parent="." index="0"]
+position = Vector2(9.405, -3.425)
+rotation = -0.5
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_staff_texture")
+region_enabled = true
+region_rect = Rect2(64, 288, 32, 32)

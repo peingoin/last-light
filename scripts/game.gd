@@ -41,7 +41,7 @@ func _ready() -> void:
 			player.weapon_inactive_icon = weapon_ui_container.get_node("InactiveWeaponCircle/InactiveWeaponIcon")
 
 		# Equip starting weapons
-		player.equip_weapon("res://scenes/weapons/iron_sword.tscn", 1)
+		player.equip_weapon("res://scenes/weapons/ranged/fire_staff.tscn", 1)
 		player.equip_weapon("res://scenes/weapons/axe.tscn", 2)
 		player.update_weapon_ui()
 

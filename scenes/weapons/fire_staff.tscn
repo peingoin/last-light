@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://b6tpmhyxxx6fr"]
+
+[ext_resource type="PackedScene" uid="uid://bv0k6xo4yh8xj" path="res://scenes/weapons/base_weapon.tscn" id="1_j050d"]
+[ext_resource type="Texture2D" uid="uid://dqlnhhoxpxxlq" path="res://assets/32x32_PixelWeapons_Free.png" id="2_n1dl5"]
+[ext_resource type="Texture2D" uid="uid://4vag21ad54dn" path="res://assets/Effect and Bullet 16x16/Effect and Bullet 16x16/Fire Effect and Bullet 16x16.png" id="3_t6kod"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_672sg"]
+atlas = ExtResource("3_t6kod")
+region = Rect2(384, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rif7x"]
+atlas = ExtResource("3_t6kod")
+region = Rect2(400, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gs3ad"]
+atlas = ExtResource("3_t6kod")
+region = Rect2(416, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pi7e6"]
+atlas = ExtResource("3_t6kod")
+region = Rect2(432, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s5gtr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_672sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rif7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gs3ad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pi7e6")
+}],
+"loop": false,
+"name": &"fireball",
+"speed": 10.0
+}]
+
+[node name="Fire Staff" instance=ExtResource("1_j050d")]
+
+[node name="WeaponSprite" parent="." index="0"]
+texture = ExtResource("2_n1dl5")
+region_enabled = true
+region_rect = Rect2(64, 288, 32, 32)
+
+[node name="SlashEffect" parent="AttackEffects" index="0"]
+sprite_frames = SubResource("SpriteFrames_s5gtr")
+animation = &"fireball"

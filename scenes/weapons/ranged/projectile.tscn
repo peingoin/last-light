@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8j5xm2kn7pqr"]
+
+[ext_resource type="Script" uid="uid://78a7tbd20npg" path="res://scripts/weapons/ranged/projectile.gd" id="1_projectile"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_projectile"]
+radius = 8.0
+
+[node name="Projectile" type="Area2D"]
+z_index = 5
+collision_layer = 4
+collision_mask = 40
+script = ExtResource("1_projectile")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_projectile")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
