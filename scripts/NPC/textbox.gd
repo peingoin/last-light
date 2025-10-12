@@ -5,6 +5,7 @@ signal choice_picked(id: String)
 @onready var speaker_label: Label = $MarginContainer/VBoxContainer/Label
 @onready var content_label: RichTextLabel = $MarginContainer/VBoxContainer/RichTextLabel
 @onready var text_audio: AudioStreamPlayer = $AudioStreamPlayer
+@onready var skip_label: Label = $MarginContainer/SkipLabel
 @onready var options_list: VBoxContainer
 
 @export var advance_allowed_with_options := false
@@ -67,25 +68,28 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("interact"):
 		_on_textbox_clicked()
+		get_viewport().set_input_as_handled()
 
 func show_dialogue(speaker_name: String, content: String) -> void:
 	if content.strip_edges() == "":
 		return  # Don't show empty dialogue
-		
+
 	if is_dialogue_active:
 		# Queue the dialogue if one is already active
 		text_queue.append({"speaker": speaker_name, "content": content})
 		return
-	
+
 	is_dialogue_active = true
 	speaker_label.text = speaker_name
 	full_text = content
-	
+
 	# Split text into 2-line chunks
 	text_chunks = _split_text_into_chunks(content)
 	current_chunk_index = 0
-	
+
 	visible = true
+	if skip_label:
+		skip_label.visible = true
 	_show_current_chunk()
 
 func addText(speaker_name: String, content: String) -> void:
@@ -147,17 +151,15 @@ func _show_current_chunk() -> void:
 	if current_chunk_index >= text_chunks.size():
 		_finish_dialogue()
 		return
-	
+
 	current_chunk_text = text_chunks[current_chunk_index]
 	content_label.text = ""
-	can_skip = false
-	is_typing = false
-	
-	type_text()
-	
-	# Allow skipping after 1 second
-	await get_tree().create_timer(1.0).timeout
 	can_skip = true
+	is_typing = false
+	if skip_label:
+		skip_label.visible = true
+
+	type_text()
 
 func type_text() -> void:
 	if is_typing:
@@ -169,7 +171,7 @@ func type_text() -> void:
 	if text_audio and not text_audio.playing:
 		text_audio.play()
 	
-	var chars_per_second = 30.0
+	var chars_per_second = 70.0
 	var delay = 1.0 / chars_per_second
 	
 	for i in range(current_chunk_text.length()):
@@ -192,14 +194,11 @@ func type_text() -> void:
 func _on_textbox_clicked() -> void:
 	if not visible:
 		return
-	
-	if not can_skip:
-		return
-	
+
 	# Prevent any skipping if options are present
 	if current_options.size() > 0:
 		return
-	
+
 	if is_typing:
 		# Skip typing animation for current chunk
 		content_label.text = current_chunk_text
@@ -216,13 +215,18 @@ func _on_textbox_clicked() -> void:
 
 func _finish_dialogue() -> void:
 	is_dialogue_active = false
-	
+
 	# Check if there are queued dialogues
 	if text_queue.size() > 0:
 		var next_dialogue = text_queue.pop_front()
 		show_dialogue(next_dialogue.speaker, next_dialogue.content)
 	else:
 		hide_dialogue()
+		# Emit dialogue_finished signal through the global Dialogue system
+		if has_node("/root/Dialogue"):
+			var dialogue = get_node("/root/Dialogue")
+			if dialogue.has_signal("dialogue_finished"):
+				dialogue.dialogue_finished.emit()
 
 func hide_dialogue() -> void:
 	visible = false
@@ -233,6 +237,8 @@ func hide_dialogue() -> void:
 	text_chunks.clear()
 	text_queue.clear()
 	_clear_options()
+	if skip_label:
+		skip_label.visible = false
 	if text_audio:
 		text_audio.stop()
 

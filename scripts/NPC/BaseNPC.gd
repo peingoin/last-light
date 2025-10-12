@@ -22,6 +22,7 @@ class_name BaseNPC
 var is_talking: bool = false
 var interaction_count: int = 0
 var is_alive: bool = true
+var can_interact_again: bool = true
 
 func _ready() -> void:
 	super._ready()
@@ -47,9 +48,9 @@ func _ready() -> void:
 		dialogue_system.dialogue_finished.connect(_on_dialogue_finished)
 
 func interact(player: Node) -> void:
-	if is_talking:
+	if is_talking or not can_interact_again:
 		return
-	
+
 	# Check interaction limits
 	if max_interactions == 0:
 		# No interactions allowed
@@ -68,21 +69,26 @@ func interact(player: Node) -> void:
 		return
 	
 	is_talking = true
+	can_interact_again = false
 	interaction_count += 1
-	
+
 	if animated_sprite and animated_sprite.sprite_frames.has_animation(anim_talk):
 		animated_sprite.play(anim_talk)
-	
+
 	var dialogue_system = get_node_or_null("/root/Dialogue")
 	if dialogue_system and dialogue_system.has_method("open"):
 		dialogue_system.open(lines, display_name)
 
 func _on_dialogue_finished() -> void:
 	is_talking = false
-	
+
 	if animated_sprite:
 		animated_sprite.play(anim_idle)
-	
+
+	# Add a small delay before allowing interaction again
+	await get_tree().create_timer(0.3).timeout
+	can_interact_again = true
+
 	if destination_scene:
 		get_tree().change_scene_to_packed(destination_scene)
 
