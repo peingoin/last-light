@@ -1,12 +1,12 @@
 [gd_scene load_steps=20 format=4 uid="uid://diqt8d50km10b"]
 
-[ext_resource type="Texture2D" uid="uid://cf1y47jeok40w" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Buildings/Buildings_dark_TileSet.png" id="1_n8f7j"]
-[ext_resource type="Texture2D" uid="uid://bde01jj8n3usv" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/Air-vent_2_rusty.png" id="2_rbbk1"]
-[ext_resource type="Texture2D" uid="uid://cl72ondf5va1o" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/Air-vent_4_rusty.png" id="3_mgv7f"]
-[ext_resource type="Texture2D" uid="uid://dxrngtuwpbumk" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/Destroyed-wall_corner.png" id="4_cuoy6"]
-[ext_resource type="Texture2D" uid="uid://sgyjjyprk0ve" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/layered-posters_1_For-ground-and-walls.png" id="5_0jgwt"]
-[ext_resource type="Texture2D" uid="uid://bcrrhmg0nqb2c" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/layered-posters_2_For-ground-and-walls.png" id="6_4yqd5"]
-[ext_resource type="Texture2D" uid="uid://dqx1kihnsr752" path="res://assets/Apocalypse_Assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Background_Dark-Green_TileSet.png" id="7_6lgjb"]
+[ext_resource type="Texture2D" uid="uid://cf1y47jeok40w" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Buildings/Buildings_dark_TileSet.png" id="1_n8f7j"]
+[ext_resource type="Texture2D" uid="uid://bde01jj8n3usv" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/Air-vent_2_rusty.png" id="2_rbbk1"]
+[ext_resource type="Texture2D" uid="uid://cl72ondf5va1o" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/Air-vent_4_rusty.png" id="3_mgv7f"]
+[ext_resource type="Texture2D" uid="uid://dxrngtuwpbumk" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/Destroyed-wall_corner.png" id="4_cuoy6"]
+[ext_resource type="Texture2D" uid="uid://sgyjjyprk0ve" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/layered-posters_1_For-ground-and-walls.png" id="5_0jgwt"]
+[ext_resource type="Texture2D" uid="uid://bcrrhmg0nqb2c" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Objects/Buildings/layered-posters_2_For-ground-and-walls.png" id="6_4yqd5"]
+[ext_resource type="Texture2D" uid="uid://dqx1kihnsr752" path="res://assets/PostApocalypse_AssetPack_v1.1.2/Tiles/Background_Dark-Green_TileSet.png" id="7_6lgjb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8od5r"]
 texture = ExtResource("1_n8f7j")

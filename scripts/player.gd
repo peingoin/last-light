@@ -71,6 +71,10 @@ func get_input() -> Vector2:
 func _ready() -> void:
 	add_to_group("player")
 
+	# Load player state from global PlayerData
+	if has_node("/root/PlayerData"):
+		PlayerData.load_player_state(self)
+
 	# Hide dash effect initially
 	if dash_effect:
 		dash_effect.visible = false
@@ -539,3 +543,12 @@ func _on_dialogue_finished() -> void:
 
 	# Show interact prompt again if still near an interactable
 	_update_interact_prompt_visibility()
+
+func save_state() -> void:
+	# Save player state to global PlayerData before scene transitions
+	if has_node("/root/PlayerData"):
+		PlayerData.save_player_state(self)
+
+func _exit_tree() -> void:
+	# Auto-save player state when player is removed from scene tree
+	save_state()

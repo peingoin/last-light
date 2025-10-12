@@ -140,17 +140,15 @@ func show_dialogue_with_options(speaker_name: String, content: String, callback_
 	
 	# Set up options if any exist
 	if options.size() > 0:
-		# Connect to choice_picked signal if not already connected
-		if dialogue_ui.has_signal("choice_picked"):
-			if not dialogue_ui.choice_picked.is_connected(_on_choice_picked):
-				dialogue_ui.choice_picked.connect(_on_choice_picked)
-		
+		# Connect to choice_picked signal if available
+		if dialogue_ui and dialogue_ui.has_signal("choice_picked"):
+			var signal_obj = dialogue_ui.choice_picked
+			if signal_obj and not signal_obj.is_connected(_on_choice_picked):
+				signal_obj.connect(_on_choice_picked)
+
 		# Set the options
 		if dialogue_ui.has_method("set_options"):
 			dialogue_ui.set_options(options)
-		else:
-			# Warning: DialogueUI does not have set_options method
-			pass
 
 func _on_choice_picked(choice_id: String) -> void:
 	# Check if there's a callback for this choice

@@ -38,9 +38,11 @@ func _ready() -> void:
 	if health_bar:
 		health_bar.max_value = max_health
 		health_bar.value = current_health
-		if current_health < max_health: 
+		# Only show health bar if damaged
+		if current_health < max_health:
 			health_bar.show()
-		
+		else:
+			health_bar.hide()
 	
 	# Connect to dialogue system if available
 	var dialogue_system = get_node_or_null("/root/Dialogue")
@@ -108,21 +110,28 @@ func get_remaining_interactions() -> int:
 func take_damage(amount: int) -> void:
 	if not is_alive:
 		return
-	
+
 	current_health = max(0, current_health - amount)
 	if health_bar:
 		health_bar.value = current_health
-	
+		# Show health bar when taking damage
+		health_bar.show()
+
 	if current_health <= 0:
 		die()
 
 func heal(amount: int) -> void:
 	if not is_alive:
 		return
-	
+
 	current_health = min(max_health, current_health + amount)
 	if health_bar:
 		health_bar.value = current_health
+		# Hide health bar if fully healed
+		if current_health >= max_health:
+			health_bar.hide()
+		else:
+			health_bar.show()
 
 func die() -> void:
 	is_alive = false

@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5y8qm3xk8rvi"]
+
+[ext_resource type="Script" uid="uid://c5tuxd5qqqhgq" path="res://scripts/VanEntrance.gd" id="1_van_entrance"]
+[ext_resource type="Texture2D" uid="uid://bi58y104re57i" path="res://assets/Van1.png" id="2_van_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_van_collision"]
+size = Vector2(71, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_van_entrance"]
+size = Vector2(102.75, 76.75)
+
+[node name="VanEntrance" type="StaticBody2D"]
+script = ExtResource("1_van_entrance")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.7, 1.7)
+texture = ExtResource("2_van_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 10)
+shape = SubResource("RectangleShape2D_van_collision")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0.625, 6)
+shape = SubResource("RectangleShape2D_van_entrance")

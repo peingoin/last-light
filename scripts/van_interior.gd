@@ -17,8 +17,15 @@ func _on_body_entered(body: Node) -> void:
 	if require_player_group != "" and not body.is_in_group(require_player_group):
 		return
 	_used = true
+
+	# Save player state before leaving van
+	if body.has_method("save_state"):
+		body.save_state()
+
 	if delay_seconds > 0.0:
 		await get_tree().create_timer(delay_seconds).timeout
 	if not is_inside_tree():
 		return
+
+	# Return to game scene
 	get_tree().change_scene_to_file(target_scene)

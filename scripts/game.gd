@@ -16,7 +16,7 @@ extends Node2D
 @onready var interact_prompt = $"CanvasLayer/UI Control/InteractPrompt"
 
 func _ready() -> void:
-	# Show loading screen immediately when game scene loads
+	# Show loading screen for map generation
 	show_loading_screen()
 
 	# Wait a frame to ensure all nodes are ready
@@ -33,8 +33,9 @@ func _ready() -> void:
 		health_bar.init_health(player.player_health)
 
 		# Connect to player's health changes
-		if not player.health_changed.is_connected(_on_player_health_changed):
-			player.health_changed.connect(_on_player_health_changed)
+		var signal_obj = player.health_changed
+		if signal_obj and not signal_obj.is_connected(_on_player_health_changed):
+			signal_obj.connect(_on_player_health_changed)
 
 		# Set up weapon UI
 		if weapon_ui_container:
@@ -107,11 +108,13 @@ func hide_loading_screen():
 
 func _connect_weapon_cooldown():
 	if player and player.active_weapon and cooldown_overlay:
+		var signal_obj = player.active_weapon.cooldown_changed
 		# Disconnect any existing connections
-		if player.active_weapon.cooldown_changed.is_connected(_on_weapon_cooldown_changed):
-			player.active_weapon.cooldown_changed.disconnect(_on_weapon_cooldown_changed)
+		if signal_obj and signal_obj.is_connected(_on_weapon_cooldown_changed):
+			signal_obj.disconnect(_on_weapon_cooldown_changed)
 		# Connect to the active weapon
-		player.active_weapon.cooldown_changed.connect(_on_weapon_cooldown_changed)
+		if signal_obj:
+			signal_obj.connect(_on_weapon_cooldown_changed)
 		# Initialize - hide overlay when ready
 		cooldown_overlay.visible = false
 
@@ -129,10 +132,16 @@ func _on_weapon_cooldown_changed(cooldown_percent: float):
 func _connect_interactables():
 	# Connect to all existing interactables
 	for interactable in get_tree().get_nodes_in_group("interactable"):
-		if not interactable.player_nearby.is_connected(_on_interactable_nearby):
-			interactable.player_nearby.connect(_on_interactable_nearby)
-		if not interactable.player_left.is_connected(_on_interactable_left):
-			interactable.player_left.connect(_on_interactable_left)
+		# Only connect if the interactable has these signals
+		if interactable.has_signal("player_nearby"):
+			var signal_obj = interactable.player_nearby
+			if signal_obj and not signal_obj.is_connected(_on_interactable_nearby):
+				signal_obj.connect(_on_interactable_nearby)
+
+		if interactable.has_signal("player_left"):
+			var signal_obj = interactable.player_left
+			if signal_obj and not signal_obj.is_connected(_on_interactable_left):
+				signal_obj.connect(_on_interactable_left)
 
 func _on_interactable_nearby(_interactable: Node):
 	if interact_prompt:

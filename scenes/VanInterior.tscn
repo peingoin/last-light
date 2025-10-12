@@ -77,11 +77,11 @@ position = Vector2(400, 300)
 lines = []
 
 [node name="Machine" type="Sprite2D" parent="."]
-position = Vector2(-58, 173)
+position = Vector2(-66, 190)
 texture = ExtResource("8_machine")
 
 [node name="Player" parent="." instance=ExtResource("9_player")]
-position = Vector2(-53, 248)
+position = Vector2(-60, 281)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
