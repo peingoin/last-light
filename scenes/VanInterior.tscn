@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ccwyhu83j70rm"]
+[gd_scene load_steps=22 format=3 uid="uid://ccwyhu83j70rm"]
 
 [ext_resource type="Script" uid="uid://bwl6fpxodiei3" path="res://scripts/van_interior.gd" id="1_1rbwi"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="1_textbox"]
@@ -46,7 +46,7 @@ corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exitdoor"]
-size = Vector2(20, 18.49)
+size = Vector2(31, 14.244997)
 
 [node name="VanInterior" type="Node2D"]
 position = Vector2(25, 0)
@@ -57,19 +57,19 @@ z_index = -2
 position = Vector2(-99, 157)
 
 [node name="MedicNPC" parent="." instance=ExtResource("2_medic")]
-position = Vector2(-90, 227)
+position = Vector2(-126, 208)
 lines = []
 
 [node name="ForagerNPC" parent="." instance=ExtResource("3_forager")]
-position = Vector2(-91, 275)
+position = Vector2(-127, 255)
 lines = []
 
 [node name="EngineerNPC" parent="." instance=ExtResource("4_engineer")]
-position = Vector2(-26, 276)
+position = Vector2(-5, 254)
 lines = []
 
 [node name="TechnicianNPC" parent="." instance=ExtResource("5_technician")]
-position = Vector2(-27, 227)
+position = Vector2(-6, 211)
 lines = []
 
 [node name="ScoutNPC" parent="." instance=ExtResource("6_scout")]
@@ -280,4 +280,5 @@ position = Vector2(-61, 306)
 script = ExtResource("1_1rbwi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor"]
+position = Vector2(-6.5, -12.877502)
 shape = SubResource("RectangleShape2D_exitdoor")
