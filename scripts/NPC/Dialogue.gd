@@ -16,20 +16,35 @@ func _ready() -> void:
 
 func _find_dialogue_ui() -> void:
 	# Try multiple possible paths to find the TextBox
+	var current_scene = get_tree().current_scene
+
+	# Try current scene paths first
+	if current_scene:
+		dialogue_ui = current_scene.get_node_or_null("CanvasLayer/UI Control/TextBox")
+		if dialogue_ui:
+			return
+		dialogue_ui = current_scene.get_node_or_null("UI/TextBox")
+		if dialogue_ui:
+			return
+		dialogue_ui = current_scene.get_node_or_null("TextBox")
+		if dialogue_ui:
+			return
+
+	# Try absolute paths
 	dialogue_ui = get_node_or_null("/root/Game/CanvasLayer/UI Control/TextBox")
-	if not dialogue_ui:
-		dialogue_ui = get_node_or_null("/root/Game/UI/TextBox")
-	if not dialogue_ui:
-		dialogue_ui = get_node_or_null("/root/Game/TextBox")
-	if not dialogue_ui:
-		# Try to find it in the current scene
-		var current_scene = get_tree().current_scene
-		if current_scene:
-			dialogue_ui = current_scene.get_node_or_null("CanvasLayer/UI Control/TextBox")
-			if not dialogue_ui:
-				dialogue_ui = current_scene.get_node_or_null("UI/TextBox")
-			if not dialogue_ui:
-				dialogue_ui = current_scene.get_node_or_null("TextBox")
+	if dialogue_ui:
+		return
+	dialogue_ui = get_node_or_null("/root/VanInterior/CanvasLayer/UI Control/TextBox")
+	if dialogue_ui:
+		return
+	dialogue_ui = get_node_or_null("/root/Game/UI/TextBox")
+	if dialogue_ui:
+		return
+	dialogue_ui = get_node_or_null("/root/Game/TextBox")
+	if dialogue_ui:
+		return
+
+	print("Warning: Could not find dialogue UI TextBox")
 
 func open(lines: PackedStringArray, speaker_name: String = "") -> void:
 	if lines.is_empty():

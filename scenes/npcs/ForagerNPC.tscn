@@ -2,15 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://bqm3vvwmg5j2k" path="res://scenes/BaseNPC.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://byxl8m5uffgg" path="res://scripts/NPC/ForagerNPC.gd" id="2_script"]
-[ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="3_frames"]
+[ext_resource type="SpriteFrames" uid="uid://dvefqc61lxn6k" path="res://resources/ForagerFrames.tres" id="3_frames"]
 
 [node name="ForagerNPC" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-display_name = &"Willow Greenthumb"
-lines = PackedStringArray("Willow: Hello there! I'm the local forager. Know of any good gathering spots?", "Willow: The forest provides for those who know where to look.")
+display_name = &"Sage Greenthumb"
+lines = PackedStringArray()
 frames = ExtResource("3_frames")
 max_health = 70
 current_health = 70
 
-[node name="AnimatedSprite2D" parent="." index="2"]
+[node name="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = ExtResource("3_frames")
+
+[node name="HealthBar" parent="." index="2"]
+visible = true

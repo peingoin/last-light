@@ -2,15 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://bqm3vvwmg5j2k" path="res://scenes/BaseNPC.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://x5wkcd35ciny" path="res://scripts/NPC/EngineerNPC.gd" id="2_script"]
-[ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="3_frames"]
+[ext_resource type="SpriteFrames" uid="uid://cgblwbj2vbsje" path="res://resources/EngineerFrames.tres" id="3_frames"]
 
 [node name="EngineerNPC" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 display_name = &"Marcus Gearwright"
-lines = PackedStringArray("Marcus: Greetings! I'm the village engineer. Need any mechanical repairs?", "Marcus: These contraptions won't fix themselves!")
+lines = PackedStringArray()
 frames = ExtResource("3_frames")
 max_health = 90
 current_health = 90
 
-[node name="AnimatedSprite2D" parent="." index="2"]
+[node name="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = ExtResource("3_frames")
+
+[node name="HealthBar" parent="." index="2"]
+visible = true

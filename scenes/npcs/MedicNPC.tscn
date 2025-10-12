@@ -2,15 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://bqm3vvwmg5j2k" path="res://scenes/BaseNPC.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://hfaffk2mdvlg" path="res://scripts/NPC/MedicNPC.gd" id="2_script"]
-[ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="3_frames"]
+[ext_resource type="SpriteFrames" uid="uid://b8kqyd76cm7eo" path="res://resources/MedicFrames.tres" id="3_frames"]
 
 [node name="MedicNPC" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 display_name = &"Dr. Elena Brightwater"
-lines = PackedStringArray("Dr. Elena: Hello! I'm the village medic. Is there anything I can help you with?", "Dr. Elena: Stay healthy out there!")
+lines = PackedStringArray()
 frames = ExtResource("3_frames")
 max_health = 80
 current_health = 80
 
-[node name="AnimatedSprite2D" parent="." index="2"]
+[node name="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = ExtResource("3_frames")
+
+[node name="HealthBar" parent="." index="2"]
+visible = true

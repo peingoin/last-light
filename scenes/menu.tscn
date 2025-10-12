@@ -31,3 +31,6 @@ text = "QUIT"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/quit_button" to="." method="_on_quit_button_pressed"]

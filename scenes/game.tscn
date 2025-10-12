@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=21 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
@@ -13,12 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bvsm4c0i2xo8t" path="res://scenes/storm.tscn" id="8_storm"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="8_textbox"]
-[ext_resource type="PackedScene" uid="uid://dqtv01a3a5fqo" path="res://scenes/Machine.tscn" id="10_machine"]
 [ext_resource type="PackedScene" uid="uid://dqtv01ata6ri3" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
 [ext_resource type="TileSet" uid="uid://cthy5whhkciiq" path="res://van_tile_set.tres" id="13_tileset"]
-[ext_resource type="PackedScene" uid="uid://bdkfp3k7n8sac" path="res://scenes/npcs/MedicNPC.tscn" id="14_medic"]
-[ext_resource type="PackedScene" uid="uid://c5k2naq4t8e1w" path="res://scenes/npcs/EngineerNPC.tscn" id="15_engineer"]
-[ext_resource type="PackedScene" uid="uid://je3eq2q7k6nx" path="res://scenes/TestNPC.tscn" id="16_testnpc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
@@ -35,19 +31,19 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inactive_circle"]
-bg_color = Color(0.3, 0.3, 0.3, 0.6)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cooldown_overlay"]
 bg_color = Color(1, 1, 1, 0.8)
 corner_radius_top_left = 50
 corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inactive_circle"]
+bg_color = Color(0.3, 0.3, 0.3, 0.6)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
@@ -69,23 +65,6 @@ monster_scenes = Array[PackedScene]([ExtResource("2_orc"), ExtResource("5_gee14"
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
 
-[node name="Machine" parent="." instance=ExtResource("10_machine")]
-position = Vector2(200, 100)
-
-[node name="MedicNPC" parent="." instance=ExtResource("14_medic")]
-position = Vector2(-200, 150)
-lines = []
-
-[node name="EngineerNPC" parent="." instance=ExtResource("15_engineer")]
-position = Vector2(300, 150)
-lines = []
-
-[node name="TestNPC" parent="." instance=ExtResource("16_testnpc")]
-position = Vector2(0, 200)
-
-[node name="CharacterBody2D" parent="." instance=ExtResource("2_orc")]
-position = Vector2(-99, -1)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UI Control" type="Control" parent="CanvasLayer"]
@@ -103,10 +82,11 @@ anchor_left = 0.051215276
 anchor_top = 0.9691358
 anchor_right = 0.3246528
 anchor_bottom = 1.0432099
-offset_left = 1.0
-offset_top = -598.0
-offset_right = 1.0
-offset_bottom = -598.0
+offset_left = -34.0
+offset_top = -613.0
+offset_right = -34.0
+offset_bottom = -613.0
+scale = Vector2(0.6, 0.6)
 metadata/_edit_use_anchors_ = true
 
 [node name="Wood Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
@@ -115,7 +95,7 @@ offset_left = -30.0
 offset_top = 70.0
 offset_right = 206.0
 offset_bottom = 161.0
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.8, 0.8)
 
 [node name="Wood Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Wood Indicator Control"]
 layout_mode = 1
@@ -140,10 +120,10 @@ stretch_mode = 4
 [node name="Metal Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
 anchors_preset = 0
 offset_left = -30.0
-offset_top = 110.0
+offset_top = 130.0
 offset_right = 206.0
-offset_bottom = 201.0
-scale = Vector2(0.5, 0.5)
+offset_bottom = 221.0
+scale = Vector2(0.8, 0.8)
 
 [node name="Metal Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Metal Indicator Control"]
 layout_mode = 1
@@ -168,7 +148,6 @@ stretch_mode = 4
 [node name="TextBox" parent="CanvasLayer/UI Control" instance=ExtResource("8_textbox")]
 visible = false
 layout_mode = 1
-script = null
 
 [node name="MachineLifeForceUI" parent="CanvasLayer/UI Control" instance=ExtResource("11_machineui")]
 layout_mode = 0
@@ -179,6 +158,26 @@ offset_left = 400.0
 offset_top = 0.0
 offset_right = 630.0
 offset_bottom = 80.0
+
+[node name="InteractPrompt" type="Label" parent="CanvasLayer/UI Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 150.0
+offset_right = 100.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_lbhrr")
+theme_override_font_sizes/font_size = 32
+text = "Press E to interact"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="WeaponUI" type="Control" parent="CanvasLayer/UI Control"]
 layout_mode = 1

@@ -13,6 +13,7 @@ extends Node2D
 @onready var loading_screen = $"CanvasLayer/LoadingScreen"
 @onready var weapon_ui_container = $"CanvasLayer/UI Control/WeaponUI"
 @onready var cooldown_overlay = $"CanvasLayer/UI Control/WeaponUI/ActiveWeaponCircle/CooldownOverlay"
+@onready var interact_prompt = $"CanvasLayer/UI Control/InteractPrompt"
 
 func _ready() -> void:
 	# Show loading screen immediately when game scene loads
@@ -54,6 +55,9 @@ func _ready() -> void:
 	if has_node("Spawner"):
 		var spawner = $Spawner
 		# Timer-based spawning starts automatically in spawner._ready()
+
+	# Connect to all interactables in the scene
+	_connect_interactables()
 
 func _spawn_environment() -> void:
 	if environment_scene:
@@ -121,3 +125,19 @@ func _on_weapon_cooldown_changed(cooldown_percent: float):
 		else:
 			# Hide overlay when cooldown is complete
 			cooldown_overlay.visible = false
+
+func _connect_interactables():
+	# Connect to all existing interactables
+	for interactable in get_tree().get_nodes_in_group("interactable"):
+		if not interactable.player_nearby.is_connected(_on_interactable_nearby):
+			interactable.player_nearby.connect(_on_interactable_nearby)
+		if not interactable.player_left.is_connected(_on_interactable_left):
+			interactable.player_left.connect(_on_interactable_left)
+
+func _on_interactable_nearby(_interactable: Node):
+	if interact_prompt:
+		interact_prompt.visible = true
+
+func _on_interactable_left(_interactable: Node):
+	if interact_prompt:
+		interact_prompt.visible = false

@@ -2,15 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://bqm3vvwmg5j2k" path="res://scenes/BaseNPC.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cwpp0tqvlqvcy" path="res://scripts/NPC/ScoutNPC.gd" id="2_script"]
-[ext_resource type="SpriteFrames" uid="uid://b2m1vgard5j2k" path="res://resources/VillageGuardFrames.tres" id="3_frames"]
+[ext_resource type="SpriteFrames" uid="uid://1rofcfuk232q" path="res://resources/ScoutFrames.tres" id="3_frames"]
 
 [node name="ScoutNPC" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-display_name = &"Raven Swiftarrow"
-lines = PackedStringArray("Raven: Well met, traveler! I scout these lands for dangers. Stay alert out there!", "Raven: Always keep your eyes on the horizon.")
+display_name = &"Raven Swiftfoot"
+lines = PackedStringArray()
 frames = ExtResource("3_frames")
 max_health = 85
 current_health = 85
 
-[node name="AnimatedSprite2D" parent="." index="2"]
+[node name="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = ExtResource("3_frames")
+
+[node name="HealthBar" parent="." index="2"]
+visible = true

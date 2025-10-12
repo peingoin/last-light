@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://b8kqyd76cm7eo"]
+
+[ext_resource type="Texture2D" uid="uid://bel0tu12ejffn" path="res://assets/NPC/character-pack-full_version/sprite_split/character_2/character_2_frame16x20.png" id="1_idle"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle"]
+atlas = ExtResource("1_idle")
+region = Rect2(16, 0, 16, 20)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]

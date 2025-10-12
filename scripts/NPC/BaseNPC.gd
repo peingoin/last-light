@@ -37,7 +37,9 @@ func _ready() -> void:
 	if health_bar:
 		health_bar.max_value = max_health
 		health_bar.value = current_health
-		health_bar.show()
+		if current_health < max_health: 
+			health_bar.show()
+		
 	
 	# Connect to dialogue system if available
 	var dialogue_system = get_node_or_null("/root/Dialogue")

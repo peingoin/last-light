@@ -84,11 +84,9 @@ radius = 19.104973
 
 [node name="Fireball" instance=ExtResource("1_fireball")]
 script = ExtResource("2_fireball_script")
-explosion_damage = 50
+explosion_damage = 30
 damage = 0
-speed = 100.0
-homing_activation_distance = 1.0
-homing_turn_rate = 1000.0
+speed = 200.0
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CircleShape2D_fireball")

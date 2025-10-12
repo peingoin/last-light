@@ -448,12 +448,3 @@ script = ExtResource("1_5aqiu")
 tile_set = SubResource("TileSet_00ycv")
 
 [node name="ObjectContainer" type="Node2D" parent="."]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Button" type="Button" parent="CanvasLayer"]
-offset_right = 100.0
-offset_bottom = 30.0
-text = "Randomize"
-
-[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

@@ -8,14 +8,16 @@
 [node name="FireStaff" instance=ExtResource("1_fire_staff_base")]
 script = ExtResource("2_fire_staff_script")
 projectile_scene = ExtResource("4_fireball")
+projectile_spawn_offset = 20.0
 weapon_name = "Fire Staff"
-damage = 0
-attack_cooldown = 0.2
+damage = 5
+attack_cooldown = 0.8
+knockback_force = 10.0
 
 [node name="WeaponSprite" parent="." index="0"]
-position = Vector2(9.405, -3.425)
+position = Vector2(8.585, -4.15)
 rotation = -0.5
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.705, 0.705)
 texture = ExtResource("3_staff_texture")
 region_enabled = true
 region_rect = Rect2(64, 288, 32, 32)

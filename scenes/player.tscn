@@ -1,9 +1,15 @@
-[gd_scene load_steps=27 format=3 uid="uid://cy42k8hu53sp5"]
+[gd_scene load_steps=34 format=3 uid="uid://cy42k8hu53sp5"]
 
 [ext_resource type="Script" uid="uid://d0rwf75h1f7gl" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://dc6onrtxkn2gg" path="res://assets/Characters(100x100)/Soldier/Soldier/Soldier-Idle.png" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://dby4l7bisarfa" path="res://assets/Characters(100x100)/Soldier/Soldier/Soldier-Hurt.png" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://cmcju6t2eixwq" path="res://assets/Characters(100x100)/Soldier/Soldier/Soldier-Walk.png" id="3_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://b2sd7gnc0fpjx" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM051/SM051.png" id="5_y4r1p"]
+[ext_resource type="Texture2D" uid="uid://cgbtlqoubm8ny" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM051/SM052.png" id="6_d2wvv"]
+[ext_resource type="Texture2D" uid="uid://beqyty2jc0i0" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM051/SM053.png" id="7_3v2ag"]
+[ext_resource type="Texture2D" uid="uid://q61gwc1qp4gd" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM051/SM054.png" id="8_jej6c"]
+[ext_resource type="Texture2D" uid="uid://uolaako0jiy6" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM051/SM055.png" id="9_f1ej7"]
+[ext_resource type="Texture2D" uid="uid://j60x71lu1inc" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM051/SM056.png" id="10_oprun"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfm1y"]
 atlas = ExtResource("2_dqkch")
@@ -153,10 +159,36 @@ animations = [{
 radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
-radius = 64.0
+radius = 25.96151
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_interaction"]
 radius = 25.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a8ls1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_y4r1p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_d2wvv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_3v2ag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jej6c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_f1ej7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_oprun")
+}],
+"loop": false,
+"name": &"dash",
+"speed": 12.0
+}]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 100
@@ -175,7 +207,6 @@ shape = SubResource("CircleShape2D_f1ek2")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 limit_enabled = false
-position_smoothing_enabled = true
 
 [node name="InteractSensor" type="Area2D" parent="."]
 
@@ -193,3 +224,10 @@ position = Vector2(-7, -7)
 [node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea"]
 position = Vector2(-7, -7)
 shape = SubResource("CircleShape2D_interaction")
+
+[node name="dash_effect" type="AnimatedSprite2D" parent="."]
+z_index = -1
+position = Vector2(16, -6)
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_a8ls1")
+animation = &"dash"
