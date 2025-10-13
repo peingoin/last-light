@@ -16,10 +16,12 @@ var active_enemies_count: int = 0
 
 func _ready() -> void:
 	# Disable spawner timer (we control spawning manually)
-	if spawner and spawner.has_node("spawn_timer"):
-		var timer = spawner.get_node("spawn_timer")
-		timer.stop()
-		timer.autostart = false
+	if spawner:
+		# Wait for spawner to be fully ready
+		await get_tree().process_frame
+		if spawner.spawn_timer:
+			spawner.spawn_timer.stop()
+			spawner.spawn_timer.autostart = false
 
 	# Reset player health to max
 	PlayerData.player_health = PlayerData.max_health
@@ -90,6 +92,7 @@ func _on_weapon_cooldown_changed(cooldown_percent: float):
 
 func _start_wave_1() -> void:
 	current_state = WaveState.WAVE_1
+	print("Starting Wave 1")
 
 	# Show tutorial text
 	if tutorial_text:
@@ -110,13 +113,13 @@ func _start_wave_1() -> void:
 	add_child(orc)
 
 	# Connect death signal
-	orc.tree_exiting.connect(_on_enemy_died)
+	if orc.tree_exiting.connect(_on_enemy_died) == OK:
+		print("Connected orc death signal")
 	active_enemies_count = 1
 
 func _start_wave_2() -> void:
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
-	return
 	current_state = WaveState.WAVE_2
+	print("Starting Wave 2")
 
 	# Hide tutorial text
 	if tutorial_text:
@@ -125,12 +128,16 @@ func _start_wave_2() -> void:
 	# Spawn 3 random enemies around player
 	var spawned = spawner.spawn_monsters(player.global_position, 3, 100.0)
 
-	# Connect signals
+	# Connect signals and debug positions
 	for enemy in spawned:
-		enemy.tree_exiting.connect(_on_enemy_died)
+		if enemy.tree_exiting.connect(_on_enemy_died) == OK:
+			print("Connected enemy death signal")
+		print("Enemy spawned at: ", enemy.global_position, " z_index: ", enemy.z_index)
+		# Ensure enemies are visible and above tilemaps
+		enemy.z_index = 50
 
 	active_enemies_count = 3
-	_complete_tutorial()
+	print("Wave 2: Spawned ", spawned.size(), " enemies at player pos: ", player.global_position)
 
 func _start_wave_3() -> void:
 	current_state = WaveState.WAVE_3
@@ -191,9 +198,11 @@ func _complete_tutorial() -> void:
 func _on_enemy_died() -> void:
 	# Decrement counter
 	active_enemies_count -= 1
+	print("Enemy died! Remaining: ", active_enemies_count)
 
 	# Check if wave is complete
 	if active_enemies_count == 0:
+		print("Wave complete! Advancing...")
 		_advance_wave()
 
 func _advance_wave() -> void:
