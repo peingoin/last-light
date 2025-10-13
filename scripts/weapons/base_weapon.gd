@@ -27,6 +27,7 @@ var last_animation_state: String = ""
 @onready var hitbox: Area2D = $Hitbox
 @onready var hitbox_shape: CollisionShape2D = $Hitbox/HitboxShape
 @onready var attack_audio: AudioStreamPlayer2D = $AttackAudio
+@onready var impact_audio: AudioStreamPlayer2D = $ImpactAudio
 
 func _ready() -> void:
 	hitbox.area_entered.connect(_on_hitbox_area_entered)
@@ -102,6 +103,10 @@ func attack(direction: Vector2) -> void:
 	is_attacking = true
 	cooldown_timer = attack_cooldown
 
+	# Play attack sound
+	if attack_audio:
+		attack_audio.play()
+
 	# Hide weapon sprite during attack
 	if weapon_sprite:
 		weapon_sprite.visible = false
@@ -161,6 +166,10 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 				return
 			enemies_hit_this_attack.append(enemy)
 			print("Hitting enemy with damage: ", damage)
+
+			# Play impact sound
+			if impact_audio:
+				impact_audio.play()
 
 			# Calculate knockback direction from player to enemy
 			var knockback_direction = (enemy.global_position - player.global_position).normalized()

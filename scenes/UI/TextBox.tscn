@@ -3,7 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://byigt3yah65th" path="res://assets/Ui/Pixelarium - Interfaces Bundle - Free version/Pack Content/DarkMode Interface/Dialogue interfaces/spr_dialogue_box_button.png" id="1_81jq1"]
 [ext_resource type="FontFile" uid="uid://dwdegyba7w14f" path="res://assets/Font/VT323/VT323-Regular.ttf" id="2_oijin"]
 [ext_resource type="Script" uid="uid://byxmrrv3fndrq" path="res://scripts/NPC/textbox.gd" id="3_script"]
-[ext_resource type="AudioStream" uid="uid://cmb6n0x2jv1bq" path="res://assets/Audio/SFX/video-game-text-330163.mp3" id="4_audio"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_outline"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.5, 0.5, 0.5, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -19,6 +26,16 @@ offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("3_script")
+
+[node name="OutlinePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_outline")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -60,8 +77,10 @@ theme_override_font_sizes/normal_font_size = 24
 text = "Sample text for preview
 Second line of text"
 fit_content = false
-scroll_active = false
+scroll_active = true
+scroll_following = false
 autowrap_mode = 3
+clip_contents = true
 
 [node name="SkipLabel" type="Label" parent="MarginContainer"]
 layout_mode = 2
@@ -77,7 +96,6 @@ vertical_alignment = 2
 visible = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_audio")
 volume_db = -10.0
 
 [node name="ExitPrompt" type="Label" parent="."]

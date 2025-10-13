@@ -25,12 +25,18 @@ var current_keymap: OptionKeymap = null
 func _ready() -> void:
 	# Make the textbox clickable
 	mouse_filter = Control.MOUSE_FILTER_PASS
-	
-	# Ensure content label has proper wrapping
+
+	# Setup text audio
+	if text_audio:
+		text_audio.stream = load("res://assets/Audio/text.mp3")
+
+	# Ensure content label has proper wrapping and clipping
 	if content_label:
 		content_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		content_label.fit_content = true
-	
+		content_label.fit_content = false
+		content_label.scroll_active = true
+		content_label.clip_contents = true
+
 	# Create options list container if it doesn't exist
 	_ensure_options_list()
 

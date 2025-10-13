@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b0vwv6to08eu1"
+path="res://.godot/imported/Melee Attack.mp3-d9cba6d7d34b3900a27b8ea1bcf9e268.mp3str"
+
+[deps]
+
+source_file="res://assets/Audio/Weapon/Attack/Melee Attack.mp3"
+dest_files=["res://.godot/imported/Melee Attack.mp3-d9cba6d7d34b3900a27b8ea1bcf9e268.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

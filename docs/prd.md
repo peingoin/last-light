@@ -8,14 +8,14 @@
 Harvest → Manage → Decide (Move or Stay) → Defend → Sacrifice → Explore → Progress  
 
 **Experience Goal:**  
-Survive in a dying world by managing limited life energy, scarce resources, and impossible moral choices.
+Survive in a dying world by managing limited life force, scarce resources, and impossible moral choices.
 
 ---
 
 ## Setting
 The world has been swallowed by a poisonous gas that kills any living being that breathes it. Civilization has fallen into ruin — all that remains are scattered remnants, broken machines, and the silence of a dead world.  
 You and a small group of survivors travel across this wasteland inside a van equipped with a Life Core, a machine that emits a forcefield to keep the poison out.  
-But the Core is powered by Life Energy, extracted from living beings. Every mile you travel, every repair you make, every decision you choose — costs life.  
+But the Core is powered by Life Force, extracted from living beings. Every mile you travel, every repair you make, every decision you choose — costs life.  
 The van is your home, your fortress, and your coffin if the Core ever fails.
 
 ---
@@ -29,7 +29,7 @@ The van houses the Life Core and acts as your entire world. From the outside, it
 | Kitchen | Food management; consume rations daily to sustain health and energy. |
 | Blacksmith Station | Crafts and upgrades tools and weapons; unlocks new recipes via blueprints. |
 | Weaponsmith Station | Builds and upgrades van defenses; increases durability during attacks. |
-| Storage Bay | Stores materials (wood, metal, food, life energy). |
+| Storage Bay | Stores materials (wood, metal, food, life force). |
 | Living Quarters | Shows morale, status, and passive buffs from survivors. |
 
 Each survivor has a specific role and can work in their assigned station during the day phase.
@@ -40,8 +40,8 @@ Each survivor has a specific role and can work in their assigned station during 
 
 | Name | Role | Passive Buff / Ability | Sacrifice Impact |
 |------|------|---------------------|-----------------|
-| Technician | Repairs van and Life Core | Uses 20% less wood, steel, and Life Energy when repairing damage from mob attacks | Repairs cost full materials and energy without their bonus |
-| Medic | Heals injured NPCs and mitigates starvation | Heals 50% of damage inflicted by mobs on teammates; reduces Life Energy loss during starvation by 50% after 2 days without food | Healing and starvation reduction no longer apply |
+| Technician | Repairs van and Life Core | Uses 20% less wood, steel, and Life Force when repairing damage from mob attacks | Repairs cost full materials and energy without their bonus |
+| Medic | Heals injured NPCs and mitigates starvation | Heals 50% of damage inflicted by mobs on teammates; reduces Life Force loss during starvation by 50% after 2 days without food | Healing and starvation reduction no longer apply |
 | Blacksmith | Upgrades tools and weapons | Can upgrade weapons if provided with materials and blueprints (metal, wood) | Weapon upgrades fail or take longer |
 | Weaponsmith | Builds/Upgrades van defenses | Can create or upgrade defenses (spikes, turrets, barbed wire, electric fences, rocket launchers, flamethrowers, spike launchers) if given materials and blueprints | Defense upgrades fail or are weaker |
 | Scout | Exploration & map guidance | Reveals nearby points of interest (loot, bosses, structures); provides map visibility while alive | You lose map visibility and directional hints |
@@ -53,7 +53,7 @@ Each survivor has a specific role and can work in their assigned station during 
 - The van protects survivors from poisonous gas but takes damage during night waves of mobs.  
 - Life Core damage reduces shield strength; it must be repaired by the Technician.  
 - NPCs inside the van take damage when mobs attack. Damage can be partially healed by the Medic.  
-- Repairs require wood, steel, and Life Energy; efficiency is improved if the Technician is alive.  
+- Repairs require wood, steel, and Life Force; efficiency is improved if the Technician is alive.  
 - Upgrading weapons and defenses requires resources + blueprints: the Blacksmith handles tools and weapons; the Weaponsmith handles the van’s defensive systems.
 
 ---
@@ -91,7 +91,7 @@ Each survivor has a specific role and can work in their assigned station during 
 1. **Day Phase – Harvest & Manage**  
    - Harvest food, wood, metal, and blueprints from ruins, structures, and random spawns.  
    - Assign NPCs to foraging, scavenging, exploring, or resting.  
-   - Survivors must eat daily; after 2 days without food, Life Energy starts to drain.
+   - Survivors must eat daily; after 2 days without food, Life Force starts to drain.
 
 2. **Management Phase – Upgrades & Crafting**  
    - Blacksmith upgrades weapons/tools.  
@@ -99,7 +99,7 @@ Each survivor has a specific role and can work in their assigned station during 
    - Kitchen cooks food and manages rationing.
 
 3. **Decision Phase – Move or Stay**  
-   - Stay: Minimal Life Energy used, no attacks.  
+   - Stay: Minimal Life Force used, no attacks.  
    - Move: Extra energy used, shield weakens → night attacks.
 
 4. **Night Phase – Defense**  
@@ -117,10 +117,10 @@ Each survivor has a specific role and can work in their assigned station during 
 **Major Structures**
 | Structure | Typical Loot | Notes / Hazards |
 |-----------|--------------|----------------|
-| Dungeon | Life Energy capsules, rare materials, occasionally blueprints | Contains a boss fight; high risk/high reward |
+| Dungeon | Life Force capsules, rare materials, occasionally blueprints | Contains a boss fight; high risk/high reward |
 | Gas Station | Scrap metal | Light combat, moderate risk; good for van upgrades |
 | Grocery Store | Food, metal | Moderate risk; provides essential rations and some materials |
-| Lab | Metal, wood, occasional Life Energy capsules | Often guarded by mobs; may contain blueprints for advanced upgrades |
+| Lab | Metal, wood, occasional Life Force capsules | Often guarded by mobs; may contain blueprints for advanced upgrades |
 | Industrial Factory | Metal, scrap machinery, occasional blueprints | Dense mobs; high metal yield for van defenses and tools |
 | Military Outpost / Bunker | Weapons, ammo, blueprints | Heavy mobs or boss-like enemies; high combat risk, high reward |
 | Farm / Barn | Food, wood, rare seeds | Low-to-moderate hazard; good for sustaining the team |
@@ -138,7 +138,7 @@ Each survivor has a specific role and can work in their assigned station during 
 - Can appear in any nearby structure, but not guaranteed.  
 - Maximum one per round.  
 - Marked on the Scout’s map with a gold glowing question mark.  
-- Rewards include blueprints, Life Energy capsules, legendary weapons, metal caches, or large food supplies.  
+- Rewards include blueprints, Life Force capsules, legendary weapons, metal caches, or large food supplies.  
 
 **Exploration Mechanics:**  
 - Scout reveals structures; Mystery Box is visually distinct.  
@@ -157,7 +157,7 @@ Each survivor has a specific role and can work in their assigned station during 
 ## Resources Overview
 | Resource | Source | Use |
 |----------|--------|-----|
-| Life Energy | Enemies, sacrifices, rare caches | Powers the Life Core, repairs |
+| Life Force | Enemies, sacrifices, rare caches | Powers the Life Core, repairs |
 | Food | Harvesting, ruins, bushes, farms | Prevent starvation & life loss |
 | Wood | Harvesting forests, trees, ruins | Tools, upgrades, van repairs |
 | Metal / Steel | Ruins, scrap heaps, garbage bins | Tools, upgrades, defenses |
@@ -173,7 +173,7 @@ Each survivor has a specific role and can work in their assigned station during 
 ---
 
 ## Visual & Audio Style
-- **Visuals:** Desaturated palette (grays, browns, glowing blues for Life Energy).  
+- **Visuals:** Desaturated palette (grays, browns, glowing blues for Life Force).  
 - **Interior:** Warm, functional stations for each NPC.  
 - **Sound:** Low ambient drones, heartbeat when energy is low, muffled combat outside.  
 - **Music:** Ambient, melancholic; swells during sacrifice, combat, or rare structure exploration.

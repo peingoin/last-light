@@ -29,3 +29,5 @@ shape = SubResource("RectangleShape2D_1g4n5")
 disabled = true
 
 [node name="AttackAudio" type="AudioStreamPlayer2D" parent="."]
+
+[node name="ImpactAudio" type="AudioStreamPlayer2D" parent="."]

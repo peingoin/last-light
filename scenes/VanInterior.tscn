@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dd3bc2y1eupgu" path="res://scenes/npcs/TechnicianNPC.tscn" id="5_technician"]
 [ext_resource type="Texture2D" uid="uid://dobyt11lpisfo" path="res://assets/Item_Icons/Tiny Wonder RPG Icons Pack FREE/free preview.png" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://8cgn4wmmpyll" path="res://scenes/van.tscn" id="7_van"]
-[ext_resource type="Texture2D" uid="uid://c2uwolu2cwwk8" path="res://assets/Machine.png" id="8_machine"]
+[ext_resource type="PackedScene" uid="uid://dqtv01a3a5fqo" path="res://scenes/Machine.tscn" id="8_machine"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="9_player"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="10_healthbar"]
 [ext_resource type="Script" uid="uid://dcljf063ljvtn" path="res://scripts/time_controller.gd" id="11_timecontroller"]
@@ -80,9 +80,8 @@ lines = []
 position = Vector2(-39, 135)
 lines = []
 
-[node name="Machine" type="Sprite2D" parent="."]
+[node name="Machine" parent="." instance=ExtResource("8_machine")]
 position = Vector2(-100, 98)
-texture = ExtResource("8_machine")
 
 [node name="Player" parent="." instance=ExtResource("9_player")]
 position = Vector2(-94, 184)
@@ -274,6 +273,43 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
+
+[node name="LoadingScreen" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="CanvasLayer/LoadingScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="LoadingLabel" type="Label" parent="CanvasLayer/LoadingScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -14.0
+offset_right = 50.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadingAudio" type="AudioStreamPlayer" parent="CanvasLayer/LoadingScreen"]
 
 [node name="ExitDoor" type="Area2D" parent="."]
 position = Vector2(-61, 306)
