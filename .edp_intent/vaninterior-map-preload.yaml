@@ -1,0 +1,78 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T00:00:00Z"
+originalIntent: "I want the map to start generating as soon as the player presses play as to negate load time."
+
+scope:
+  allowedPaths:
+    - "scripts/VanInterior.gd"
+    - "scripts/game.gd"
+    - "scenes/VanInterior.tscn"
+  forbiddenPaths:
+    - "scripts/terrainGeneration/perlin.gd"
+    - "scripts/MapData.gd"
+    - "scripts/menu.gd"
+    - "scenes/game.tscn"
+  newFiles: []
+
+apiContracts:
+  - name: "VanInterior._trigger_map_generation"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Checks MapData state and triggers map generation if not already complete"
+
+  - name: "VanInterior._show_loading_screen"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Displays loading overlay in VanInterior scene"
+
+  - name: "VanInterior._hide_loading_screen"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Hides loading overlay in VanInterior scene"
+
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Map generation starts when VanInterior scene loads"
+    given: "Player clicks play button in menu"
+    when: "VanInterior scene _ready() executes"
+    then: "Map generation begins if not already generated"
+
+  - id: "AC-002"
+    description: "Loading screen visible during generation in VanInterior"
+    given: "Map generation is in progress"
+    when: "VanInterior scene is active"
+    then: "Loading overlay is visible to player"
+
+  - id: "AC-003"
+    description: "Game scene skips regeneration if map exists"
+    given: "Map was generated in VanInterior"
+    when: "Game scene _ready() executes"
+    then: "No duplicate generation occurs, loading screen not shown"
+
+  - id: "AC-004"
+    description: "No duplicate generation on repeated van entries"
+    given: "Player returns to van from game world"
+    when: "VanInterior loads again"
+    then: "MapData.is_map_generated() returns true, no regeneration"
+
+nonGoals:
+  - "Refactoring map generation algorithm (perlin.gd)"
+  - "Adding progress bars or percentage indicators"
+  - "Implementing map caching or persistence across sessions"
+  - "Threading or async generation improvements"
+  - "Modifying map size or generation parameters"
+  - "Menu-based background generation"
+  - "Distributed frame-by-frame generation"
+
+complexityBudget:
+  maxNewFunctions: 3
+  maxNewFiles: 0
+  maxLinesOfCode: 80
+  maxDependencies: 0

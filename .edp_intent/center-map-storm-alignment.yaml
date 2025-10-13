@@ -1,0 +1,47 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T00:00:00Z"
+originalIntent: "create a fucking map radius that extends to the border and the purple poison gas that kills the player immediately - no, I want the radius to be smaller, why dont you move the map center to the center of the game"
+scope:
+  allowedPaths:
+    - "scenes/game.tscn"
+  forbiddenPaths:
+    - "scripts/storm.gd"
+    - "scripts/terrainGeneration/perlin.gd"
+    - "scripts/player.gd"
+    - "scripts/game.gd"
+  newFiles: []
+apiContracts: []
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Map is centered at world origin (0, 0)"
+    given: "500x500 tile map (8000x8000 pixels)"
+    when: "Perlin node position is set to Vector2(-4000, -4000)"
+    then: "Map bounds are (-4000, -4000) to (4000, 4000) with center at (0, 0)"
+  - id: "AC-002"
+    description: "Storm boundary aligns with map center"
+    given: "Storm positioned at (0, 0) with 1000 pixel radius"
+    when: "Map is centered at (0, 0)"
+    then: "Storm center and map center are identical"
+  - id: "AC-003"
+    description: "Player dies immediately when entering storm"
+    given: "Player crosses storm radius boundary (1000 pixels from center)"
+    when: "Player position distance from (0, 0) exceeds 1000 pixels"
+    then: "Player takes 1000 damage and dies instantly"
+  - id: "AC-004"
+    description: "Map generation remains functional"
+    given: "Repositioned map at (-4000, -4000)"
+    when: "Game scene loads and map generates"
+    then: "All terrain tiles and objects spawn correctly without errors"
+nonGoals:
+  - "Modifying storm visual effects or rendering"
+  - "Changing storm damage values or collision detection logic"
+  - "Adjusting map generation algorithm or noise parameters"
+  - "Modifying player spawn position"
+  - "Adding new storm features or shrinking mechanics"
+  - "Creating UI indicators for storm distance"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 0
+  maxDependencies: 0

@@ -1,0 +1,55 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T02:00:00Z"
+originalIntent: "Remove MapData legacy code from VanInterior.gd - delete obsolete _trigger_map_generation() function and its call. This is part of abandoned map-seed-storage approach, no longer needed with SceneManager."
+scope:
+  allowedPaths:
+    - "scripts/VanInterior.gd"
+  forbiddenPaths:
+    - "scripts/SceneManager.gd"
+    - "scripts/game.gd"
+    - "scripts/menu.gd"
+    - "scripts/VanEntrance.gd"
+    - "scripts/van_interior.gd"
+    - "scripts/terrainGeneration/perlin.gd"
+    - "project.godot"
+    - "scenes/**"
+  newFiles: []
+apiContracts:
+  - name: "VanInterior._ready"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Remove _trigger_map_generation() call, keep interactables setup"
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "No MapData references in VanInterior.gd"
+    given: "Code cleanup complete"
+    when: "Search for 'MapData' in VanInterior.gd"
+    then: "Zero matches found"
+  - id: "AC-002"
+    description: "_trigger_map_generation function deleted"
+    given: "File edited"
+    when: "Search for '_trigger_map_generation' in VanInterior.gd"
+    then: "Zero matches found"
+  - id: "AC-003"
+    description: "Van interior scene loads without errors"
+    given: "Player enters van interior"
+    when: "Scene loads"
+    then: "No console errors, interactables work normally"
+  - id: "AC-004"
+    description: "Loading screen code removed"
+    given: "Obsolete preload logic deleted"
+    when: "Check for _show_loading_screen and _hide_loading_screen"
+    then: "Functions no longer needed, can be removed"
+nonGoals:
+  - "Changing van interior scene transition behavior"
+  - "Modifying van entrance/exit logic"
+  - "Adding new functionality"
+  - "Refactoring interactables system"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 0
+  maxDependencies: 0

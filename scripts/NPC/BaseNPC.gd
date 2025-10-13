@@ -26,14 +26,14 @@ var can_interact_again: bool = true
 
 func _ready() -> void:
 	super._ready()
-	
+
 	# Add to NPCs group for the sacrifice system
 	add_to_group("npcs")
-	
+
 	if animated_sprite and frames:
 		animated_sprite.sprite_frames = frames
 		animated_sprite.play(anim_idle)
-	
+
 	# Initialize health bar
 	if health_bar:
 		health_bar.max_value = max_health
@@ -43,11 +43,15 @@ func _ready() -> void:
 			health_bar.show()
 		else:
 			health_bar.hide()
-	
+
 	# Connect to dialogue system if available
 	var dialogue_system = get_node_or_null("/root/Dialogue")
 	if dialogue_system and dialogue_system.has_signal("dialogue_finished"):
 		dialogue_system.dialogue_finished.connect(_on_dialogue_finished)
+
+func _process(_delta: float) -> void:
+	# Update z_index for depth sorting
+	z_index = int(global_position.y)
 
 func interact(player: Node) -> void:
 	if is_talking or not can_interact_again:

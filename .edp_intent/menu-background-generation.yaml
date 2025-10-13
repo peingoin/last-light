@@ -1,0 +1,80 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T00:00:00Z"
+originalIntent: "I just want 0 loading - Implement Option 1: Menu Background Generation to generate game map asynchronously while player views menu, enabling instant transition when Play is pressed"
+scope:
+  allowedPaths:
+    - "scripts/menu.gd"
+    - "scripts/SceneManager.gd"
+    - "project.godot"
+  forbiddenPaths:
+    - "scripts/VanEntrance.gd"
+    - "scripts/van_interior.gd"
+    - "scripts/VanInterior.gd"
+    - "scripts/game.gd"
+    - "scripts/terrainGeneration/perlin.gd"
+  newFiles:
+    - "scripts/SceneManager.gd"
+apiContracts:
+  - name: "SceneManager.start_background_generation"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Begin async map generation in background, invisible to player"
+  - name: "SceneManager.is_game_ready"
+    type: "function"
+    params: []
+    returns: "bool"
+    required: true
+    description: "Check if background generation is complete"
+  - name: "SceneManager.show_game_scene"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Instantly display pre-generated game scene"
+  - name: "menu.gd._ready"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Trigger background generation when menu loads"
+  - name: "menu.gd._on_play_button_pressed"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Show game instantly if ready, otherwise show loading screen"
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Play button shows game instantly when generation complete"
+    given: "Menu displayed for at least 2-3 seconds"
+    when: "Player clicks Play button"
+    then: "Game scene appears in <100ms with no loading screen"
+  - id: "AC-002"
+    description: "Fallback loading screen works for impatient players"
+    given: "Menu displayed for <2 seconds"
+    when: "Player clicks Play button before generation complete"
+    then: "Loading screen appears briefly until generation finishes"
+  - id: "AC-003"
+    description: "Background generation invisible to player"
+    given: "Menu is displayed"
+    when: "Background generation is running"
+    then: "Menu remains fully interactive with no performance impact"
+  - id: "AC-004"
+    description: "No duplicate generation or memory leaks"
+    given: "Game scene generated in background"
+    when: "Player navigates menu or presses Play"
+    then: "Only one game scene instance exists in memory"
+nonGoals:
+  - "No changes to van interior scene transitions"
+  - "No menu UI visual redesign or button changes"
+  - "No disk caching or map file serialization"
+  - "No boot flow modification (menu remains first scene)"
+  - "No multi-threading or complex async patterns"
+complexityBudget:
+  maxNewFunctions: 5
+  maxNewFiles: 1
+  maxLinesOfCode: 80
+  maxDependencies: 0

@@ -113,6 +113,9 @@ func _process(delta):
 
 	move_and_slide()
 
+	# Update z_index for depth sorting with objects
+	z_index = int(position.y)
+
 	# Flip weapon to match player direction
 	if weapon_slot and animated_sprite:
 		weapon_slot.scale.x = -1 if animated_sprite.flip_h else 1

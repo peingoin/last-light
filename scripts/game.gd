@@ -16,7 +16,14 @@ extends Node2D
 @onready var interact_prompt = $"CanvasLayer/UI Control/InteractPrompt"
 
 func _ready() -> void:
-	# Show loading screen for map generation
+	# Create ObjectLayer at Game level for proper depth sorting
+	if not has_node("ObjectLayer"):
+		var object_layer = Node2D.new()
+		object_layer.name = "ObjectLayer"
+		object_layer.z_index = 0
+		add_child(object_layer)
+
+	# Show loading screen during generation
 	show_loading_screen()
 
 	# Wait a frame to ensure all nodes are ready
@@ -27,6 +34,9 @@ func _ready() -> void:
 		var perlin = $Perlin
 		if perlin.has_method("start_map_generation"):
 			perlin.start_map_generation()
+
+	# Hide loading screen after generation completes
+	hide_loading_screen()
 
 	# Initialize health bar with player's max health
 	if health_bar and player:

@@ -32,3 +32,7 @@ func can_interact() -> bool:
 func interact_with(player: Node) -> void:
 	# Override in subclasses for specific interaction behavior
 	pass
+
+func _process(_delta: float) -> void:
+	# Update z_index based on Y position for depth sorting
+	z_index = int(position.y)
