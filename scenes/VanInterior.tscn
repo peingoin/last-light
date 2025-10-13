@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ccwyhu83j70rm"]
+[gd_scene load_steps=22 format=3 uid="uid://ccwyhu83j70rm"]
 
 [ext_resource type="Script" uid="uid://bwl6fpxodiei3" path="res://scripts/van_interior.gd" id="1_1rbwi"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="1_textbox"]
@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="9_player"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="10_healthbar"]
 [ext_resource type="Script" uid="uid://dcljf063ljvtn" path="res://scripts/time_controller.gd" id="11_timecontroller"]
-[ext_resource type="PackedScene" path="res://scenes/UI/TimeDisplay.tscn" id="12_timedisplay"]
+[ext_resource type="PackedScene" uid="uid://c8gk5x2h4n7p1" path="res://scenes/UI/TimeDisplay.tscn" id="12_timedisplay"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
@@ -175,6 +175,35 @@ layout_mode = 1
 
 [node name="TimeDisplay" parent="CanvasLayer/UI Control" instance=ExtResource("12_timedisplay")]
 layout_mode = 1
+
+[node name="LoadingScreen" type="ColorRect" parent="CanvasLayer/UI Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="LoadingLabel" type="Label" parent="CanvasLayer/UI Control/LoadingScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -25.0
+offset_right = 150.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_lbhrr")
+theme_override_font_sizes/font_size = 48
+text = "Generating terrain..."
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="InteractPrompt" type="Label" parent="CanvasLayer/UI Control"]
 visible = false

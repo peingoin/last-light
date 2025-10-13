@@ -1,0 +1,75 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T00:00:00Z"
+originalIntent: "Create a location on the map for a boss to spawn on, on background green tileset, use the 14, 0 to 16, 2 square of 9 tiles to generate this 500 pixel radius area for the boss to spawn, then create a method that returns the center coordinate"
+scope:
+  allowedPaths:
+    - "scripts/terrainGeneration/perlin.gd"
+  forbiddenPaths:
+    - "scripts/game.gd"
+    - "scripts/spawner.gd"
+    - "scripts/enemies/**"
+    - "scenes/**"
+  newFiles: []
+apiContracts:
+  - name: "get_boss_spawn_center"
+    type: "function"
+    params: []
+    returns: "Vector2"
+    required: true
+    description: "Returns the world coordinate (in pixels) of the boss spawn area center"
+  - name: "spawn_boss_area"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Internal function to generate the 3x3 tile pattern and mark 500px radius exclusion zone"
+  - name: "mark_circular_exclusion_zone"
+    type: "function"
+    params:
+      - name: "center_x"
+        type: "int"
+        description: "Tile X coordinate of center"
+      - name: "center_y"
+        type: "int"
+        description: "Tile Y coordinate of center"
+      - name: "radius_tiles"
+        type: "float"
+        description: "Radius in tile units (e.g., 31.25 for 500px)"
+    returns: "void"
+    required: true
+    description: "Helper function to mark circular area in occupancy grid"
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "3x3 tile pattern visible on generated map"
+    given: "Map generation completes"
+    when: "Player views the map"
+    then: "A 3x3 pattern using tiles (14,0) to (16,2) from Source 1 is visible"
+  - id: "AC-002"
+    description: "Boss spawn center coordinate retrievable"
+    given: "Map has been generated"
+    when: "get_boss_spawn_center() is called"
+    then: "Returns a Vector2 with x,y world coordinates in pixels"
+  - id: "AC-003"
+    description: "500px radius exclusion zone functional"
+    given: "Boss area has been generated"
+    when: "Object spawning occurs"
+    then: "No trees, buildings, or props spawn within 500px of boss center"
+  - id: "AC-004"
+    description: "Boss area placement varies by seed"
+    given: "Different map seeds are used"
+    when: "Multiple maps are generated"
+    then: "Boss spawn location differs across map seeds (quadrant-based)"
+nonGoals:
+  - "Boss enemy entity implementation"
+  - "Boss spawning logic or timers"
+  - "Combat mechanics or boss behavior"
+  - "UI indicators or minimap markers"
+  - "Player notifications or quest tracking"
+  - "Boss health bars or damage systems"
+  - "Loot drops or rewards"
+complexityBudget:
+  maxNewFunctions: 3
+  maxNewFiles: 0
+  maxLinesOfCode: 80
+  maxDependencies: 0

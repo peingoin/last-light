@@ -1,0 +1,68 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "add collision around the entire map"
+scope:
+  allowedPaths:
+    - "scripts/terrainGeneration/object_factory.gd"
+    - "scripts/terrainGeneration/perlin.gd"
+    - "project.godot"
+  forbiddenPaths:
+    - "scenes/game.tscn"
+    - "scenes/player.tscn"
+    - "scripts/player.gd"
+    - "scenes/perlin.tscn"
+  newFiles: []
+apiContracts:
+  - name: "create_map_boundaries"
+    type: "function"
+    params:
+      - name: "map_width"
+        type: "int"
+      - name: "map_height"
+        type: "int"
+      - name: "tile_size"
+        type: "int"
+    returns: "Array[StaticBody2D]"
+    required: true
+  - name: "create_boundary_wall"
+    type: "function"
+    params:
+      - name: "position"
+        type: "Vector2"
+      - name: "size"
+        type: "Vector2"
+    returns: "StaticBody2D"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Map boundaries prevent player movement outside playable area"
+    given: "Player at map edge position"
+    when: "Player attempts to move beyond boundary"
+    then: "Player collision blocks movement and player stays within map"
+  - id: "AC-002"
+    description: "Boundary collision uses existing physics layer system"
+    given: "Boundary walls created"
+    when: "Boundaries are inspected"
+    then: "Collision layer 6 configured for map boundaries in project settings"
+  - id: "AC-003"
+    description: "Boundaries positioned at exact map perimeter"
+    given: "Map dimensions 500x500 tiles"
+    when: "Boundary positions calculated"
+    then: "Four walls positioned at (0,0), (8000,0), (0,8000), (8000,8000) edges"
+  - id: "AC-004"
+    description: "Integration with existing object factory pattern"
+    given: "ObjectFactory extension implemented"
+    when: "Boundary creation called during map generation"
+    then: "Boundaries created using consistent StaticBody2D + CollisionShape2D pattern"
+nonGoals:
+  - "Visual barrier walls or textures"
+  - "Teleportation or wrap-around mechanics"
+  - "Camera constraint systems"
+  - "Map size modifications"
+  - "Performance optimizations beyond basic efficiency"
+complexityBudget:
+  maxNewFunctions: 2
+  maxNewFiles: 0
+  maxLinesOfCode: 50
+  maxDependencies: 0

@@ -1,0 +1,69 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T01:00:00Z"
+originalIntent: "Remove legacy MapData code and replace polling with await ready signal. Clean up abandoned map-seed-storage architecture from game.gd, perlin.gd, and project.godot. Fix SceneManager to use synchronous ready detection."
+scope:
+  allowedPaths:
+    - "scripts/SceneManager.gd"
+    - "scripts/game.gd"
+    - "scripts/terrainGeneration/perlin.gd"
+    - "project.godot"
+  forbiddenPaths:
+    - "scripts/menu.gd"
+    - "scripts/VanEntrance.gd"
+    - "scripts/van_interior.gd"
+    - "scripts/VanInterior.gd"
+    - "scripts/PlayerData.gd"
+    - "scenes/**"
+  newFiles: []
+apiContracts:
+  - name: "SceneManager.start_background_generation"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Use await ready signal instead of MapData polling"
+  - name: "game.gd._ready"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Remove MapData checks, always run generation"
+  - name: "perlin.gd.start_map_generation"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Remove MapData save calls"
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "No MapData file not found errors"
+    given: "Game is launched"
+    when: "Godot loads autoloads and scripts"
+    then: "No compilation or runtime errors about MapData"
+  - id: "AC-002"
+    description: "Background generation completes and is detectable"
+    given: "Menu is displayed"
+    when: "SceneManager starts background generation"
+    then: "is_game_ready() returns true after generation finishes"
+  - id: "AC-003"
+    description: "Game loads normally when launched directly"
+    given: "User clicks Play from menu"
+    when: "Fallback scene transition occurs"
+    then: "Game scene loads and generates map normally"
+  - id: "AC-004"
+    description: "No MapData references remain in codebase"
+    given: "Code cleanup is complete"
+    when: "Search for 'MapData' in modified files"
+    then: "Zero matches found"
+nonGoals:
+  - "Changing map generation algorithm or parameters"
+  - "Modifying van interior scene transitions"
+  - "Adding new MapData functionality"
+  - "Implementing disk caching or serialization"
+  - "Performance optimization of generation itself"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 10
+  maxDependencies: 0

@@ -38,5 +38,6 @@ func _on_play_button_pressed() -> void:
 	if controls_menu:
 		controls_menu.show()
 
+
 func _on_quit_button_pressed() -> void:
 		get_tree().quit()

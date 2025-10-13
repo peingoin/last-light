@@ -1,0 +1,86 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T19:45:00Z"
+originalIntent: "do not regenerate from stored seed, fucking store the scene and just have it appear after every time, I just want it load faster and load the same map each time"
+scope:
+  allowedPaths:
+    - "scripts/SceneManager.gd"
+    - "project.godot"
+    - "scripts/VanEntrance.gd"
+    - "scripts/van_interior.gd"
+    - "scripts/menu.gd"
+    - "scripts/game.gd"
+  forbiddenPaths:
+    - "scripts/MapData.gd"  # Keep existing seed storage (don't modify)
+    - "scripts/PlayerData.gd"
+    - "scripts/terrainGeneration/**"  # No changes to map generation
+    - "scripts/enemies/**"
+    - "scripts/weapons/**"
+    - "scenes/**"  # No scene file modifications
+  newFiles:
+    - "scripts/SceneManager.gd"
+apiContracts:
+  - name: "SceneManager.load_game_scene"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Loads and displays game scene, generates map on first call"
+  - name: "SceneManager.show_van_overlay"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Hides game scene, shows van interior overlay"
+  - name: "SceneManager.hide_van_overlay"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+    description: "Removes van overlay, shows game scene"
+  - name: "SceneManager.get_game_scene"
+    type: "function"
+    params: []
+    returns: "Node"
+    required: false
+    description: "Returns reference to game scene instance"
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Game scene loads once from menu and persists"
+    given: "Player presses Play button in menu"
+    when: "SceneManager.load_game_scene() is called"
+    then: "Game scene loads, map generates, scene stays in memory"
+  - id: "AC-002"
+    description: "Entering van is instant with no regeneration"
+    given: "Player presses E at van entrance"
+    when: "SceneManager.show_van_overlay() is called"
+    then: "Game scene hidden, van scene appears in <100ms, no map generation"
+  - id: "AC-003"
+    description: "Exiting van shows same map instantly"
+    given: "Player exits van trigger area"
+    when: "SceneManager.hide_van_overlay() is called"
+    then: "Van removed, game scene visible in <50ms, identical map layout"
+  - id: "AC-004"
+    description: "Map never regenerates after first generation"
+    given: "Map generated on game start"
+    when: "Multiple van entries/exits occur"
+    then: "No calls to Perlin.start_map_generation() after first time"
+  - id: "AC-005"
+    description: "Scene transitions don't break gameplay"
+    given: "Player in game with enemies, UI, etc."
+    when: "Enter/exit van"
+    then: "All game state preserved (player health, position, enemies)"
+nonGoals:
+  - "Seed-based map regeneration"
+  - "Disk save/load system"
+  - "Multiple map support"
+  - "Fancy transition animations (fades, etc.)"
+  - "Pause menu implementation (future feature)"
+  - "Inventory overlay (future feature)"
+  - "Scene preloading optimizations"
+  - "Memory management beyond basic scene caching"
+complexityBudget:
+  maxNewFunctions: 5
+  maxNewFiles: 1
+  maxLinesOfCode: 80
+  maxDependencies: 0

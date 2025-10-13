@@ -134,6 +134,9 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.play("swing")
 		cooldown_timer = attack_cooldown
 
+	# Update z_index for depth sorting
+	z_index = int(global_position.y)
+
 	move_and_slide()
 
 func _on_frame_changed() -> void:

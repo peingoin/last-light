@@ -1,0 +1,87 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-09-28T00:00:00Z"
+originalIntent: "do_dis, see all the miscellanoeous objects like trees, garbage bins, buildings, move it up to z inedx 5"
+scope:
+  allowedPaths:
+    - "scripts/terrainGeneration/object_factory.gd"
+    - "scenes/buidling_2.tscn"
+    - "scenes/objects/tree_variants.tscn"
+    - "scenes/objects/garbage_pile.tscn"
+    - "scenes/objects/barrel_variants.tscn"
+  forbiddenPaths:
+    - "scripts/game.gd"
+    - "scripts/player.gd"
+    - "scenes/game.tscn"
+    - "scenes/player.tscn"
+  newFiles: []
+apiContracts:
+  - name: "create_tree_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+      - name: "color_variant"
+        type: "String"
+      - name: "player"
+        type: "Node"
+    returns: "Node2D"
+    required: true
+  - name: "create_garbage_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+      - name: "player"
+        type: "Node"
+    returns: "Node2D"
+    required: true
+  - name: "create_barrel_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+      - name: "player"
+        type: "Node"
+    returns: "Node2D"
+    required: true
+  - name: "create_building_visual"
+    type: "function"
+    params:
+      - name: "pos"
+        type: "Vector2"
+      - name: "player"
+        type: "Node"
+    returns: "Node2D"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "All factory-created objects have z_index = 5"
+    given: "ObjectFactory creates miscellaneous objects"
+    when: "create_tree_visual, create_garbage_visual, create_barrel_visual are called"
+    then: "Object z_index property equals 5"
+  - id: "AC-002"
+    description: "Building scene has z_index = 5"
+    given: "Building scene is instantiated"
+    when: "buidling_2.tscn is loaded"
+    then: "Building root node z_index equals 5"
+  - id: "AC-003"
+    description: "All miscellaneous object scenes have z_index = 5"
+    given: "Scene files for trees, garbage, barrels exist"
+    when: "Scene files are instantiated"
+    then: "Root node z_index property equals 5"
+  - id: "AC-004"
+    description: "Player and terrain z_index values remain unchanged"
+    given: "Existing z_index hierarchy"
+    when: "Changes are applied"
+    then: "Player z_index = 100, terrain z_index = -1"
+nonGoals:
+  - "UI or visual improvements beyond z_index"
+  - "Performance optimizations"
+  - "New object types or features"
+  - "Gameplay mechanics changes"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 20
+  maxDependencies: 0

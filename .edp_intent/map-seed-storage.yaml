@@ -1,0 +1,91 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T18:30:00Z"
+originalIntent: "I want to add something that allows us to store the current generation after generating it at the beginning"
+scope:
+  allowedPaths:
+    - "scripts/MapData.gd"
+    - "project.godot"
+    - "scripts/terrainGeneration/perlin.gd"
+    - "scripts/game.gd"
+  forbiddenPaths:
+    - "scripts/PlayerData.gd"  # Do not modify existing PlayerData
+    - "scripts/enemies/**"      # No combat system changes
+    - "scripts/weapons/**"      # No weapon changes
+    - "scenes/**"              # No scene file modifications
+  newFiles:
+    - "scripts/MapData.gd"
+apiContracts:
+  - name: "MapData.save_map_seed"
+    type: "function"
+    params:
+      - name: "seed"
+        type: "int"
+    returns: "void"
+    required: true
+  - name: "MapData.get_map_seed"
+    type: "function"
+    params: []
+    returns: "int"
+    required: true
+  - name: "MapData.is_map_generated"
+    type: "function"
+    params: []
+    returns: "bool"
+    required: true
+  - name: "MapData.reset_map"
+    type: "function"
+    params: []
+    returns: "void"
+    required: true
+  - name: "Perlin.generate_map_with_seed"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+      - name: "noise_seed"
+        type: "int"
+    returns: "void"
+    required: false
+    note: "Modified version of existing generate_map()"
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Map seed is captured after initial generation"
+    given: "Game starts and map generates for first time"
+    when: "Map generation completes"
+    then: "MapData.map_seed contains the generated seed value"
+  - id: "AC-002"
+    description: "Map uses stored seed on subsequent loads"
+    given: "Map has been generated once (MapData.is_map_generated == true)"
+    when: "Player transitions to van and back to game"
+    then: "Same map is regenerated using stored seed"
+  - id: "AC-003"
+    description: "MapData autoload is accessible globally"
+    given: "Game is running"
+    when: "Any script accesses MapData via get_node('/root/MapData')"
+    then: "MapData singleton is available and functional"
+  - id: "AC-004"
+    description: "No performance regression on scene transitions"
+    given: "Map regeneration from stored seed"
+    when: "Scene transition occurs"
+    then: "Load time is equivalent to original generation time"
+  - id: "AC-005"
+    description: "Architecture matches PlayerData pattern"
+    given: "MapData.gd implementation"
+    when: "Code review is performed"
+    then: "Structure, naming, and patterns match PlayerData.gd exactly"
+nonGoals:
+  - "Disk persistence (saving map to file system)"
+  - "Modification tracking (destroyed objects, player changes)"
+  - "Full map snapshot serialization (tiles + objects)"
+  - "Save/load game system"
+  - "UI for seed management"
+  - "Map editor functionality"
+  - "Multiplayer synchronization"
+complexityBudget:
+  maxNewFunctions: 4
+  maxNewFiles: 1
+  maxLinesOfCode: 50
+  maxDependencies: 0

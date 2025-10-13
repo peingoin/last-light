@@ -4,12 +4,12 @@ class_name ObjectFactory
 # Collision size constants
 const TREE_COLLISION_SIZE = Vector2(16, 20
 )
-const GARBAGE_COLLISION_SIZE = Vector2(14, 18)
-const BARREL_COLLISION_SIZE = Vector2(12, 16)
-const PALLET_COLLISION_SIZE = Vector2(20, 8)
-const BIN_COLLISION_SIZE = Vector2(14, 18)
-const BENCH_COLLISION_SIZE = Vector2(24, 12)
-const DEFAULT_COLLISION_SIZE = Vector2(8, 8)
+const GARBAGE_COLLISION_SIZE = Vector2(17, 22)
+const BARREL_COLLISION_SIZE = Vector2(15, 20)
+const PALLET_COLLISION_SIZE = Vector2(24, 10)
+const BIN_COLLISION_SIZE = Vector2(17, 22)
+const BENCH_COLLISION_SIZE = Vector2(28, 15)
+const DEFAULT_COLLISION_SIZE = Vector2(10, 10)
 
 # Sprite size constants (typical PostApocalypse asset dimensions)
 const TREE_SPRITE_SIZE = Vector2(64, 64)
@@ -80,11 +80,13 @@ func create_building_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var building_scene = preload("res://scenes/buidling_2.tscn")
 	var building = building_scene.instantiate()
 	building.position = pos
+	building.z_index = int(pos.y)
 	return building
 
 func create_tree_visual(pos: Vector2, color_variant: String, player: Node = null) -> Node2D:
 	var tree = StaticBody2D.new()
 	tree.position = pos
+	tree.z_index = int(pos.y)
 
 	var collision = create_bottom_collision(TREE_COLLISION_SIZE)
 	tree.add_child(collision)
@@ -103,6 +105,7 @@ func create_tree_visual(pos: Vector2, color_variant: String, player: Node = null
 func create_garbage_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var garbage = StaticBody2D.new()
 	garbage.position = pos
+	garbage.z_index = int(pos.y)
 
 	var collision = create_bottom_collision(GARBAGE_COLLISION_SIZE)
 	garbage.add_child(collision)
@@ -120,6 +123,7 @@ func create_garbage_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_barrel_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var barrel = StaticBody2D.new()
 	barrel.position = pos
+	barrel.z_index = int(pos.y)
 
 	var collision = create_bottom_collision(BARREL_COLLISION_SIZE)
 	barrel.add_child(collision)
@@ -137,6 +141,7 @@ func create_barrel_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_pallet_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var pallet = StaticBody2D.new()
 	pallet.position = pos
+	pallet.z_index = int(pos.y)
 
 	var collision = create_bottom_collision(PALLET_COLLISION_SIZE)
 	pallet.add_child(collision)
@@ -155,6 +160,7 @@ func create_pallet_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_bin_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var bin = StaticBody2D.new()
 	bin.position = pos
+	bin.z_index = int(pos.y)
 
 	var collision = create_bottom_collision(BIN_COLLISION_SIZE)
 	bin.add_child(collision)
@@ -173,6 +179,7 @@ func create_bin_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_bench_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var bench = StaticBody2D.new()
 	bench.position = pos
+	bench.z_index = int(pos.y)
 
 	var collision = create_bottom_collision(BENCH_COLLISION_SIZE)
 	bench.add_child(collision)
@@ -198,6 +205,7 @@ func create_bench_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_default_object(pos: Vector2, player: Node = null) -> Node2D:
 	var obj = StaticBody2D.new()
 	obj.position = pos
+	obj.z_index = int(pos.y)
 
 	var collision = create_bottom_collision(DEFAULT_COLLISION_SIZE)
 	obj.add_child(collision)
