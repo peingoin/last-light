@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=25 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
@@ -19,7 +19,6 @@
 [ext_resource type="Script" uid="uid://buwu2lqpmm375" path="res://scripts/canvas_modulate.gd" id="16_ca42v"]
 [ext_resource type="Texture2D" uid="uid://bkpc1kjm4t2xn" path="res://daynightcycle-gradient-texture.tres" id="17_rysoc"]
 [ext_resource type="PackedScene" path="res://scenes/UI/TimeDisplay.tscn" id="18_timedisplay"]
-[ext_resource type="PackedScene" uid="uid://d4efeveeol2rc" path="res://scenes/enemies/fire_wizard.tscn" id="20_1kice"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
@@ -309,6 +308,3 @@ vertical_alignment = 1
 color = Color(0.08418272, 0.26881677, 0.5436753, 1)
 script = ExtResource("16_ca42v")
 gradient = ExtResource("17_rysoc")
-
-[node name="fire_wizard" parent="." instance=ExtResource("20_1kice")]
-position = Vector2(-120, -2)

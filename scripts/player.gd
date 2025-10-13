@@ -525,7 +525,19 @@ func handle_interaction() -> void:
 func _on_resources_collected(resources: Dictionary) -> void:
 	for resource_type in resources:
 		inventory[resource_type] += resources[resource_type]
-	# Resources collected and added to inventory
+
+	# Update UI in the current scene
+	var current_scene = get_tree().current_scene
+	if current_scene:
+		# Try to find and update wood label
+		var wood_label = current_scene.get_node_or_null("CanvasLayer/UI Control/HealthBar/Wood Indicator Control/Wood Label")
+		if wood_label and "wood" in inventory:
+			wood_label.text = str(inventory["wood"])
+
+		# Try to find and update metal label
+		var metal_label = current_scene.get_node_or_null("CanvasLayer/UI Control/HealthBar/Metal Indicator Control/Metal Label")
+		if metal_label and "steel" in inventory:
+			metal_label.text = str(inventory["steel"])
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
 	if body.has_method("can_interact"):

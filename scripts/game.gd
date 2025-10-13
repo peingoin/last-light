@@ -37,6 +37,12 @@ func _ready() -> void:
 		if signal_obj and not signal_obj.is_connected(_on_player_health_changed):
 			signal_obj.connect(_on_player_health_changed)
 
+		# Initialize resource UI from player inventory
+		if wood_label and "wood" in player.inventory:
+			wood_label.text = str(player.inventory["wood"])
+		if metal_label and "steel" in player.inventory:
+			metal_label.text = str(player.inventory["steel"])
+
 		# Set up weapon UI
 		if weapon_ui_container:
 			player.weapon_ui_container = weapon_ui_container
