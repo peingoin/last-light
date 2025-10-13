@@ -243,3 +243,7 @@ energy = 1.0
 blend_mode = 0
 range_z_min = -1024
 range_z_max = 1024
+
+[node name="WalkAudio" type="AudioStreamPlayer2D" parent="."]
+
+[node name="DashAudio" type="AudioStreamPlayer2D" parent="."]

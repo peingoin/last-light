@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/Machine.png" id="2_sprite"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
-size = Vector2(80, 80)
+size = Vector2(40, 40)
 
 [node name="Machine" type="Area2D"]
 script = ExtResource("1_machine")
@@ -12,21 +12,14 @@ script = ExtResource("1_machine")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_1")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_sprite")
 
 [node name="Prompt" type="Label" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -30.0
 offset_top = -50.0
 offset_right = 30.0
-offset_bottom = -34.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_bottom = -30.0
 text = "Press E"
 horizontal_alignment = 1
 vertical_alignment = 1

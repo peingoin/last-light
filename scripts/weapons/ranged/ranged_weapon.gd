@@ -26,6 +26,10 @@ func attack(direction: Vector2) -> void:
 	is_attacking = true
 	cooldown_timer = attack_cooldown
 
+	# Play attack sound
+	if attack_audio:
+		attack_audio.play()
+
 	attack_started.emit()
 
 	# Spawn projectile

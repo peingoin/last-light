@@ -28,3 +28,12 @@ func on_player_exited() -> void:
 
 func interact(_player: Node) -> void:
 	pass
+
+# Methods for showing/hiding prompts - can be overridden by subclasses
+func show_prompt() -> void:
+	# Override this in subclasses to show interaction prompt
+	pass
+
+func hide_prompt() -> void:
+	# Override this in subclasses to hide interaction prompt
+	pass

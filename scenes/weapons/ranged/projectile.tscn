@@ -15,3 +15,5 @@ script = ExtResource("1_projectile")
 shape = SubResource("CircleShape2D_projectile")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="ImpactAudio" type="AudioStreamPlayer2D" parent="."]

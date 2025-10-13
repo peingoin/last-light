@@ -16,6 +16,10 @@ class_name BaseNPC
 @export var max_health: int = 100
 @export var current_health: int = 100
 
+# Life force properties
+@export var max_life_force: int = 100
+@export var current_life_force: int = 100
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var health_bar: ProgressBar = $HealthBar
 
@@ -94,6 +98,13 @@ func _on_dialogue_finished() -> void:
 	if destination_scene:
 		get_tree().change_scene_to_packed(destination_scene)
 
+# Override show_prompt and hide_prompt - NPCs use global prompt, so these are no-ops
+func show_prompt() -> void:
+	pass
+
+func hide_prompt() -> void:
+	pass
+
 # Utility methods for interaction limits
 func reset_interaction_count() -> void:
 	interaction_count = 0
@@ -154,4 +165,14 @@ func die() -> void:
 	queue_free()
 
 func get_life_force() -> int:
-	return current_health
+	return current_life_force
+
+func consume_life_force(amount: int) -> int:
+	"""Consume life force from NPC and return actual amount consumed"""
+	var amount_consumed = min(amount, current_life_force)
+	current_life_force -= amount_consumed
+
+	if current_life_force <= 0:
+		die()
+
+	return amount_consumed

@@ -33,10 +33,30 @@ func _unhandled_input(event: InputEvent) -> void:
 			viewport.set_input_as_handled()
 
 func enter_van() -> void:
+	# Show loading screen and play audio
+	var current_scene = get_tree().current_scene
+	if current_scene:
+		# Show loading screen
+		var loading_screen = current_scene.get_node_or_null("CanvasLayer/LoadingScreen")
+		if loading_screen:
+			loading_screen.visible = true
+			# Play loading audio
+			if loading_screen.has_node("LoadingAudio"):
+				var loading_audio = loading_screen.get_node("LoadingAudio")
+				loading_audio.play()
+
+		# Hide UI
+		var ui_control = current_scene.get_node_or_null("CanvasLayer/UI Control")
+		if ui_control:
+			ui_control.visible = false
+
 	# Save player state before entering van
 	var player = get_tree().get_first_node_in_group("player")
 	if player and player.has_method("save_state"):
 		player.save_state()
+
+	# Wait a bit for the audio to play
+	await get_tree().create_timer(0.5).timeout
 
 	# Change to van interior scene
 	get_tree().change_scene_to_file(van_interior_scene)

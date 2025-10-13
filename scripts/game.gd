@@ -6,16 +6,23 @@ extends Node2D
 
 
 @onready var player = $Player
+@onready var ui_control = $"CanvasLayer/UI Control"
 @onready var health_bar = $"CanvasLayer/UI Control/HealthBar"
 @onready var wood_label = $"CanvasLayer/UI Control/HealthBar/Wood Indicator Control/Wood Label"
 @onready var metal_label = $"CanvasLayer/UI Control/HealthBar/Metal Indicator Control/Metal Label"
 @onready var textbox = $"CanvasLayer/UI Control/TextBox"
 @onready var loading_screen = $"CanvasLayer/LoadingScreen"
+@onready var loading_audio: AudioStreamPlayer = null
 @onready var weapon_ui_container = $"CanvasLayer/UI Control/WeaponUI"
 @onready var cooldown_overlay = $"CanvasLayer/UI Control/WeaponUI/ActiveWeaponCircle/CooldownOverlay"
 @onready var interact_prompt = $"CanvasLayer/UI Control/InteractPrompt"
 
 func _ready() -> void:
+	# Get loading audio node if it exists
+	if loading_screen and loading_screen.has_node("LoadingAudio"):
+		loading_audio = loading_screen.get_node("LoadingAudio")
+		loading_audio.stream = load("res://assets/Audio/Loading.mp3")
+
 	# Show loading screen for map generation
 	show_loading_screen()
 
@@ -107,10 +114,22 @@ func add_metal(amount: int):
 func show_loading_screen():
 	if loading_screen:
 		loading_screen.visible = true
+	# Play loading audio
+	if loading_audio:
+		loading_audio.play()
+	# Hide UI during loading
+	if ui_control:
+		ui_control.visible = false
 
 func hide_loading_screen():
 	if loading_screen:
 		loading_screen.visible = false
+	# Stop loading audio
+	if loading_audio:
+		loading_audio.stop()
+	# Show UI when map is loaded
+	if ui_control:
+		ui_control.visible = true
 
 func _connect_weapon_cooldown():
 	if player and player.active_weapon and cooldown_overlay:

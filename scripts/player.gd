@@ -37,6 +37,8 @@ var inventory: Dictionary = {"wood": 0, "steel": 0}
 @onready var weapon_slot: Node2D = $WeaponSlot
 @onready var interaction_area: Area2D = $InteractionArea
 @onready var player_light: PointLight2D = $PlayerLight
+@onready var walk_audio: AudioStreamPlayer2D = null
+@onready var dash_audio: AudioStreamPlayer2D = null
 
 var weapon_ui_container: Control  # Will be set by game.gd
 var weapon_active_icon: TextureRect
@@ -63,9 +65,15 @@ func get_input() -> Vector2:
 		if input == Vector2.ZERO:
 			if animated_sprite.animation != "idle":
 				animated_sprite.play("idle")
+				# Stop walk sound when idle
+				if walk_audio and walk_audio.playing:
+					walk_audio.stop()
 		else:
 			if animated_sprite.animation != "run":
 				animated_sprite.play("run")
+			# Play walk sound when moving
+			if walk_audio and not walk_audio.playing:
+				walk_audio.play()
 
 	return input.normalized()
 
@@ -79,6 +87,15 @@ func _ready() -> void:
 	# Hide dash effect initially
 	if dash_effect:
 		dash_effect.visible = false
+
+	# Get audio nodes if they exist and set up their streams
+	if has_node("WalkAudio"):
+		walk_audio = $WalkAudio
+		walk_audio.stream = load("res://assets/Audio/walk.mp3")
+		walk_audio.volume_db = -5.0
+	if has_node("DashAudio"):
+		dash_audio = $DashAudio
+		dash_audio.stream = load("res://assets/Audio/Dash.mp3")
 
 	# Connect interaction area signals
 	interaction_area.body_entered.connect(_on_interaction_area_body_entered)
@@ -145,11 +162,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _handle_interact() -> void:
 	if closest_interactable:
-		# Set is_talking to true when interacting with NPC
-		if closest_interactable is BaseNPC:
+		# Set is_talking to true when interacting with interactables
+		if closest_interactable is BaseNPC or closest_interactable is Machine:
 			is_talking = true
-			# Hide interact prompt when starting dialogue
-			_hide_interact_prompt()
+			# Hide all interact prompts when starting dialogue
+			_update_closest_interactable()
 		closest_interactable.interact(self)
 
 	# Handle interaction input
@@ -164,8 +181,8 @@ func _hide_interact_prompt() -> void:
 			prompt.visible = false
 
 func _update_interact_prompt_visibility() -> void:
-	# Show interact prompt if near an interactable
-	if closest_interactable:
+	# Show interact prompt if near an interactable and not talking
+	if closest_interactable and not is_talking:
 		var current_scene = get_tree().current_scene
 		if current_scene:
 			var prompt = current_scene.get_node_or_null("CanvasLayer/UI Control/InteractPrompt")
@@ -195,6 +212,10 @@ func perform_dash() -> void:
 
 	# Grant i-frames during dash (Hades-style)
 	is_invulnerable = true
+
+	# Play dash sound
+	if dash_audio:
+		dash_audio.play()
 
 	# Play dash effect animation
 	if dash_effect:
@@ -297,23 +318,37 @@ func _on_interactable_exited(area: Area2D) -> void:
 		_update_closest_interactable()
 
 func _update_closest_interactable() -> void:
+	# Hide all prompts first (both individual and global)
+	for interactable in nearby_interactables:
+		if is_instance_valid(interactable) and interactable.has_method("hide_prompt"):
+			interactable.hide_prompt()
+	_hide_interact_prompt()
+
 	if nearby_interactables.is_empty():
 		closest_interactable = null
 		return
-	
+
 	var closest_distance := INF
 	var new_closest = null
-	
+
 	for interactable in nearby_interactables:
 		if not is_instance_valid(interactable):
 			continue
-		
+
 		var distance := global_position.distance_to(interactable.global_position)
 		if distance < closest_distance:
 			closest_distance = distance
 			new_closest = interactable
-	
+
 	closest_interactable = new_closest
+
+	# Show prompts only if not talking
+	if closest_interactable and not is_talking:
+		# Show individual prompt if interactable has one
+		if closest_interactable.has_method("show_prompt"):
+			closest_interactable.show_prompt()
+		# Show global prompt
+		_update_interact_prompt_visibility()
 
 # Weapon management methods
 func equip_weapon(weapon_scene_path: String, slot: int = 1) -> void:
@@ -336,6 +371,9 @@ func equip_weapon(weapon_scene_path: String, slot: int = 1) -> void:
 	var new_weapon = weapon_scene.instantiate()
 	weapon_slot.add_child(new_weapon)
 	new_weapon.weapon_hit.connect(_on_weapon_hit)
+
+	# Setup audio for the weapon
+	_setup_weapon_audio(new_weapon)
 
 	# Assign to appropriate slot
 	if slot == 1:
@@ -563,8 +601,8 @@ func _on_dialogue_finished() -> void:
 	# Re-enable inputs when dialogue finishes
 	is_talking = false
 
-	# Show interact prompt again if still near an interactable
-	_update_interact_prompt_visibility()
+	# Update interactable prompts - will show prompt for closest if not talking
+	_update_closest_interactable()
 
 func _on_time_changed(hour: int, _minute: int) -> void:
 	# Enable light during nighttime (6pm to 6am), but not inside the van
@@ -593,3 +631,23 @@ func save_state() -> void:
 func _exit_tree() -> void:
 	# Auto-save player state when player is removed from scene tree
 	save_state()
+
+func _setup_weapon_audio(weapon: Node2D) -> void:
+	"""Setup audio streams for a weapon based on its type"""
+	var is_fire_weapon = weapon.name.to_lower().contains("fire") or weapon.name.to_lower().contains("staff")
+
+	# Load audio resources
+	var melee_attack = load("res://assets/Audio/Weapon/Attack/Melee Attack.mp3")
+	var fire_attack = load("res://assets/Audio/Weapon/Attack/Fire Attack.mp3")
+	var melee_impact = load("res://assets/Audio/Weapon/Impact/Melee Impact.mp3")
+	var fire_impact = load("res://assets/Audio/Weapon/Impact/Fire Impact.mp3")
+
+	# Setup attack audio
+	if weapon.has_node("AttackAudio"):
+		var attack_audio = weapon.get_node("AttackAudio")
+		attack_audio.stream = fire_attack if is_fire_weapon else melee_attack
+
+	# Setup impact audio
+	if weapon.has_node("ImpactAudio"):
+		var impact_audio = weapon.get_node("ImpactAudio")
+		impact_audio.stream = fire_impact if is_fire_weapon else melee_impact
