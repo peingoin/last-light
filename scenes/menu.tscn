@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcvf44rlys1qm"]
+[gd_scene load_steps=8 format=3 uid="uid://dcvf44rlys1qm"]
 
 [ext_resource type="Script" uid="uid://8ls1x4o6rhts" path="res://scripts/menu.gd" id="1_yqeox"]
 [ext_resource type="PackedScene" uid="uid://ccwyhu83j70rm" path="res://scenes/VanInterior.tscn" id="2_vjb58"]
 [ext_resource type="Texture2D" uid="uid://cljrp2xm3j8uy" path="res://assets/Homescreen.jpeg" id="3_homescreen"]
 [ext_resource type="FontFile" uid="uid://b67qvxv6vr8h3" path="res://assets/Font/rust/Rust.ttf" id="4_font"]
+[ext_resource type="PackedScene" uid="uid://controls_menu" path="res://scenes/UI/ControlsMenu.tscn" id="5_controls"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_transparent"]
 bg_color = Color(0, 0, 0, 0)
@@ -69,6 +70,8 @@ flat = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+
+[node name="ControlsMenu" parent="." instance=ExtResource("5_controls")]
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/quit_button" to="." method="_on_quit_button_pressed"]

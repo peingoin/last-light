@@ -92,7 +92,18 @@ theme_override_font_sizes/font_size = 20
 text = "E - Interact with NPCs/Objects
 Space - Continue Dialogue"
 
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ContinueLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 28
+text = "Press E to Continue"
+horizontal_alignment = 1
+
 [node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_font")
 theme_override_font_sizes/font_size = 24
