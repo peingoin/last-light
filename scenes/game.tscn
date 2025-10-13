@@ -59,6 +59,9 @@ spawner_scene = ExtResource("2_spawner")
 
 [node name="Storm" parent="." instance=ExtResource("8_storm")]
 
+[node name="Perlin" parent="." instance=ExtResource("19_264po")]
+position = Vector2(-4000, -4000)
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("13_tileset")
 format = 2
@@ -323,5 +326,3 @@ horizontal_alignment = 1
 color = Color(0.08418272, 0.26881677, 0.5436753, 1)
 script = ExtResource("16_ca42v")
 gradient = ExtResource("17_rysoc")
-
-[node name="Perlin" parent="." instance=ExtResource("19_264po")]

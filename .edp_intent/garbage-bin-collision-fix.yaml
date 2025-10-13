@@ -1,0 +1,58 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-01-28T15:30:00Z"
+originalIntent: "I made foraging feature where if you press e on the garbage bins, it gets 6-10 steel and wood combined, but it doesnt work rn. I assume its because the area2d is too small, and you need to make it 3x bigger."
+scope:
+  allowedPaths:
+    - "scenes/objects/garbage_pile.tscn"
+    - "scripts/objects/garbage_bin.gd"
+  forbiddenPaths:
+    - "scripts/player.gd"
+    - "scripts/terrainGeneration/"
+    - "scripts/interactions/interactable.gd"
+  newFiles: []
+apiContracts:
+  - name: "StaticBody2D collision detection"
+    type: "physics_body"
+    params: []
+    returns: "body_entered signal compatibility"
+    required: true
+  - name: "can_interact"
+    type: "function"
+    params: []
+    returns: "bool"
+    required: true
+  - name: "interact_with"
+    type: "function"
+    params:
+      - name: "player"
+        type: "Node"
+    returns: "void"
+    required: true
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Player can detect garbage bins for interaction"
+    given: "Player is within 25 unit radius of garbage bin"
+    when: "Player approaches garbage bin"
+    then: "Interaction prompt appears (body_entered signal fires)"
+  - id: "AC-002"
+    description: "Player can interact with garbage bins using E key"
+    given: "Player is near garbage bin and sees interaction prompt"
+    when: "Player presses E key"
+    then: "interact_with method is called and resources are collected"
+  - id: "AC-003"
+    description: "Garbage bin becomes non-interactable after use"
+    given: "Player has successfully interacted with garbage bin"
+    when: "Player tries to interact again"
+    then: "No interaction occurs (can_interact returns false)"
+nonGoals:
+  - "Changing Area2D size on player (original assumption was incorrect)"
+  - "Modifying resource collection logic"
+  - "Adding new interaction types"
+  - "Performance optimizations"
+  - "Visual improvements"
+complexityBudget:
+  maxNewFunctions: 0
+  maxNewFiles: 0
+  maxLinesOfCode: 20
+  maxDependencies: 0

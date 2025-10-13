@@ -1,0 +1,85 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T01:00:00Z"
+originalIntent: "can you not have a loading screen for generating content, I want it to generate while the player is in the van, and continue after if it needs"
+
+scope:
+  allowedPaths:
+    - "scripts/terrainGeneration/perlin.gd"
+    - "scripts/VanInterior.gd"
+    - "scripts/MapData.gd"
+    - "scripts/game.gd"
+    - "scenes/VanInterior.tscn"
+  forbiddenPaths:
+    - "scripts/menu.gd"
+    - "scenes/game.tscn"
+    - "scripts/terrainGeneration/object_factory.gd"
+    - "scripts/terrainGeneration/spawn_rule_engine.gd"
+  newFiles: []
+
+apiContracts:
+  - name: "perlin.generate_map_async"
+    type: "function"
+    params:
+      - name: "width"
+        type: "int"
+      - name: "height"
+        type: "int"
+      - name: "noise_seed"
+        type: "int"
+    returns: "void"
+    required: true
+    description: "Async version of generate_map with frame yields every 1000 tiles"
+
+  - name: "MapData.generation_in_progress"
+    type: "property"
+    params: []
+    returns: "bool"
+    required: true
+    description: "Flag indicating if background generation is currently running"
+
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Player can move in van during generation"
+    given: "Player enters VanInterior scene"
+    when: "Map generation starts"
+    then: "Player controls are responsive, no freezing, can walk around"
+
+  - id: "AC-002"
+    description: "No blocking loading screen shown"
+    given: "Map generation is in progress"
+    when: "Player is in VanInterior"
+    then: "No fullscreen loading overlay visible, player can see van interior"
+
+  - id: "AC-003"
+    description: "Generation continues after van exit"
+    given: "Player exits van while generation incomplete"
+    when: "Game scene loads"
+    then: "Generation continues in background until complete"
+
+  - id: "AC-004"
+    description: "Generation yields control regularly"
+    given: "Generation loop is running"
+    when: "Every 1000 tiles processed"
+    then: "await process_frame called, control returned to engine"
+
+  - id: "AC-005"
+    description: "Game scene handles incomplete generation"
+    given: "Player enters game scene"
+    when: "MapData.generation_in_progress is true"
+    then: "Game scene waits or shows minimal indicator, no crash"
+
+nonGoals:
+  - "Progress bars or percentage indicators"
+  - "Frame-budget time-based yield system"
+  - "Chunked/resumable generation state"
+  - "Making Perlin an autoload singleton"
+  - "Threading or worker-based generation"
+  - "Generation algorithm optimizations"
+  - "Loading screen animation improvements"
+
+complexityBudget:
+  maxNewFunctions: 1
+  maxNewFiles: 0
+  maxLinesOfCode: 50
+  maxDependencies: 0

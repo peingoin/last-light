@@ -4,8 +4,8 @@ var map_width = 500
 var map_height = 500
 
 @onready var tilemap: TileMapLayer = $TileMapLayer
-@onready var object_container: Node2D = $ObjectContainer
-@onready var object_layer: Node2D = $ObjectContainer
+@onready var object_container: Node2D = get_node("../ObjectLayer")
+@onready var object_layer: Node2D = get_node("../ObjectLayer")
 
 # Multi-layer noise system
 var base_noise: FastNoiseLite
@@ -33,6 +33,10 @@ var exclusion_radii = {
 func _ready() -> void:
 	setup_enhanced_spawning_system()
 	setup_noise_layers(0.05, 3)
+
+	# Set terrain layer to background (behind all dynamic entities)
+	if tilemap:
+		tilemap.z_index = -1000
 
 func start_map_generation() -> void:
 	generate_map(map_width, map_height, randi())

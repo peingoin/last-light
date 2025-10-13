@@ -1,0 +1,65 @@
+version: "1.0.0"
+generatedBy: "edp-6-mcp"
+timestamp: "2025-10-12T00:00:00Z"
+originalIntent: "do_dis, the current trees, garbage bins, etc. are not following that concept where in which if the players are in front, they are in front, and when they're behind, theyre behind the sprite."
+scope:
+  allowedPaths:
+    - "scripts/terrainGeneration/object_factory.gd"
+    - "scripts/terrainGeneration/objects/base_spawnable_object.gd"
+  forbiddenPaths:
+    - "scenes/game.tscn"
+    - "scripts/player.gd"
+    - "scenes/player.tscn"
+    - "scripts/terrainGeneration/perlin.gd"
+    - "scripts/game.gd"
+  newFiles: []
+apiContracts:
+  - name: "setup_depth_sorting"
+    type: "function"
+    params:
+      - name: "node"
+        type: "Node2D"
+    returns: "void"
+    required: true
+    description: "Initialize depth sorting on a newly created object"
+  - name: "_process"
+    type: "function"
+    params:
+      - name: "delta"
+        type: "float"
+    returns: "void"
+    required: true
+    description: "Update z_index every frame based on Y position in BaseSpawnableObject"
+acceptanceCriteria:
+  - id: "AC-001"
+    description: "Objects render behind player when player is in front"
+    given: "Player Y position is less than object Y position (player in front)"
+    when: "Player moves in front of an object"
+    then: "Player sprite renders on top of object sprite"
+  - id: "AC-002"
+    description: "Objects render in front of player when player is behind"
+    given: "Player Y position is greater than object Y position (player behind)"
+    when: "Player moves behind an object"
+    then: "Object sprite renders on top of player sprite"
+  - id: "AC-003"
+    description: "All factory-created objects participate in depth sorting"
+    given: "Objects created through ObjectFactory (trees, garbage, barrels, buildings, benches, pallets, bins)"
+    when: "Objects are instantiated and added to scene"
+    then: "All objects automatically update z_index every frame based on Y position"
+  - id: "AC-004"
+    description: "Depth sorting works for both static and procedurally generated objects"
+    given: "Objects spawned through terrain generation (perlin.gd) and preset scene objects"
+    when: "Game is running"
+    then: "Both types of objects have correct depth sorting"
+nonGoals:
+  - "YSort hierarchy implementation (previous failure)"
+  - "Scene hierarchy restructuring"
+  - "Player z_index modifications"
+  - "Enemy or NPC depth sorting"
+  - "Performance optimizations beyond basic implementation"
+  - "Object-to-object depth sorting improvements"
+complexityBudget:
+  maxNewFunctions: 2
+  maxNewFiles: 0
+  maxLinesOfCode: 30
+  maxDependencies: 0

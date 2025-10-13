@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Dialogue="*res://scripts/NPC/Dialogue.gd"
 PlayerData="*res://scripts/PlayerData.gd"
+SceneManager="*res://scripts/SceneManager.gd"
 
 [input]
 
