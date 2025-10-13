@@ -135,14 +135,17 @@ func _start_wave_2() -> void:
 func _start_wave_3() -> void:
 	current_state = WaveState.WAVE_3
 
-	# Spawn 4 random enemies around player
-	var spawned = spawner.spawn_monsters(player.global_position, 4, 100.0)
+	# Spawn fire wizard at center of room
+	var wizard_scene = load("res://scenes/enemies/fire_wizard.tscn")
+	var wizard = wizard_scene.instantiate()
+	wizard.global_position = Vector2(150, 150)
 
-	# Connect signals
-	for enemy in spawned:
-		enemy.tree_exiting.connect(_on_enemy_died)
+	# Add to scene
+	add_child(wizard)
 
-	active_enemies_count = 4
+	# Connect death signal
+	wizard.tree_exiting.connect(_on_enemy_died)
+	active_enemies_count = 1
 
 func _start_wave_4() -> void:
 	current_state = WaveState.WAVE_4
@@ -171,6 +174,13 @@ func _start_wave_5() -> void:
 	wizard.tree_exiting.connect(_on_enemy_died)
 	active_enemies_count = 1
 
+func _spawn_in_van() -> void:
+	# Save player state
+	PlayerData.save_player_state(player)
+
+	# Transition to van interior
+	get_tree().change_scene_to_file("res://scenes/VanInterior.tscn")
+
 func _complete_tutorial() -> void:
 	# Save player state
 	PlayerData.save_player_state(player)
@@ -194,7 +204,8 @@ func _advance_wave() -> void:
 		WaveState.WAVE_2:
 			_start_wave_3()
 		WaveState.WAVE_3:
-			_start_wave_4()
+			# Fire wizard defeated, spawn player in van
+			_spawn_in_van()
 		WaveState.WAVE_4:
 			_start_wave_5()
 		WaveState.WAVE_5:

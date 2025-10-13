@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ccwyhu83j70rm"]
+[gd_scene load_steps=22 format=3 uid="uid://ccwyhu83j70rm"]
 
 [ext_resource type="Script" uid="uid://bwl6fpxodiei3" path="res://scripts/van_interior.gd" id="1_1rbwi"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="1_textbox"]
@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="9_player"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="10_healthbar"]
 [ext_resource type="Script" uid="uid://dcljf063ljvtn" path="res://scripts/time_controller.gd" id="11_timecontroller"]
-[ext_resource type="PackedScene" path="res://scenes/UI/TimeDisplay.tscn" id="12_timedisplay"]
+[ext_resource type="PackedScene" uid="uid://c8gk5x2h4n7p1" path="res://scenes/UI/TimeDisplay.tscn" id="12_timedisplay"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
