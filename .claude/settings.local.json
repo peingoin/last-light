@@ -42,10 +42,11 @@
       "Bash(/Applications/Godot.app/Contents/MacOS/Godot:*)",
       "Bash(true)",
       "Bash(git checkout:*)",
-      "Bash(git log:*)",
-      "Bash(dir scenes)",
-      "Bash(dir:*)",
-      "Bash(findstr:*)"
+      "Read(//Users/charliegao/Documents/CODE/**)",
+      "Bash(for:*)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(tail:*)",
+      "Bash(git rebase:*)"
     ],
     "deny": [],
     "ask": []

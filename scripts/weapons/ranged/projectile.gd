@@ -22,8 +22,13 @@ var shooter: Node2D = null
 var current_target: Node2D = null
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var impact_audio: AudioStreamPlayer2D = null
 
 func _ready() -> void:
+	# Try to get impact audio node if it exists and set up stream
+	if has_node("ImpactAudio"):
+		impact_audio = $ImpactAudio
+		impact_audio.stream = load("res://assets/Audio/Weapon/Impact/Fire Impact.mp3")
 	# Calculate max lifetime distance based on viewport size
 	var viewport_size = get_viewport_rect().size
 	max_lifetime_distance = viewport_size.length() * lifetime_multiplier
@@ -162,6 +167,10 @@ func _on_body_entered(body: Node2D) -> void:
 func hit_enemy_target(enemy: Node2D) -> void:
 	if not enemy:
 		return
+
+	# Play impact sound
+	if impact_audio:
+		impact_audio.play()
 
 	# Calculate knockback direction
 	var knockback_direction = (enemy.global_position - global_position).normalized()

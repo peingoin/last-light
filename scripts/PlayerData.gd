@@ -19,6 +19,9 @@ var active_weapon_slot: int = 1
 var last_position: Vector2 = Vector2.ZERO
 var last_scene: String = ""
 
+# Universal time that persists across scenes
+var current_time: float = 6.0  # Start at 6:00 AM (dawn)
+
 func save_player_state(player: CharacterBody2D) -> void:
 	if not player:
 		return
@@ -34,6 +37,17 @@ func save_player_state(player: CharacterBody2D) -> void:
 	# Save weapon data
 	if player.has_method("get") and "active_weapon_slot" in player:
 		active_weapon_slot = player.active_weapon_slot
+
+	# Save weapon scene paths
+	if "weapon_slot_1" in player and player.weapon_slot_1:
+		weapon_slot_1_path = player.weapon_slot_1.scene_file_path
+	else:
+		weapon_slot_1_path = ""
+
+	if "weapon_slot_2" in player and player.weapon_slot_2:
+		weapon_slot_2_path = player.weapon_slot_2.scene_file_path
+	else:
+		weapon_slot_2_path = ""
 
 	# Save position
 	last_position = player.global_position
@@ -52,9 +66,19 @@ func load_player_state(player: CharacterBody2D) -> void:
 	if player.has_method("set") and "inventory" in player:
 		player.inventory = inventory.duplicate()
 
-	# Load weapon slot
+	# Load weapons from saved paths
+	if player.has_method("equip_weapon"):
+		if weapon_slot_1_path != "":
+			player.equip_weapon(weapon_slot_1_path, 1)
+		if weapon_slot_2_path != "":
+			player.equip_weapon(weapon_slot_2_path, 2)
+
+	# Load active weapon slot
 	if player.has_method("set") and "active_weapon_slot" in player:
 		player.active_weapon_slot = active_weapon_slot
+		# Switch to the correct weapon if we have one
+		if player.has_method("switch_to_weapon"):
+			player.switch_to_weapon(active_weapon_slot)
 
 func reset_player_data() -> void:
 	player_health = 5
@@ -65,3 +89,4 @@ func reset_player_data() -> void:
 	active_weapon_slot = 1
 	last_position = Vector2.ZERO
 	last_scene = ""
+	current_time = 6.0

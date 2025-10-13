@@ -78,16 +78,16 @@ func _on_explosion_frame_changed() -> void:
 
 	# Enable hitbox only on frames 2 and 3
 	if current_frame == 1 || 2:
-		explosion_area.monitoring = true
-		explosion_area.monitorable = true
+		explosion_area.set_deferred("monitoring", true)
+		explosion_area.set_deferred("monitorable", true)
 		# Wait for physics to update then deal damage
 		call_deferred("_deal_damage_deferred")
 	elif current_frame == 3:
 		# Keep monitoring on frame 3, but don't deal damage again
 		pass
 	else:
-		explosion_area.monitoring = false
-		explosion_area.monitorable = false
+		explosion_area.set_deferred("monitoring", false)
+		explosion_area.set_deferred("monitorable", false)
 
 func _deal_damage_deferred() -> void:
 	await get_tree().physics_frame
@@ -125,8 +125,8 @@ func deal_explosion_damage() -> void:
 func _on_explosion_finished() -> void:
 	# Disable explosion area and despawn
 	if explosion_area:
-		explosion_area.monitoring = false
-		explosion_area.monitorable = false
+		explosion_area.set_deferred("monitoring", false)
+		explosion_area.set_deferred("monitorable", false)
 	despawn()
 
 # Override hit_enemy_target to use explosion instead

@@ -6,11 +6,13 @@ extends Node2D
 
 
 @onready var player = $Player
+@onready var ui_control = $"CanvasLayer/UI Control"
 @onready var health_bar = $"CanvasLayer/UI Control/HealthBar"
 @onready var wood_label = $"CanvasLayer/UI Control/HealthBar/Wood Indicator Control/Wood Label"
 @onready var metal_label = $"CanvasLayer/UI Control/HealthBar/Metal Indicator Control/Metal Label"
 @onready var textbox = $"CanvasLayer/UI Control/TextBox"
 @onready var loading_screen = $"CanvasLayer/LoadingScreen"
+@onready var loading_audio: AudioStreamPlayer = null
 @onready var weapon_ui_container = $"CanvasLayer/UI Control/WeaponUI"
 @onready var cooldown_overlay = $"CanvasLayer/UI Control/WeaponUI/ActiveWeaponCircle/CooldownOverlay"
 @onready var interact_prompt = $"CanvasLayer/UI Control/InteractPrompt"
@@ -23,7 +25,12 @@ func _ready() -> void:
 		object_layer.z_index = 0
 		add_child(object_layer)
 
-	# Show loading screen during generation
+	# Get loading audio node if it exists
+	if loading_screen and loading_screen.has_node("LoadingAudio"):
+		loading_audio = loading_screen.get_node("LoadingAudio")
+		loading_audio.stream = load("res://assets/Audio/Loading.mp3")
+
+	# Show loading screen for map generation
 	show_loading_screen()
 
 	# Wait a frame to ensure all nodes are ready
@@ -46,6 +53,12 @@ func _ready() -> void:
 		var signal_obj = player.health_changed
 		if signal_obj and not signal_obj.is_connected(_on_player_health_changed):
 			signal_obj.connect(_on_player_health_changed)
+
+		# Initialize resource UI from player inventory
+		if wood_label and "wood" in player.inventory:
+			wood_label.text = str(player.inventory["wood"])
+		if metal_label and "steel" in player.inventory:
+			metal_label.text = str(player.inventory["steel"])
 
 		# Set up weapon UI
 		if weapon_ui_container:
@@ -111,10 +124,22 @@ func add_metal(amount: int):
 func show_loading_screen():
 	if loading_screen:
 		loading_screen.visible = true
+	# Play loading audio
+	if loading_audio:
+		loading_audio.play()
+	# Hide UI during loading
+	if ui_control:
+		ui_control.visible = false
 
 func hide_loading_screen():
 	if loading_screen:
 		loading_screen.visible = false
+	# Stop loading audio
+	if loading_audio:
+		loading_audio.stop()
+	# Show UI when map is loaded
+	if ui_control:
+		ui_control.visible = true
 
 func _connect_weapon_cooldown():
 	if player and player.active_weapon and cooldown_overlay:

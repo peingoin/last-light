@@ -4,7 +4,7 @@ func _ready() -> void:
 	# Movement and detection
 	speed = 30.0
 	detect_range = 200.0
-	attack_range = 30.0
+	attack_range = 15.0
 
 	# Combat
 	damage = 1

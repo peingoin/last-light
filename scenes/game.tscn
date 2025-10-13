@@ -1,8 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=28 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://ccwyhu83j70rm" path="res://scenes/VanInterior.tscn" id="2_1kice"]
 [ext_resource type="PackedScene" uid="uid://c7g47ul4jt3ti" path="res://scenes/enemies/orc.tscn" id="2_orc"]
 [ext_resource type="PackedScene" uid="uid://b8r2hsxdk7k0l" path="res://scenes/spawner.tscn" id="2_spawner"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="3_lnu2h"]
@@ -13,9 +13,16 @@
 [ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="7_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bvsm4c0i2xo8t" path="res://scenes/storm.tscn" id="8_storm"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="8_textbox"]
-[ext_resource type="PackedScene" uid="uid://b5y8qm3xk8rvi" path="res://scenes/VanEntrance.tscn" id="9_van_entrance"]
 [ext_resource type="PackedScene" uid="uid://dqtv01ata6ri3" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
 [ext_resource type="TileSet" uid="uid://cthy5whhkciiq" path="res://van_tile_set.tres" id="13_tileset"]
+[ext_resource type="Script" uid="uid://dcljf063ljvtn" path="res://scripts/time_controller.gd" id="15_timecontroller"]
+[ext_resource type="Script" uid="uid://buwu2lqpmm375" path="res://scripts/canvas_modulate.gd" id="16_ca42v"]
+[ext_resource type="Texture2D" uid="uid://bkpc1kjm4t2xn" path="res://daynightcycle-gradient-texture.tres" id="17_rysoc"]
+[ext_resource type="PackedScene" uid="uid://c8gk5x2h4n7p1" path="res://scenes/UI/TimeDisplay.tscn" id="18_timedisplay"]
+[ext_resource type="PackedScene" uid="uid://controls_menu" path="res://scenes/UI/ControlsMenu.tscn" id="19_controls_menu"]
+[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="19_264po"]
+[ext_resource type="PackedScene" uid="uid://d4efeveeol2rc" path="res://scenes/enemies/fire_wizard.tscn" id="20_1kice"]
+[ext_resource type="PackedScene" uid="uid://controls_toggle_button" path="res://scenes/UI/ControlsToggleButton.tscn" id="21_controls_button"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
@@ -48,12 +55,12 @@ corner_radius_bottom_left = 30
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
-player_scene = ExtResource("1_uwrxv")
+player_scene = ExtResource("2_1kice")
 spawner_scene = ExtResource("2_spawner")
 
 [node name="Storm" parent="." instance=ExtResource("8_storm")]
 
-[node name="Perlin" parent="." instance=ExtResource("1_yqjtg")]
+[node name="Perlin" parent="." instance=ExtResource("19_264po")]
 position = Vector2(-4000, -4000)
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -66,7 +73,8 @@ monster_scenes = Array[PackedScene]([ExtResource("2_orc"), ExtResource("5_gee14"
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
 
-[node name="VanEntrance" parent="." instance=ExtResource("9_van_entrance")]
+[node name="TimeController" type="Node" parent="."]
+script = ExtResource("15_timecontroller")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -161,6 +169,18 @@ offset_left = 400.0
 offset_top = 0.0
 offset_right = 630.0
 offset_bottom = 80.0
+
+[node name="TimeDisplay" parent="CanvasLayer/UI Control" instance=ExtResource("18_timedisplay")]
+layout_mode = 1
+
+[node name="ControlsMenu" parent="CanvasLayer/UI Control" instance=ExtResource("19_controls_menu")]
+
+[node name="ControlsToggleButton" parent="CanvasLayer/UI Control" instance=ExtResource("21_controls_button")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
 
 [node name="InteractPrompt" type="Label" parent="CanvasLayer/UI Control"]
 visible = false
@@ -295,4 +315,11 @@ theme_override_fonts/font = ExtResource("4_lbhrr")
 theme_override_font_sizes/font_size = 48
 text = "Loading..."
 horizontal_alignment = 1
+
+[node name="LoadingAudio" type="AudioStreamPlayer" parent="CanvasLayer/LoadingScreen"]
 vertical_alignment = 1
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.08418272, 0.26881677, 0.5436753, 1)
+script = ExtResource("16_ca42v")
+gradient = ExtResource("17_rysoc")

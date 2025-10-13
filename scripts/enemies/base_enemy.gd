@@ -30,6 +30,10 @@ var recovering := false   # <-- new: short pause after a landed hit
 var knockback_velocity := Vector2.ZERO
 var is_dying := false
 var is_invulnerable := false
+var zombie_sound_timer: float = 0.0
+var zombie_sound_interval: float = 0.0
+
+@onready var zombie_audio: AudioStreamPlayer2D = null
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -38,6 +42,14 @@ func _ready() -> void:
 	$AnimatedSprite2D.animation_finished.connect(_on_anim_finished)
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AnimatedSprite2D.play("idle")
+
+	# Get zombie audio node if it exists and set up stream
+	if has_node("ZombieAudio"):
+		zombie_audio = $ZombieAudio
+		zombie_audio.stream = load("res://assets/Audio/zombie.mp3")
+		zombie_audio.volume_db = -10.0
+		# Set random initial interval between 3-8 seconds
+		zombie_sound_interval = randf_range(3.0, 8.0)
 
 	# Connect hurtbox for weapon damage
 	if has_node("Hurtbox"):
@@ -48,6 +60,15 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if player == null or is_dying:
 		return
+
+	# Update zombie sound timer
+	if zombie_audio:
+		zombie_sound_timer += delta
+		if zombie_sound_timer >= zombie_sound_interval:
+			zombie_audio.play()
+			zombie_sound_timer = 0.0
+			# Set new random interval
+			zombie_sound_interval = randf_range(3.0, 8.0)
 
 	# Apply knockback velocity and reduce it over time
 	if knockback_velocity != Vector2.ZERO:
