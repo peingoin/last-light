@@ -16,8 +16,8 @@ func _ready() -> void:
 	circle_shape.radius = radius
 	collision_shape.shape = circle_shape
 
-	# Set collision layers - acts as a wall
-	collision_layer = 32  # Layer 6 (Walls/Environment)
+	# Set collision layers - acts as a wall for boss projectiles only
+	collision_layer = 256  # Layer 9 (Boss Arena Boundary)
 	collision_mask = 0
 
 	# Create visual ring

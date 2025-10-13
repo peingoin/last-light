@@ -480,6 +480,10 @@ func die() -> void:
 	# Play death animation if available, otherwise show hit animation
 	animated_sprite.play("hit")
 
+	# Reset PlayerData on death
+	if has_node("/root/PlayerData"):
+		PlayerData.reset_player_data()
+
 	# Create death message UI
 	show_death_message()
 

@@ -1,0 +1,236 @@
+[gd_scene load_steps=17 format=3 uid="uid://dghqrqm58wids"]
+
+[ext_resource type="Script" uid="uid://b3lyrs2c6ykbq" path="res://scripts/tutorial.gd" id="1_tutorial"]
+[ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://b8r2hsxdk7k0l" path="res://scenes/spawner.tscn" id="3_spawner"]
+[ext_resource type="PackedScene" uid="uid://c7g47ul4jt3ti" path="res://scenes/enemies/orc.tscn" id="4_orc"]
+[ext_resource type="PackedScene" uid="uid://g0a1vh6i2lf2" path="res://scenes/enemies/zombie_small.tscn" id="5_zombie_small"]
+[ext_resource type="PackedScene" uid="uid://c3og38mfq76d3" path="res://scenes/enemies/zombie_big.tscn" id="6_zombie_big"]
+[ext_resource type="PackedScene" uid="uid://cp3nsyopw8s8s" path="res://scenes/enemies/zombie_axe.tscn" id="7_zombie_axe"]
+[ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="8_healthbar"]
+[ext_resource type="FontFile" uid="uid://dwdegyba7w14f" path="res://assets/Font/VT323/VT323-Regular.ttf" id="9_font"]
+[ext_resource type="Texture2D" uid="uid://dobyt11lpisfo" path="res://assets/Item_Icons/Tiny Wonder RPG Icons Pack FREE/free preview.png" id="10_icons"]
+[ext_resource type="PackedScene" uid="uid://8cgn4wmmpyll" path="res://scenes/van.tscn" id="11_g2equ"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wood"]
+atlas = ExtResource("10_icons")
+region = Rect2(16.81281, 32.816788, 14.552509, 14.520523)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_metal"]
+atlas = ExtResource("10_icons")
+region = Rect2(-0.2072525, 16.752626, 16.751667, 15.37929)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_active_circle"]
+bg_color = Color(0.3, 0.3, 0.3, 0.6)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cooldown_overlay"]
+bg_color = Color(1, 1, 1, 0.8)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inactive_circle"]
+bg_color = Color(0.3, 0.3, 0.3, 0.6)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[node name="Tutorial" type="Node2D"]
+script = ExtResource("1_tutorial")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(150, 150)
+
+[node name="Spawner" parent="." instance=ExtResource("3_spawner")]
+player_path = NodePath("../Player")
+monster_scenes = Array[PackedScene]([ExtResource("4_orc"), ExtResource("5_zombie_small"), ExtResource("6_zombie_big"), ExtResource("7_zombie_axe")])
+default_radius = 100.0
+spawn_parent_path = NodePath("..")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.08418272, 0.26881677, 0.5436753, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UIControl" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthBar" parent="CanvasLayer/UIControl" instance=ExtResource("8_healthbar")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.051215276
+anchor_top = 0.9691358
+anchor_right = 0.3246528
+anchor_bottom = 1.0432099
+offset_left = -34.0
+offset_top = -613.0
+offset_right = -34.0
+offset_bottom = -613.0
+scale = Vector2(0.6, 0.6)
+
+[node name="Wood Indicator Control" type="Control" parent="CanvasLayer/UIControl/HealthBar"]
+anchors_preset = 0
+offset_left = -30.0
+offset_top = 70.0
+offset_right = 206.0
+offset_bottom = 161.0
+scale = Vector2(0.8, 0.8)
+
+[node name="Wood Label" type="Label" parent="CanvasLayer/UIControl/HealthBar/Wood Indicator Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.5
+offset_right = 42.0
+offset_bottom = 73.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("9_font")
+theme_override_font_sizes/font_size = 74
+text = "0"
+
+[node name="Wood Icon" type="TextureRect" parent="CanvasLayer/UIControl/HealthBar/Wood Indicator Control"]
+layout_mode = 1
+offset_right = 91.0
+offset_bottom = 71.0
+texture = SubResource("AtlasTexture_wood")
+stretch_mode = 4
+
+[node name="Metal Indicator Control" type="Control" parent="CanvasLayer/UIControl/HealthBar"]
+anchors_preset = 0
+offset_left = -30.0
+offset_top = 130.0
+offset_right = 206.0
+offset_bottom = 221.0
+scale = Vector2(0.8, 0.8)
+
+[node name="Metal Label" type="Label" parent="CanvasLayer/UIControl/HealthBar/Metal Indicator Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.5
+offset_right = 42.0
+offset_bottom = 73.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("9_font")
+theme_override_font_sizes/font_size = 74
+text = "0"
+
+[node name="Metal Icon" type="TextureRect" parent="CanvasLayer/UIControl/HealthBar/Metal Indicator Control"]
+layout_mode = 1
+offset_right = 91.0
+offset_bottom = 71.0
+texture = SubResource("AtlasTexture_metal")
+stretch_mode = 4
+
+[node name="WeaponUI" type="Control" parent="CanvasLayer/UIControl"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -130.0
+offset_top = -130.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ActiveWeaponCircle" type="Panel" parent="CanvasLayer/UIControl/WeaponUI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_active_circle")
+
+[node name="ActiveWeaponIcon" type="TextureRect" parent="CanvasLayer/UIControl/WeaponUI/ActiveWeaponCircle"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CooldownOverlay" type="Panel" parent="CanvasLayer/UIControl/WeaponUI/ActiveWeaponCircle"]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cooldown_overlay")
+
+[node name="InactiveWeaponCircle" type="Panel" parent="CanvasLayer/UIControl/WeaponUI"]
+layout_mode = 1
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 35.0
+offset_bottom = 35.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_inactive_circle")
+
+[node name="InactiveWeaponIcon" type="TextureRect" parent="CanvasLayer/UIControl/WeaponUI/InactiveWeaponCircle"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TutorialText" type="Label" parent="CanvasLayer/UIControl"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 50.0
+offset_right = 300.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("9_font")
+theme_override_font_sizes/font_size = 32
+text = "Use your mouse to aim and click on the mob to attack"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="map" parent="." instance=ExtResource("11_g2equ")]
+z_index = -2
+position = Vector2(144, 144)

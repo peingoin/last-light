@@ -27,5 +27,5 @@ func _on_body_entered(body: Node) -> void:
 	if not is_inside_tree():
 		return
 
-	# Return to game scene
-	get_tree().change_scene_to_file(target_scene)
+	# Return to game scene (use call_deferred to avoid physics callback issues)
+	get_tree().call_deferred("change_scene_to_file", target_scene)

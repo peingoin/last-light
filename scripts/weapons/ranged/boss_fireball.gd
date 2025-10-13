@@ -4,18 +4,28 @@ class_name BossFireball
 ## Fireball projectile used by the Fire Wizard boss.
 ## Shoots straight without homing and damages the player.
 
+var boss_shooter: Node2D = null
+
 func _ready() -> void:
 	# Disable homing behavior by setting activation distance very high
 	homing_activation_distance = 999999.0
 
 	# Set collision layers for enemy projectile
 	collision_layer = 128  # Layer 7 - Enemy Projectiles
-	collision_mask = 1 + 32  # Layer 1 (Player) + Layer 6 (Walls)
+	collision_mask = 257  # Layer 1 (Player) + Layer 9 (Arena Boundary) = 1 + 256 = 257
 
 	# Set damage
 	explosion_damage = 2
 
 	super._ready()
+
+func _on_body_entered(body: Node2D) -> void:
+	# Don't explode if hitting the boss itself
+	if body == shooter or body == boss_shooter:
+		return
+
+	# Hit a wall or environment object
+	explode()
 
 func deal_explosion_damage() -> void:
 	# Check if player is in explosion radius

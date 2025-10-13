@@ -180,13 +180,10 @@ radius = 8.0
 
 [node name="Zombie_small" type="CharacterBody2D"]
 script = ExtResource("1_mb1iq")
-speed = 80.0
-attack_range = 20.0
-enemy_health = 35.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_b5xhy")
-animation = &"death"
+animation = &"swing"
 autoplay = "idle"
 offset = Vector2(-1.545, -13.805)
 

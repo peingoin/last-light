@@ -17,7 +17,7 @@ enum State {
 # Arena and battle setup
 const TRIGGER_RADIUS: float = 500.0
 const ARENA_RADIUS: float = 500.0
-const COOLDOWN_DURATION: float = 1.5
+const COOLDOWN_DURATION: float = 0.5  # Reduced from 1.5
 const CLOSE_RANGE_THRESHOLD: float = 100.0
 const PHASE_2_HEALTH_THRESHOLD: float = 250.0
 
@@ -204,14 +204,30 @@ func check_phase_transition() -> void:
 		current_state = State.PHASE_TRANSITION
 
 func take_damage(damage_amount: int) -> void:
-	# Check if flamethrower attack is active and interrupt it
-	if current_state == State.ATTACKING and current_attack == attack_2:
-		current_attack.interrupt()
-		current_state = State.COOLDOWN
-		cooldown_timer_boss = COOLDOWN_DURATION
+	if is_dying or is_invulnerable:
+		return
 
-	# Call parent take_damage
-	super.take_damage(damage_amount)
+	enemy_health -= damage_amount
+
+	# White flash effect (non-blocking)
+	var sprite = get_node_or_null("AnimatedSprite2D")
+	if sprite:
+		var original_modulate = sprite.modulate
+		sprite.modulate = Color(10, 10, 10, 1)  # Bright white
+		get_tree().create_timer(0.1).timeout.connect(func():
+			if is_instance_valid(sprite):
+				sprite.modulate = original_modulate
+		)
+
+	if enemy_health <= 0:
+		die()
+		return
+
+	# Start invulnerability period (non-blocking)
+	is_invulnerable = true
+	get_tree().create_timer(invuln_duration).timeout.connect(func():
+		is_invulnerable = false
+	)
 
 func die() -> void:
 	current_state = State.DEFEATED

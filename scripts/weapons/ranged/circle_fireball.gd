@@ -13,11 +13,13 @@ var rotation_speed: float = 0.0
 func _ready() -> void:
 	# Set damage amount for this projectile
 	damage = 2
-	# Don't call super._ready() to avoid default projectile behavior
+
+	# Get the animated sprite node
+	animated_sprite = get_node_or_null("AnimatedSprite2D")
 
 	# Set collision layers for enemy projectiles
-	collision_layer = 128  # Layer 8 (Enemy Projectiles)
-	collision_mask = 33     # Layer 1 (Player) + Layer 6 (Walls) = 1 + 32 = 33
+	collision_layer = 128  # Layer 7 (Enemy Projectiles)
+	collision_mask = 257    # Layer 1 (Player) + Layer 9 (Arena Boundary) = 1 + 256 = 257
 
 	# Connect signals
 	area_entered.connect(_on_area_entered)
@@ -25,7 +27,8 @@ func _ready() -> void:
 
 	# Start animation if available
 	if animated_sprite and animated_sprite.sprite_frames:
-		animated_sprite.play()
+		animated_sprite.play("default")
+		print("CircleFireball: Animation started")
 
 func initialize_circle(center: Vector2, start_angle: float, start_radius: float) -> void:
 	circle_center = center

@@ -9,7 +9,7 @@ var boss_fireball_scene: PackedScene = preload("res://scenes/weapons/ranged/boss
 
 const BURST_COUNT: int = 3
 const FIREBALLS_PER_BURST: int = 3
-const BURST_DELAY: float = 0.5
+const BURST_DELAY: float = 0.75  # Increased from 0.5
 const SPREAD_ANGLE: float = 20.0  # degrees
 
 var current_burst: int = 0
@@ -20,7 +20,10 @@ func can_execute() -> bool:
 	return true
 
 func execute() -> void:
+	print("ATTACK 3: Shoot Fireballs - EXECUTING")
+
 	if not boss or not player:
+		print("  ERROR: Boss or player is null!")
 		return
 
 	is_active = true
@@ -66,6 +69,7 @@ func shoot_burst() -> void:
 		return
 
 	current_burst += 1
+	print("  Burst ", current_burst, " of ", BURST_COUNT)
 
 	# Play shoot animation
 	if animation_player and is_instance_valid(animation_player):
@@ -102,6 +106,10 @@ func spawn_fireball(base_direction: Vector2, angle_offset_degrees: float) -> voi
 
 	# Set the speed before initializing
 	fireball.speed = projectile_speed
+
+	# Set boss reference to prevent self-collision
+	if fireball.has("boss_shooter"):
+		fireball.boss_shooter = boss
 
 	# Add to scene first (required for some Godot nodes)
 	boss.get_parent().add_child(fireball)

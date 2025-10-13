@@ -1,8 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://dbnfe5rbtn0vc"]
+[gd_scene load_steps=26 format=3 uid="uid://dbnfe5rbtn0vc"]
 
 [ext_resource type="Script" uid="uid://dk5ur7rcpakxt" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://ccwyhu83j70rm" path="res://scenes/VanInterior.tscn" id="2_1kice"]
 [ext_resource type="PackedScene" uid="uid://c7g47ul4jt3ti" path="res://scenes/enemies/orc.tscn" id="2_orc"]
 [ext_resource type="PackedScene" uid="uid://b8r2hsxdk7k0l" path="res://scenes/spawner.tscn" id="2_spawner"]
 [ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="3_lnu2h"]
@@ -18,7 +18,8 @@
 [ext_resource type="Script" uid="uid://dcljf063ljvtn" path="res://scripts/time_controller.gd" id="15_timecontroller"]
 [ext_resource type="Script" uid="uid://buwu2lqpmm375" path="res://scripts/canvas_modulate.gd" id="16_ca42v"]
 [ext_resource type="Texture2D" uid="uid://bkpc1kjm4t2xn" path="res://daynightcycle-gradient-texture.tres" id="17_rysoc"]
-[ext_resource type="PackedScene" path="res://scenes/UI/TimeDisplay.tscn" id="18_timedisplay"]
+[ext_resource type="PackedScene" uid="uid://c8gk5x2h4n7p1" path="res://scenes/UI/TimeDisplay.tscn" id="18_timedisplay"]
+[ext_resource type="PackedScene" uid="uid://dem5xrxb1bguc" path="res://scenes/perlin.tscn" id="19_264po"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
 atlas = ExtResource("6_p57ef")
@@ -51,13 +52,10 @@ corner_radius_bottom_left = 30
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
-player_scene = ExtResource("1_uwrxv")
+player_scene = ExtResource("2_1kice")
 spawner_scene = ExtResource("2_spawner")
 
 [node name="Storm" parent="." instance=ExtResource("8_storm")]
-
-[node name="Perlin" parent="." instance=ExtResource("1_yqjtg")]
-position = Vector2(-750, -750)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("13_tileset")
@@ -308,3 +306,5 @@ vertical_alignment = 1
 color = Color(0.08418272, 0.26881677, 0.5436753, 1)
 script = ExtResource("16_ca42v")
 gradient = ExtResource("17_rysoc")
+
+[node name="Perlin" parent="." instance=ExtResource("19_264po")]
