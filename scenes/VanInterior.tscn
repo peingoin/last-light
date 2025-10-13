@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ccwyhu83j70rm"]
+[gd_scene load_steps=12 format=3 uid="uid://ccwyhu83j70rm"]
 
 [ext_resource type="Script" uid="uid://bwl6fpxodiei3" path="res://scripts/van_interior.gd" id="1_1rbwi"]
 [ext_resource type="PackedScene" uid="uid://c2l6df5utetwh" path="res://scenes/UI/TextBox.tscn" id="1_textbox"]
@@ -6,82 +6,52 @@
 [ext_resource type="PackedScene" uid="uid://bdkfp3k7n8sac" path="res://scenes/npcs/MedicNPC.tscn" id="2_medic"]
 [ext_resource type="PackedScene" uid="uid://c8746ts0xri6" path="res://scenes/npcs/ForagerNPC.tscn" id="3_forager"]
 [ext_resource type="PackedScene" uid="uid://c5k2naq4t8e1w" path="res://scenes/npcs/EngineerNPC.tscn" id="4_engineer"]
-[ext_resource type="FontFile" uid="uid://dwdegyba7w14f" path="res://assets/Font/VT323/VT323-Regular.ttf" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://dd3bc2y1eupgu" path="res://scenes/npcs/TechnicianNPC.tscn" id="5_technician"]
-[ext_resource type="Texture2D" uid="uid://dobyt11lpisfo" path="res://assets/Item_Icons/Tiny Wonder RPG Icons Pack FREE/free preview.png" id="6_p57ef"]
-[ext_resource type="PackedScene" uid="uid://ce6b6yvyavubv" path="res://scenes/npcs/ScoutNPC.tscn" id="6_scout"]
 [ext_resource type="PackedScene" uid="uid://8cgn4wmmpyll" path="res://scenes/van.tscn" id="7_van"]
 [ext_resource type="Texture2D" uid="uid://c2uwolu2cwwk8" path="res://assets/Machine.png" id="8_machine"]
 [ext_resource type="PackedScene" uid="uid://cy42k8hu53sp5" path="res://scenes/player.tscn" id="9_player"]
-[ext_resource type="PackedScene" uid="uid://cckcn2hxkgddw" path="res://scenes/UI/HealthBar.tscn" id="10_healthbar"]
-[ext_resource type="PackedScene" uid="uid://dqtv01ata6ri3" path="res://scenes/UI/MachineLifeForceUI.tscn" id="11_machineui"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
-atlas = ExtResource("6_p57ef")
-region = Rect2(16.81281, 32.816788, 14.552509, 14.520523)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p57ef"]
-atlas = ExtResource("6_p57ef")
-region = Rect2(-0.2072525, 16.752626, 16.751667, 15.37929)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_active_circle"]
-bg_color = Color(0.3, 0.3, 0.3, 0.6)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cooldown_overlay"]
-bg_color = Color(1, 1, 1, 0.8)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inactive_circle"]
-bg_color = Color(0.3, 0.3, 0.3, 0.6)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exitdoor"]
-size = Vector2(31, 14.244997)
+size = Vector2(32, 5.245)
 
 [node name="VanInterior" type="Node2D"]
 position = Vector2(25, 0)
 script = ExtResource("1_vanscene")
 
-[node name="Node2D" parent="." instance=ExtResource("7_van")]
+[node name="BlackBackground" type="ColorRect" parent="."]
+z_index = -3
+offset_left = -10000.0
+offset_top = -10000.0
+offset_right = 10000.0
+offset_bottom = 10000.0
+color = Color(0, 0, 0, 1)
+
+[node name="map" parent="." instance=ExtResource("7_van")]
 z_index = -2
 position = Vector2(-99, 157)
 
 [node name="MedicNPC" parent="." instance=ExtResource("2_medic")]
-position = Vector2(-126, 208)
+position = Vector2(-159, 135)
 lines = []
 
 [node name="ForagerNPC" parent="." instance=ExtResource("3_forager")]
-position = Vector2(-127, 255)
+position = Vector2(-159, 213)
 lines = []
 
 [node name="EngineerNPC" parent="." instance=ExtResource("4_engineer")]
-position = Vector2(-5, 254)
+position = Vector2(-39, 213)
 lines = []
 
 [node name="TechnicianNPC" parent="." instance=ExtResource("5_technician")]
-position = Vector2(-6, 211)
-lines = []
-
-[node name="ScoutNPC" parent="." instance=ExtResource("6_scout")]
-position = Vector2(400, 300)
+position = Vector2(-39, 135)
 lines = []
 
 [node name="Machine" type="Sprite2D" parent="."]
-position = Vector2(-66, 190)
+position = Vector2(-100, 98)
 texture = ExtResource("8_machine")
 
 [node name="Player" parent="." instance=ExtResource("9_player")]
-position = Vector2(-60, 281)
+position = Vector2(-94, 184)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -93,89 +63,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HealthBar" parent="CanvasLayer/UI Control" instance=ExtResource("10_healthbar")]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.051215276
-anchor_top = 0.9691358
-anchor_right = 0.3246528
-anchor_bottom = 1.0432099
-offset_left = -34.0
-offset_top = -613.0
-offset_right = -34.0
-offset_bottom = -613.0
-scale = Vector2(0.6, 0.6)
-metadata/_edit_use_anchors_ = true
-
-[node name="Wood Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
-anchors_preset = 0
-offset_left = -30.0
-offset_top = 70.0
-offset_right = 206.0
-offset_bottom = 161.0
-scale = Vector2(0.8, 0.8)
-
-[node name="Wood Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Wood Indicator Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -25.5
-offset_right = 42.0
-offset_bottom = 73.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("4_lbhrr")
-theme_override_font_sizes/font_size = 74
-text = "12"
-
-[node name="Wood Icon" type="TextureRect" parent="CanvasLayer/UI Control/HealthBar/Wood Indicator Control"]
-layout_mode = 1
-offset_right = 91.0
-offset_bottom = 71.0
-texture = SubResource("AtlasTexture_u5sy4")
-stretch_mode = 4
-
-[node name="Metal Indicator Control" type="Control" parent="CanvasLayer/UI Control/HealthBar"]
-anchors_preset = 0
-offset_left = -30.0
-offset_top = 130.0
-offset_right = 206.0
-offset_bottom = 221.0
-scale = Vector2(0.8, 0.8)
-
-[node name="Metal Label" type="Label" parent="CanvasLayer/UI Control/HealthBar/Metal Indicator Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -25.5
-offset_right = 42.0
-offset_bottom = 73.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("4_lbhrr")
-theme_override_font_sizes/font_size = 74
-text = "12"
-
-[node name="Metal Icon" type="TextureRect" parent="CanvasLayer/UI Control/HealthBar/Metal Indicator Control"]
-layout_mode = 1
-offset_right = 91.0
-offset_bottom = 71.0
-texture = SubResource("AtlasTexture_p57ef")
-stretch_mode = 4
-
 [node name="TextBox" parent="CanvasLayer/UI Control" instance=ExtResource("1_textbox")]
 visible = false
 layout_mode = 1
-
-[node name="MachineLifeForceUI" parent="CanvasLayer/UI Control" instance=ExtResource("11_machineui")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 400.0
-offset_top = 0.0
-offset_right = 630.0
-offset_bottom = 80.0
 
 [node name="InteractPrompt" type="Label" parent="CanvasLayer/UI Control"]
 visible = false
@@ -191,94 +81,15 @@ offset_right = 100.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("4_lbhrr")
 theme_override_font_sizes/font_size = 32
 text = "Press E to interact"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="WeaponUI" type="Control" parent="CanvasLayer/UI Control"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -130.0
-offset_top = -130.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="ActiveWeaponCircle" type="Panel" parent="CanvasLayer/UI Control/WeaponUI"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -100.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_active_circle")
-
-[node name="ActiveWeaponIcon" type="TextureRect" parent="CanvasLayer/UI Control/WeaponUI/ActiveWeaponCircle"]
-z_index = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 40.0
-offset_bottom = 40.0
-grow_horizontal = 2
-grow_vertical = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="CooldownOverlay" type="Panel" parent="CanvasLayer/UI Control/WeaponUI/ActiveWeaponCircle"]
-z_index = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cooldown_overlay")
-
-[node name="InactiveWeaponCircle" type="Panel" parent="CanvasLayer/UI Control/WeaponUI"]
-layout_mode = 1
-offset_left = -25.0
-offset_top = -25.0
-offset_right = 35.0
-offset_bottom = 35.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_inactive_circle")
-
-[node name="InactiveWeaponIcon" type="TextureRect" parent="CanvasLayer/UI Control/WeaponUI/InactiveWeaponCircle"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -25.0
-offset_right = 25.0
-offset_bottom = 25.0
-grow_horizontal = 2
-grow_vertical = 2
-expand_mode = 1
-stretch_mode = 5
 
 [node name="ExitDoor" type="Area2D" parent="."]
 position = Vector2(-61, 306)
 script = ExtResource("1_1rbwi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor"]
-position = Vector2(-6.5, -12.877502)
+position = Vector2(-39, -38.377502)
 shape = SubResource("RectangleShape2D_exitdoor")

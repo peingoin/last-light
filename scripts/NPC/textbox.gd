@@ -42,7 +42,20 @@ func _gui_input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
 		return
-	
+
+	# Check for X key to exit dialogue
+	if event is InputEventKey and event.pressed:
+		var pressed_key = ""
+		if event.keycode != 0:
+			pressed_key = OS.get_keycode_string(event.keycode).to_upper()
+		elif event.physical_keycode != 0:
+			pressed_key = OS.get_keycode_string(event.physical_keycode).to_upper()
+
+		if pressed_key == "X":
+			# Exit dialogue immediately
+			hide_dialogue()
+			return
+
 	# Handle option selection if options are present
 	if current_options.size() > 0:
 		# Check for key presses using InputEventKey directly
@@ -53,7 +66,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				pressed_key = OS.get_keycode_string(event.keycode).to_upper()
 			elif event.physical_keycode != 0:
 				pressed_key = OS.get_keycode_string(event.physical_keycode).to_upper()
-			
+
 			if pressed_key != "":
 				for option in current_options:
 					var option_key = option.key.to_upper()
@@ -61,11 +74,11 @@ func _unhandled_input(event: InputEvent) -> void:
 						choice_picked.emit(option.id)
 						_clear_options()
 						return
-		
+
 		# Block interaction advance if options are present and advance_allowed_with_options is false
 		if not advance_allowed_with_options:
 			return
-	
+
 	if event.is_action_pressed("interact"):
 		_on_textbox_clicked()
 		get_viewport().set_input_as_handled()
@@ -241,6 +254,12 @@ func hide_dialogue() -> void:
 		skip_label.visible = false
 	if text_audio:
 		text_audio.stop()
+
+	# Notify the Dialogue system that dialogue has ended
+	# This ensures the player's is_talking flag is reset
+	var dialogue_system = get_node_or_null("/root/Dialogue")
+	if dialogue_system and dialogue_system.has_signal("dialogue_finished"):
+		dialogue_system.dialogue_finished.emit()
 
 func set_options(options: Array, keymap: OptionKeymap = null) -> void:
 	# Validate options array
