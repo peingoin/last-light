@@ -36,6 +36,7 @@ var inventory: Dictionary = {"wood": 0, "steel": 0}
 @onready var interact_sensor: Area2D = $InteractSensor
 @onready var weapon_slot: Node2D = $WeaponSlot
 @onready var interaction_area: Area2D = $InteractionArea
+@onready var player_light: PointLight2D = $PlayerLight
 
 var weapon_ui_container: Control  # Will be set by game.gd
 var weapon_active_icon: TextureRect
@@ -93,6 +94,11 @@ func _ready() -> void:
 		var dialogue = get_node("/root/Dialogue")
 		if dialogue.has_signal("dialogue_finished"):
 			dialogue.dialogue_finished.connect(_on_dialogue_finished)
+
+	# Connect to time controller for day/night light control
+	var time_controller = get_node_or_null("/root/Game/TimeController")
+	if time_controller:
+		time_controller.time_changed.connect(_on_time_changed)
 
 
 func _process(delta):
@@ -543,6 +549,25 @@ func _on_dialogue_finished() -> void:
 
 	# Show interact prompt again if still near an interactable
 	_update_interact_prompt_visibility()
+
+func _on_time_changed(hour: int, _minute: int) -> void:
+	# Enable light during nighttime (6pm to 6am), but not inside the van
+	if player_light:
+		# Check if we're inside the van
+		var is_in_van = _is_inside_van()
+
+		# Night is from 18:00 (6pm) to 6:00 (6am)
+		var is_night = hour >= 18 or hour < 6
+
+		# Enable light only if it's night AND we're not in the van
+		player_light.enabled = is_night and not is_in_van
+
+func _is_inside_van() -> bool:
+	# Check if the current scene is VanInterior
+	var current_scene = get_tree().current_scene
+	if current_scene:
+		return current_scene.name == "VanInterior"
+	return false
 
 func save_state() -> void:
 	# Save player state to global PlayerData before scene transitions

@@ -4,8 +4,7 @@ extends Node
 const DAY_DURATION = 60.0  # 1 minute = 1 day
 const HOURS_PER_DAY = 24
 
-# Current game time
-var current_time: float = 6.0  # Start at 6:00 AM (dawn)
+# Time scale
 var time_scale: float = 1.0
 
 # Signals
@@ -13,17 +12,17 @@ signal time_changed(hour: int, minute: int)
 signal day_night_cycle_value_changed(value: float)
 
 func _process(delta: float) -> void:
-	# Update time
+	# Update time using PlayerData
 	var time_increment = (HOURS_PER_DAY / DAY_DURATION) * delta * time_scale
-	current_time += time_increment
+	PlayerData.current_time += time_increment
 
 	# Wrap around after 24 hours
-	if current_time >= HOURS_PER_DAY:
-		current_time -= HOURS_PER_DAY
+	if PlayerData.current_time >= HOURS_PER_DAY:
+		PlayerData.current_time -= HOURS_PER_DAY
 
 	# Emit time changed signal
-	var hour = int(current_time)
-	var minute = int((current_time - hour) * 60)
+	var hour = int(PlayerData.current_time)
+	var minute = int((PlayerData.current_time - hour) * 60)
 	time_changed.emit(hour, minute)
 
 	# Calculate day/night cycle value (0 to 1)
@@ -40,7 +39,7 @@ func get_day_night_value() -> float:
 
 	# Shift time so midnight (0) is at the bottom of sine wave
 	# and noon (12) is at the top
-	var shifted_time = current_time - 6.0  # Offset by 6 hours
+	var shifted_time = PlayerData.current_time - 6.0  # Offset by 6 hours
 	if shifted_time < 0:
 		shifted_time += HOURS_PER_DAY
 
@@ -51,7 +50,7 @@ func get_day_night_value() -> float:
 	return value
 
 func get_time_string() -> String:
-	var hour = int(current_time)
+	var hour = int(PlayerData.current_time)
 
 	# Convert to 12-hour format
 	var display_hour = hour

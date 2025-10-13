@@ -19,6 +19,9 @@ var active_weapon_slot: int = 1
 var last_position: Vector2 = Vector2.ZERO
 var last_scene: String = ""
 
+# Universal time that persists across scenes
+var current_time: float = 6.0  # Start at 6:00 AM (dawn)
+
 func save_player_state(player: CharacterBody2D) -> void:
 	if not player:
 		return
@@ -65,3 +68,4 @@ func reset_player_data() -> void:
 	active_weapon_slot = 1
 	last_position = Vector2.ZERO
 	last_scene = ""
+	current_time = 6.0

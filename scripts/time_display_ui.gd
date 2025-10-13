@@ -6,7 +6,14 @@ var time_controller: Node = null
 
 func _ready():
 	# Find the TimeController in the scene
-	time_controller = get_node("/root/Game/TimeController")
+	# Try Game scene first, then look in current scene
+	if has_node("/root/Game/TimeController"):
+		time_controller = get_node("/root/Game/TimeController")
+	else:
+		# Search in the current scene tree
+		var root = get_tree().current_scene
+		if root:
+			time_controller = root.get_node_or_null("TimeController")
 
 	if time_controller:
 		# Connect to time changes

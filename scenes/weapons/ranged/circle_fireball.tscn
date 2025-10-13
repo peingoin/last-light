@@ -1,0 +1,71 @@
+[gd_scene load_steps=14 format=3 uid="uid://circle_fireball_001"]
+
+[ext_resource type="Script" path="res://scripts/weapons/ranged/circle_fireball.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dajknr8ckpglb" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F021.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://c7v7ffjspgwd8" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F022.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://d0pbhwnxe35pd" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F023.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://bvp21w5x01xjp" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F024.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://cv8cqjn8dcg5o" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F025.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://b1hhy64ifobdo" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F026.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://b17r5o8r4bvxv" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F027.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://de07sxsvg3dps" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F028.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://c35m4a36wkh0l" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F029.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://bw313q0jl8ilg" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F030.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://dqo71j8lh40b0" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Fire/F021/F031.png" id="12"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_circle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_circle"]
+radius = 8.0
+
+[node name="CircleFireball" type="Area2D"]
+collision_layer = 128
+collision_mask = 1
+script = ExtResource("1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_circle")
+animation = &"default"
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_circle")

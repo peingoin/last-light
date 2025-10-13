@@ -1,9 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://cy42k8hu53sp5"]
+[gd_scene load_steps=35 format=3 uid="uid://cy42k8hu53sp5"]
 
 [ext_resource type="Script" uid="uid://d0rwf75h1f7gl" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://dc6onrtxkn2gg" path="res://assets/Characters(100x100)/Soldier/Soldier/Soldier-Idle.png" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://dby4l7bisarfa" path="res://assets/Characters(100x100)/Soldier/Soldier/Soldier-Hurt.png" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://cmcju6t2eixwq" path="res://assets/Characters(100x100)/Soldier/Soldier/Soldier-Walk.png" id="3_qhqgy"]
+[ext_resource type="Texture2D" path="res://player_light_texture.tres" id="4_light"]
 [ext_resource type="Texture2D" uid="uid://b2sd7gnc0fpjx" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM051/SM051.png" id="5_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://cgbtlqoubm8ny" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM051/SM052.png" id="6_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://beqyty2jc0i0" path="res://assets/Melee/Melee Effects/+40FXPack_NYKNCK/Smoke/SM051/SM053.png" id="7_3v2ag"]
@@ -231,3 +232,14 @@ position = Vector2(16, -6)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_a8ls1")
 animation = &"dash"
+
+[node name="PlayerLight" type="PointLight2D" parent="."]
+position = Vector2(-7, -7)
+enabled = false
+texture = ExtResource("4_light")
+texture_scale = 0.2
+color = Color(1, 1, 1, 1)
+energy = 1.0
+blend_mode = 0
+range_z_min = -1024
+range_z_max = 1024
