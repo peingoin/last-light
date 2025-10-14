@@ -48,7 +48,8 @@
       "Bash(tail:*)",
       "Bash(git rebase:*)",
       "Bash(git stash:*)",
-      "Read(//Users/charliegao/Downloads/**)"
+      "Read(//Users/charliegao/Downloads/**)",
+      "Bash(git merge:*)"
     ],
     "deny": [],
     "ask": []
