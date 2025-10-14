@@ -1,25 +1,12 @@
-extends Node2D
+extends Control
 
 # Keep it simple: preload the game scene so it's never null.
 @export var game_scene: PackedScene
 
+# Track whether we're showing instructions or starting the game
+var showing_instructions := false
+
 func _ready() -> void:
-	var viewport_size = get_viewport_rect().size
-
-	# Scale background to fit viewport
-	var background = $Background
-	if background:
-		var texture_size = background.texture.get_size()
-		var scale_x = viewport_size.x / texture_size.x
-		var scale_y = viewport_size.y / texture_size.y
-		var scale_factor = max(scale_x, scale_y)
-		background.scale = Vector2(scale_factor, scale_factor)
-		background.position = viewport_size / 2
-
-	# Center the UI container
-	var center_container = $CenterContainer
-	center_container.position = viewport_size / 2
-
 	# Hide controls menu initially
 	var controls_menu = $ControlsMenu
 	if controls_menu:
@@ -29,15 +16,27 @@ func _input(event):
 	var controls_menu = $ControlsMenu
 	if controls_menu and controls_menu.visible:
 		if event.is_action_pressed("interact"):
-			get_tree().change_scene_to_packed(game_scene)
+			if showing_instructions:
+				# Return to main menu
+				controls_menu.hide()
+				$CenterContainer.show()
+				showing_instructions = false
+			else:
+				# Start the game
+				get_tree().change_scene_to_packed(game_scene)
 
 func _on_play_button_pressed() -> void:
-	# Hide menu buttons and show controls
+	# Hide menu buttons and show controls before starting game
 	$CenterContainer.hide()
+	showing_instructions = false
 	var controls_menu = $ControlsMenu
 	if controls_menu:
 		controls_menu.show()
 
-
-func _on_quit_button_pressed() -> void:
-		get_tree().quit()
+func _on_instructions_button_pressed() -> void:
+	# Hide menu buttons and show instructions
+	$CenterContainer.hide()
+	showing_instructions = true
+	var controls_menu = $ControlsMenu
+	if controls_menu:
+		controls_menu.show()

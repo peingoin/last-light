@@ -46,7 +46,10 @@
       "Bash(for:*)",
       "Bash(do echo \"=== $file ===\")",
       "Bash(tail:*)",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "Bash(git stash:*)",
+      "Read(//Users/charliegao/Downloads/**)",
+      "Bash(git merge:*)"
     ],
     "deny": [],
     "ask": []
