@@ -47,7 +47,8 @@
       "Bash(do echo \"=== $file ===\")",
       "Bash(tail:*)",
       "Bash(git rebase:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Read(//Users/charliegao/Downloads/**)"
     ],
     "deny": [],
     "ask": []

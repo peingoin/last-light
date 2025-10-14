@@ -85,6 +85,7 @@ func create_building_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_tree_visual(pos: Vector2, color_variant: String, player: Node = null) -> Node2D:
 	var tree = StaticBody2D.new()
 	tree.position = pos
+	tree.z_index = 101  # Above player (player is 100)
 
 	var collision = create_bottom_collision(TREE_COLLISION_SIZE)
 	tree.add_child(collision)
@@ -103,6 +104,7 @@ func create_tree_visual(pos: Vector2, color_variant: String, player: Node = null
 func create_garbage_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var garbage = StaticBody2D.new()
 	garbage.position = pos
+	garbage.z_index = 101  # Above player (player is 100)
 
 	var collision = create_bottom_collision(GARBAGE_COLLISION_SIZE)
 	garbage.add_child(collision)
@@ -120,6 +122,7 @@ func create_garbage_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_barrel_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var barrel = StaticBody2D.new()
 	barrel.position = pos
+	barrel.z_index = 101  # Above player (player is 100)
 
 	var collision = create_bottom_collision(BARREL_COLLISION_SIZE)
 	barrel.add_child(collision)
@@ -137,6 +140,7 @@ func create_barrel_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_pallet_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var pallet = StaticBody2D.new()
 	pallet.position = pos
+	pallet.z_index = 101  # Above player (player is 100)
 
 	var collision = create_bottom_collision(PALLET_COLLISION_SIZE)
 	pallet.add_child(collision)
@@ -155,6 +159,7 @@ func create_pallet_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_bin_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var bin = StaticBody2D.new()
 	bin.position = pos
+	bin.z_index = 101  # Above player (player is 100)
 
 	var collision = create_bottom_collision(BIN_COLLISION_SIZE)
 	bin.add_child(collision)
@@ -173,6 +178,7 @@ func create_bin_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_bench_visual(pos: Vector2, player: Node = null) -> Node2D:
 	var bench = StaticBody2D.new()
 	bench.position = pos
+	bench.z_index = 101  # Above player (player is 100)
 
 	var collision = create_bottom_collision(BENCH_COLLISION_SIZE)
 	bench.add_child(collision)
@@ -198,6 +204,7 @@ func create_bench_visual(pos: Vector2, player: Node = null) -> Node2D:
 func create_default_object(pos: Vector2, player: Node = null) -> Node2D:
 	var obj = StaticBody2D.new()
 	obj.position = pos
+	obj.z_index = 101  # Above player (player is 100)
 
 	var collision = create_bottom_collision(DEFAULT_COLLISION_SIZE)
 	obj.add_child(collision)

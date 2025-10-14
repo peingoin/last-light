@@ -322,3 +322,4 @@ script = ExtResource("16_ca42v")
 gradient = ExtResource("17_rysoc")
 
 [node name="Perlin" parent="." instance=ExtResource("19_264po")]
+position = Vector2(-250, -250)
